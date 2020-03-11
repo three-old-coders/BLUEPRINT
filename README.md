@@ -1,5 +1,5 @@
 # BLUEPRINT
-Blueprints and Samples mainly for JAVA
+Blueprints and Samples (mainly using the JAVA language / stack)
 
 We are a team of passionate software developers and love what we do. And we are old, really old, but just let's say "experienced" instead. Whenever we start new projects, start to learn something new, Google, Stackoverflow is our main starting point. Unfortunately most of the projects / samples were a little outdated or do not work seamlessly with current versions of libraries / frameworks or build environments. The basic idea behind this repositiory is to share samples of different technolgies, ready to use, with up-to-date software.
 
