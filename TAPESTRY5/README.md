@@ -27,7 +27,7 @@ you only need to do this once. Afterwards compile the entire project by
 ```
 mvn clean install
 ```
-Now, just navigate to
+Now, navigate to
 ```
 BLUEPRINT/TAPESTRY5/T55_BS4_SB_Java11/T55_BS_SB_Java11-APPLICATION
 ```
@@ -35,7 +35,7 @@ and type
 ```
 mvn spring-boot:run
 ```
-As soon you see somethig similar to "Started Tapestry55SBLauncher in 4.494 seconds (JVM running for 5.265)" everything is fine. Fire up your favorite browser and type
+As soon you see something similar to "Started Tapestry55SBLauncher in 4.494 seconds (JVM running for 5.265)" everything is fine. Fire up your favorite browser and type
 ```
 http://localhost:8080/bs/alert
 ```
