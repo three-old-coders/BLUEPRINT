@@ -1,0 +1,176 @@
+package de.twd.t5.services.impl;
+
+import de.twd.security.ExtendedPropertiesRealm;
+import de.twd.security.KeycloakFilter;
+import de.twd.security.OAuthAppRealm;
+import de.twd.service.IAppConfigService;
+import de.twd.t5.services.IArticleComponentService;
+import de.twd.t5.services.IAuthorService;
+import de.twd.t5.services.ILocalizationService;
+import org.apache.shiro.realm.Realm;
+import org.apache.shiro.web.mgt.WebSecurityManager;
+import org.apache.tapestry5.MetaDataConstants;
+import org.apache.tapestry5.SymbolConstants;
+import org.apache.tapestry5.ioc.*;
+import org.apache.tapestry5.ioc.annotations.Contribute;
+import org.apache.tapestry5.ioc.annotations.Scope;
+import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.ioc.annotations.Value;
+import org.apache.tapestry5.ioc.services.ApplicationDefaults;
+import org.apache.tapestry5.ioc.services.FactoryDefaults;
+import org.apache.tapestry5.ioc.services.SymbolProvider;
+import org.apache.tapestry5.services.Core;
+import org.apache.tapestry5.services.HttpServletRequestFilter;
+import org.apache.tapestry5.services.PersistentLocale;
+import org.apache.tapestry5.services.RequestGlobals;
+import org.apache.tapestry5.services.javascript.JavaScriptStack;
+import org.apache.tapestry5.services.javascript.StackExtension;
+import org.apache.tapestry5.services.messages.ComponentMessagesSource;
+
+/**
+ * 
+ * @author d.rehle@gmail.com
+ * 
+ */
+
+public class BaseModule {
+
+	public static final String TWD_FALLBACK_COUNTRYCODE = "de.twd.fallback.countrycode";
+	public static final String TWD_FALLBACK_LANGUAGE = "de.twd.fallback.language";
+
+	public static void bind(final ServiceBinder binder) {
+
+		binder.bind(IAuthorService.class, AuthorService.class);
+		binder.bind(IArticleComponentService.class, ArticleComponentService.class);
+	}
+
+	public static void contributeFactoryDefaults(final MappedConfiguration<String, Object> configuration) {
+
+		// The values defined here (as factory default overrides) are themselves
+		// overridden with application defaults by DevelopmentModule and QaModule.
+
+		// The application version is primarily useful as it appears in
+		// any exception reports (HTML or textual).
+		configuration.override(SymbolConstants.APPLICATION_VERSION, "0.0.1-SNAPSHOT");
+
+		// This is something that should be removed when going to production, but is
+		// useful
+		// in the early stages of development.
+		// configuration.add(SymbolConstants.PRODUCTION_MODE, false);
+		// now in contributeApplicationDefaults in order to avoid exception when
+		// injecting springservices to t5 config in appmodule
+
+	}
+
+	public static void contributeApplicationDefaults(MappedConfiguration<String, Object> configuration,
+			@Symbol(SymbolConstants.EXECUTION_MODE) final String executionMode) {
+
+		configuration.add(SymbolConstants.PRODUCTION_MODE, false);
+
+		// Contributions to ApplicationDefaults will override any contributions to
+		// FactoryDefaults (with the same key). Here we're restricting the supported
+		// locales to just "en" (English). As you add localised message catalogs and
+		// other assets,
+		// you can extend this list of locales (it's a comma separated series of locale
+		// names;
+		// the first locale name is the default when there's no reasonable match).
+
+		// moved to setupLocales setup by spring config
+		// configuration.add(SymbolConstants.SUPPORTED_LOCALES, "de,en");
+
+		// You should change the passphrase immediately; the HMAC passphrase is used to
+		// secure
+		// the hidden field data stored in forms to encrypt and digitally sign
+		// client-side data.
+		configuration.add(SymbolConstants.HMAC_PASSPHRASE, "change this immediately");
+	}
+
+	/**
+	 * Use annotation or method naming convention:
+	 * <code>contributeApplicationDefaults</code>
+	 */
+	@Contribute(SymbolProvider.class)
+	@ApplicationDefaults
+	public static void setupEnvironment(MappedConfiguration<String, Object> configuration) {
+
+		// Support for jQuery is new in Tapestry 5.4 and will become the only supported
+		// option in 5.5.
+		configuration.add(SymbolConstants.JAVASCRIPT_INFRASTRUCTURE_PROVIDER, "jquery");
+		configuration.add(SymbolConstants.BOOTSTRAP_ROOT, "context:bootstrap4");
+		configuration.add(SymbolConstants.ENABLE_PAGELOADING_MASK, false);
+
+		// does not work, see t5 mailinglist
+		// configuration.add(SymbolConstants.INCLUDE_CORE_STACK, false);
+	}
+
+	//
+	// ---> twd
+	//
+
+	public void contributeMetaDataLocator(MappedConfiguration<String, String> configuration,
+			@Symbol(SymbolConstants.EXECUTION_MODE) String executionMode, final IAppConfigService appConfigService) {
+
+		if (appConfigService.isProductionMode() == true) {
+			configuration.add(MetaDataConstants.SECURE_PAGE, "true");
+		}
+	}
+
+	@Contribute(SymbolProvider.class)
+	@FactoryDefaults
+	public static void setupTwdConfig(final MappedConfiguration<String, Object> configuration,
+			final IAppConfigService appConfigService) {
+
+		configuration.override(SymbolConstants.SUPPORTED_LOCALES,
+				appConfigService.getAllSupportedLocalesAsString() + "," + appConfigService.getAllSupportedLanguages());
+		configuration.add(TWD_FALLBACK_COUNTRYCODE, appConfigService.getFallbackCountryCode());
+		configuration.add(TWD_FALLBACK_LANGUAGE, appConfigService.getFallbackLanguage());
+
+		if (appConfigService.isProductionMode() == true) {
+			configuration.override(SymbolConstants.PRODUCTION_MODE, true);
+			configuration.override(SymbolConstants.SECURE_ENABLED, true);
+			configuration.override(SymbolConstants.HOSTPORT_SECURE, 443);
+		}
+	}
+
+	public static void contributeJavaScriptStackSource(
+			final MappedConfiguration<String, JavaScriptStack> configuration) {
+
+		configuration.addInstance("Bootstrap4Stack", Bootstrap4Stack.class);
+	}
+
+	@Contribute(JavaScriptStack.class)
+	@Core
+	public static void overrideJquery(OrderedConfiguration<StackExtension> configuration) {
+
+		configuration.override("jquery-library",
+				StackExtension.library("classpath:META-INF/assets/bootstrap4/jquery-3.3.1.min.js"));
+	}
+
+	@Contribute(ComponentMessagesSource.class)
+	public static void provideMessages(final @Value("message.properties") Resource resource1,
+			final OrderedConfiguration<Resource> configuration) {
+
+		configuration.add(SymbolConstants.APPLICATION_CATALOG + ".base", resource1);
+	}
+
+	@Scope(ScopeConstants.PERTHREAD)
+	public static ILocalizationService buildLocalizationService(final IAppConfigService appConfigService,
+			final RequestGlobals rg, final PersistentLocale persistenLocale) {
+
+		return new LocalizationService(appConfigService, rg, persistenLocale);
+	}
+
+	@Contribute(WebSecurityManager.class)
+	public static void addRealms(final Configuration<Realm> configuration, final IAppConfigService appConfigService) {
+
+		configuration.add(new OAuthAppRealm());
+		configuration.add(new ExtendedPropertiesRealm("classpath:shiro-users.properties"));
+	}
+
+	public static void contributeHttpServletRequestHandler(
+			final OrderedConfiguration<HttpServletRequestFilter> configuration,
+			final IAppConfigService appConfigService) {
+
+		configuration.addInstance("Keycloak", KeycloakFilter.class, "after:SecurityConfiguration");
+	}
+}

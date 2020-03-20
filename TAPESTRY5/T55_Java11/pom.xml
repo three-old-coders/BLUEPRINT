@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.3oc.blueprint</groupId>
+  <artifactId>T55_Java11</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>T55_Java11</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.tapestry</groupId>
+      <artifactId>tapestry-core</artifactId>
+      <version>5.5.0-beta-3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <!-- https://stackoverflow.com/questions/22806946/getting-error-scanning-file-when-running-jetty-9-on-java-8-using-the-maven-jetty -->
+        <!-- http://mail-archives.apache.org/mod_mbox/tapestry-users/201704.mbox/%3CDB5PR08MB03762C83CE482B03A98D5A04D2040@DB5PR08MB0376.eurprd08.prod.outlook.com%3E -->
+        <!-- https://stackoverflow.com/questions/38991185/no-plugin-found-for-prefix-jetty-in-the-current-project-and-in-the-plugin-grou -->
+        <!-- https://tapestry.apache.org/getting-started.html -->
+        <plugin>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-maven-plugin</artifactId>
+          <version>9.4.20.v20190813</version>
+        </plugin>
+
+        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.2.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.2.3</version>
+          <configuration>
+            <archiveClasses>false</archiveClasses>
+            <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+            <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+            <archive>
+              <index>true</index>
+              <manifestEntries>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                <mode>development</mode>
+                <url>${project.url}</url>
+
+                <Specification-Title>${project.name}</Specification-Title>
+                <Specification-Version>${project.version}</Specification-Version>
+                <Implementation-Title>${project.groupId}.${project.artifactId}</Implementation-Title>
+                <Implementation-Version>${git.revision}</Implementation-Version>
+                <X-Git-Branch>${git.branch}</X-Git-Branch>
+                <X-Git-Tag>${git.tag}</X-Git-Tag>
+                <X-Git-Revision>${git.revision}</X-Git-Revision>
+                <X-Git-Commits-Count>${git.commitsCount}</X-Git-Commits-Count>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+        <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.7.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>

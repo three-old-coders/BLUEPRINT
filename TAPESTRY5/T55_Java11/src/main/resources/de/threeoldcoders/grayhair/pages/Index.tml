@@ -1,0 +1,34 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+
+<t:form id="XValueForm" t:id="XValueForm">
+    <table>
+        <t:loop source="XValues" value="xValue" encoder="XValueEncoder" formState="iteration">
+            <tr t:type="zone" update="show" t:id="row" id="row_${xValue.pk}">
+                <t:if test="!XValueChanged">
+                    <t:delegate to="block:readOnly"/>
+                </t:if>
+                <t:if test="XValueChanged">
+                    <t:delegate to="block:editable"/>
+                </t:if>
+            </tr>
+
+            <t:block t:id="readOnly">
+                <td>${xValue.pk}</td>
+                <td>${xValue.s}</td>
+                <td><a t:type="eventlink" t:id="modifyXValue" context="xValue.pk" zone="row_${xValue.pk}">edit</a></td>
+            </t:block>
+
+            <t:block t:id="editable">
+                <t:submitNotifier>
+                    <td>${xValue.pk}<t:textfield value="xValue.pk" type="hidden"/></td>
+                    <td><t:textfield value="xValue.s"/></td>
+                    <td><a t:type="eventlink" t:id="revertXValue" context="xValue.pk" zone="row_${xValue.pk}">revert</a></td>
+                </t:submitNotifier>
+            </t:block>
+        </t:loop>
+    </table>
+    <input t:type="submit" t:defer="true" name="save" value="save"/>
+</t:form>
+
+</html>

@@ -1,0 +1,71 @@
+buildscript {
+    ext {
+        springBootVersion = '2.2.5.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "se.transmode.gradle:gradle-docker:1.2"
+    }
+}
+
+description = "Use Spring Boot with Tapestry (Java 11)"
+group = "de.3OC.blueprint.t55bs4"
+version = "0.1.0-SNAPSHOT"
+ext {
+    versions =  [
+            tapestry:   '5.5.0-beta-3',
+            junit:      '4.13'
+    ]
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'maven'
+
+jar {
+    baseName = 'SpringBoot_Tapestry55_Java11'
+    archivesBaseName = 'SpringBoot_Tapestry55_Java11'
+    manifest { attributes 'Tapestry-Module-Classes': 'info.code8.tapestry.AssetSourceModule' }
+    // Set true if only jar package and not spring boot executable jar
+    enabled = true
+}
+
+bootJar {
+    // workaround for 'Unable to find main class'
+    mainClassName = '...'
+}
+
+task sourceJar(type: Jar) {
+  dependsOn classes
+  classifier "sources"
+  from sourceSets.main.allSource
+}
+
+artifacts {
+  archives sourceJar
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // compile "org.springframework.boot:spring-boot-autoconfigure:${versions.boot}"
+    compile "org.springframework.boot:spring-boot-starter:2.2.5.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-web:2.2.4.RELEASE"
+    compile "org.springframework:spring-web:5.2.4.RELEASE"
+
+    compile "org.apache.tapestry:tapestry-core:${versions.tapestry}"
+
+    compile "javax.servlet:javax.servlet-api:3.1.0"
+
+    testCompile "junit:junit:${versions.junit}"
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+}

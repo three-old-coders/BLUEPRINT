@@ -1,0 +1,8 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
+
+<div class="alert alert-${theme.name().toLowerCase()}" role="alert">
+    <t:if test="text">${text}</t:if>
+    <t:if test="!text"><t:body/></t:if>
+</div>
+
+</html>

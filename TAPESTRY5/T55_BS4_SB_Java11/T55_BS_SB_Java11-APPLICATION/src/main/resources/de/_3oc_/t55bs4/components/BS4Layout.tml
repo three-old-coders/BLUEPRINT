@@ -1,0 +1,44 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+      xmlns:p="tapestry:parameter">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <meta name="ROBOTS" content="INDEX,NOFOLLOW,NOARCHIEVE"/>
+    <meta name="GOOGLEBOT" content="NOARCHIVE"/>
+
+    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE"/>
+    <meta http-equiv="PRAGMA" content="NO-CACHE"/>
+
+    <style type="text/css"></style>
+</head>
+
+
+<body>
+
+<!-- <t:Header/> -->
+
+<div class="container">
+    <div id="site-content" t:type="zone">
+        <t:body/>
+    </div>
+</div>
+
+<!-- <t:Footer/> -->
+
+</body>
+
+<style>
+    @media (min-width: 2400px) {
+        .container {
+            width: 1920px;
+        }
+    }
+</style>
+
+</html>

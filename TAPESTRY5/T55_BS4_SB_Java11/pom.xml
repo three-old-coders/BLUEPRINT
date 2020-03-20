@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.3OC.blueprint.T55_BS_SB_Java11</groupId>
+    <artifactId>T55_BS_SB_Java11</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>T55_BS_SB_Java11</name>
+
+    <modules>
+        <module>T55_BS_SB_Java11-APPLICATION</module>
+        <module>BOOTSTRAP</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+
+        <tapestry.version>5.5.0-beta-3</tapestry.version>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.0</version>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.1</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.2.3</version>
+                    <configuration>
+                        <archiveClasses>false</archiveClasses>
+                        <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                        <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                        <archive>
+                            <index>true</index>
+                            <manifestEntries>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <mode>development</mode>
+                                <url>${project.url}</url>
+
+                                <Specification-Title>${project.name}</Specification-Title>
+                                <Specification-Version>${project.version}</Specification-Version>
+                                <Implementation-Title>${project.groupId}.${project.artifactId}</Implementation-Title>
+                                <Implementation-Version>${git.revision}</Implementation-Version>
+                                <X-Git-Branch>${git.branch}</X-Git-Branch>
+                                <X-Git-Tag>${git.tag}</X-Git-Tag>
+                                <X-Git-Revision>${git.revision}</X-Git-Revision>
+                                <X-Git-Commits-Count>${git.commitsCount}</X-Git-Commits-Count>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.7.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
