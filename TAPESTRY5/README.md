@@ -12,7 +12,7 @@ After cloning you will find the following directory structure:
     
 The tapestry application integrates a library from https://github.com/code8/tapestry-boot, but updated to use more or less resent versions of all dependend jars. Due to the fact we are currently not pushing artifacts to a central maven repo and we want to avoid you need to deal with gradle to build the tapestry-boot artifact, it's contained as jar. To copy it to your local M2 repo just navigate to
 ```
-cd BLUEPRINT/TAPESTRY5/T55_BS4_SB_Java11
+BLUEPRINT/TAPESTRY5/T55_BS4_SB_Java11
 ```
 and type
 ```
