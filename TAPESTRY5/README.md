@@ -37,7 +37,7 @@ mvn spring-boot:run
 ```
 As soon you see something similar to "Started Tapestry55SBLauncher in 4.494 seconds (JVM running for 5.265)" everything is fine. Fire up your favorite browser and type
 ```
-http://localhost:8080/bs/alert
+http://localhost:8080
 ```
 that's it. You see a Tapestry 5 generated test page showing some alerts rendered as components. Let's treat this a starting point to see how Tapestry 5, Bootstrap 4 works together. 
 First of all, Tapestry 5 is a component based, convention over configuration, voodoo magic inversion of control framework which confuses novices but makes you happy when you got familiar with all concepts and headache subsides. It supports inheritance, packaging your components in libraries and surprisingly we will make use of all features. 
