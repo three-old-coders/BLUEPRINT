@@ -136,7 +136,9 @@ public class TapestryBeanFactoryPostProcessor
                 new SystemPropertiesSymbolProvider(),
                 new SingleKeySymbolProvider(SymbolConstants.CONTEXT_PATH, servletContextPath),
                 new SingleKeySymbolProvider(InternalConstants.TAPESTRY_APP_PACKAGE_PARAM, rootPackageName),
-                new SingleKeySymbolProvider(SymbolConstants.EXECUTION_MODE, executionMode));
+                new SingleKeySymbolProvider(SymbolConstants.EXECUTION_MODE, executionMode),
+                new SingleKeySymbolProvider(SymbolConstants.APPLICATION_CATALOG, "classpath:WEB-INF/Application.properties")
+        );
     }
 
     protected Collection<String> findPackagesToScan(ConfigurableApplicationContext applicationContext) {

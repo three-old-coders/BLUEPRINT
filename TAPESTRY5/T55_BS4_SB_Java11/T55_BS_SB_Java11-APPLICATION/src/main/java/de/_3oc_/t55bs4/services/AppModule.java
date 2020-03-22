@@ -12,5 +12,6 @@ public class AppModule
 {
     public static void contributeComponentClassResolver(final Configuration<LibraryMapping> configuration)
     {
+        // todo: choose bootstrap version dynamically?
     }
 }

@@ -1,6 +1,7 @@
 package de._3oc_.t55bs.components;
 
 import de._3oc_.t55bs.services.EBSGrid;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.annotations.Parameter;
@@ -28,7 +29,7 @@ public abstract class GridColBase
 
     public String getCssClass()
     {
-        final StringBuilder sb = new StringBuilder(_cssClass);
+        final StringBuilder sb = new StringBuilder(StringUtils.trimToEmpty(_cssClass));
         final Set<EBSGrid> boundValues = new HashSet<>();
         for (final EBSGrid value : EBSGrid.values()) {
             if (_crs.isBound(value.name())) {
