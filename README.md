@@ -12,7 +12,7 @@ So, in detail we are talking about:
 2. NoSQL
    1. Hazelcast + SpringBoot + Rest Interface + Integration of Eureka and Zuul
    2. TODO: ElasticSearch + SpringBoot + Rest Interface + Integration of Eureka and Zuul
-3. Tapestry 5.5
+3. Tapestry 5.5 (https://github.com/three-old-coders/BLUEPRINT/tree/master/TAPESTRY5)
    1. SpringBoot + Tapestry 5.5 App + SpringBoot, which does ... well ... "nothing, but starting"
    2. SpringBoot + Tapestry 5.5 App + SpringBoot + Bootstrap 4 (bundle version) + some BS4 demo components 
    3. TODO: SpringBoot + Tapestry 5.5 App + SpringBoot + Bootstrap 4 + Jquery 3.x via RequireJS
