@@ -1,0 +1,11 @@
+<html t:type="BSLayout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
+
+<h1><a href="${message:bootstrap-url}/getting-started/introduction">Bootstrap 4 - Demo</a></h1>
+
+<t:t55bs.GridRow>
+    <t:t55bs.GridCol md="4">
+        <t:pagelink page="bs/Alert">Alerts</t:pagelink>
+    </t:t55bs.GridCol>
+</t:t55bs.GridRow>
+
+</html>

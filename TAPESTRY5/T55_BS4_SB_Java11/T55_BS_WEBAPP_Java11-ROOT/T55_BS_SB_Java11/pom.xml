@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.3OC.blueprint.T55_BS_WEBAPP_Java11.root</groupId>
+        <artifactId>T55_BS_WEBAPP_Java11-ROOT</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>T55_BS_SB_Java11</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>T55_BS_SB_Java11</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.3OC.blueprint.T55_BS_Java11.root</groupId>
+            <artifactId>T55_Java11-bootstrap_common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>de.3OC.blueprint.T55_BS_Java11.root</groupId>
+            <artifactId>T55_Java11-bootstrap_v4</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>de.3OC.blueprint.T55_BS_WEBAPP_Java11.root</groupId>
+            <artifactId>T55_BS_WEBAPP_Java11-BASE</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.3OC.blueprint.t55bs</groupId>
+            <artifactId>SpringBoot_Tapestry55_Java11</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+            <version>2.2.4.RELEASE</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <!--
+                          https://stackoverflow.com/questions/31508421/maven-install-lifecycle-does-not-execute-validate
+                          just call "mvn initialize" once to copy the LIB related artifacts to your M2, thinking about a better solution later
+                    -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                    <executions>
+                        <execution>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>install-file</goal>
+                            </goals>
+                            <configuration>
+                                <pomFile>LIB/SpringBoot_Tapestry55_Java11-0.1.0-SNAPSHOT.pom</pomFile>
+                                <file>LIB/SpringBoot_Tapestry55_Java11-0.1.0-SNAPSHOT.jar</file>
+                                <groupId>de.3OC.blueprint.t55bs</groupId>
+                                <artifactId>SpringBoot_Tapestry55_Java11</artifactId>
+                                <version>0.1.0</version>
+                                <packaging>jar</packaging>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>2.2.4.RELEASE</version>
+                    <configuration>
+                        <mainClass>de._3oc_.t55bssb.services.Tapestry55SBLauncher</mainClass>
+                        <layout>ZIP</layout>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

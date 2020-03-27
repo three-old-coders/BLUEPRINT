@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.3OC.blueprint.T55_BS_WEBAPP_Java11.root</groupId>
+        <artifactId>T55_BS_WEBAPP_Java11-ROOT</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>T55_BS_WAR_Java11</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <name>T55_BS_WAR_Java11</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.3OC.blueprint.T55_BS_Java11.root</groupId>
+            <artifactId>T55_Java11-bootstrap_common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>de.3OC.blueprint.T55_BS_Java11.root</groupId>
+            <artifactId>T55_Java11-bootstrap_v4</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>de.3OC.blueprint.T55_BS_WEBAPP_Java11.root</groupId>
+            <artifactId>T55_BS_WEBAPP_Java11-BASE</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.2.3</version>
+                    <configuration>
+                        <archiveClasses>false</archiveClasses>
+                        <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                        <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                        <archive>
+                            <index>true</index>
+                            <manifestEntries>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <mode>development</mode>
+                                <url>${project.url}</url>
+
+                                <Specification-Title>${project.name}</Specification-Title>
+                                <Specification-Version>${project.version}</Specification-Version>
+                                <Implementation-Title>${project.groupId}.${project.artifactId}</Implementation-Title>
+
+                                <Implementation-Version>${git.revision}</Implementation-Version>
+                                <X-Git-Branch>${git.branch}</X-Git-Branch>
+                                <X-Git-Tag>${git.tag}</X-Git-Tag>
+                                <X-Git-Revision>${git.revision}</X-Git-Revision>
+                                <X-Git-Commits-Count>${git.commitsCount}</X-Git-Commits-Count>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
