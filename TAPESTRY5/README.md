@@ -13,12 +13,9 @@ After cloning you will find the following directory structure:
       - T55_BS_SB_Java11 (Springboot application wrapping T55_BS_WEBAPP_Java11-BASE)
       - T55_BS_WAR_Java11 (WebServer application wrapping T55_BS_WEBAPP_Java11-BASE)
     
-The tapestry application integrates a library from https://github.com/code8/tapestry-boot, but updated to use more or less resent versions of all dependend jars. Due to the fact we are currently not pushing artifacts to a central maven repo and we want to avoid you need to deal with gradle to build the tapestry-boot artifact, it's contained as jar. To copy it to your local M2 repo just navigate to
+The tapestry application integrates a library from https://github.com/code8/tapestry-boot, but updated to use more or less resent versions of all dependend jars. Due to the fact we are currently not pushing artifacts to a central maven repo and we want to avoid you need to deal with gradle to build the tapestry-boot artifact, it's contained as jar. To copy it to your local M2 repo just enter
 ```
-BLUEPRINT/TAPESTRY5/T55_BS4_SB_Java11
-```
-and type
-```
+cd BLUEPRINT/TAPESTRY5/T55_BS4_SB_Java11
 mvn initialize
 ```
 you will see something similar to this:
@@ -30,12 +27,9 @@ you only need to do this once (to be more precise, once after pulling). Afterwar
 ```
 mvn clean install
 ```
-Now, navigate to
+Now, navigate to BLUEPRINT/TAPESTRY5/T55_BS4_SB_Java11/T55_BS_WEBAPP_Java11-ROOT/T55_BS_SB_Java11 and start the application by entering
 ```
-BLUEPRINT/TAPESTRY5/T55_BS4_SB_Java11/T55_BS_WEBAPP_Java11-ROOT/T55_BS_SB_Java11
-```
-and type 
-```
+cd T55_BS_WEBAPP_Java11-ROOT/T55_BS_SB_Java11
 mvn spring-boot:run
 ```
 As soon you see something similar to "Started Tapestry55SBLauncher in 4.494 seconds (JVM running for 5.265)" everything is fine. Fire up your favorite browser and type
