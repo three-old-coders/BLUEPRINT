@@ -44,7 +44,7 @@
     <dependency>
       <groupId>org.apache.tapestry</groupId>
       <artifactId>tapestry-core</artifactId>
-      <version>5.5.0-beta-3</version>
+      <version>5.5.0</version>
       <scope>compile</scope>
       <exclusions>
         <exclusion>
