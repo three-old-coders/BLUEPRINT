@@ -19,4 +19,7 @@ build/
 .tomcatplugin
 .metadata
 .#webclasspath
-gw622*
+gw6*
+mvn3*
+__*
+DOC_*.pdf
