@@ -9,12 +9,12 @@ import java.nio.charset.StandardCharsets;
 
 public abstract class DockerInfoBase
 {
-    protected static void internalMain(final String[] args)
+    protected static void internalMain(final String[] args, final String... packageNames)
     {
         final PrintStream psErr = System.err;
         
         System.out.println("Classes you can run:");
-        try (final ScanResult scanResult = new ClassGraph().enableAllInfo().whitelistPackages("de._3oc_").scan()) {
+        try (final ScanResult scanResult = new ClassGraph().enableAllInfo().whitelistPackages(packageNames).scan()) {
             for (final ClassInfo ci : scanResult.getAllClasses()) {
                 final String className = ci.getName();
                 if (! className.equals(DockerInfoBase.class.getName())) {
