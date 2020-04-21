@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>rundeck</artifactId>
+    <groupId>com.github.three-old-coders.blueprint</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.three-old-coders.blueprint</groupId>
+  <artifactId>rundeck-jdk11-shade</artifactId>
+  <name>rundeck-jdk11-shade (jar)</name>
+  <version>0.0.1-SNAPSHOT</version>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.3</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <minimizeJar>true</minimizeJar>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.rundeck</groupId>
+      <artifactId>rundeck-core</artifactId>
+      <version>3.2.4-20200318</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.rundeck</groupId>
+      <artifactId>rundeck-storage-api</artifactId>
+      <version>3.2.4-20200318</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.rundeck</groupId>
+      <artifactId>rundeck-storage-conf</artifactId>
+      <version>3.2.4-20200318</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+</project>

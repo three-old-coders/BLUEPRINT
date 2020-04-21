@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.github.three-old-coders.blueprint</groupId>
+    <artifactId>rundeck-jdk8</artifactId>
+    <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>rundeck-jdk8 (jar)</name>
+
+    <parent>
+        <groupId>com.github.three-old-coders.blueprint</groupId>
+        <artifactId>rundeck</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+            <version>4.2.0</version>
+            <!-- for our compile switch test in rundeck we try to instantiate the class thus we need the dependencies <scope>provided</scope> -->
+        </dependency>
+        <dependency>
+            <groupId>io.github.classgraph</groupId>
+            <artifactId>classgraph</artifactId>
+            <version>4.8.66</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.three-old-coders.blueprint</groupId>
+            <artifactId>rundeck-jdk11-shade</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- test -->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <sourceDirectory>../src/main/java</sourceDirectory>
+        <testSourceDirectory>../src/main/test</testSourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>target/generated-resources</directory>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+        
+        <plugins>
+            <plugin>
+                <groupId>de.renebergelt.maven.plugins</groupId>
+                <artifactId>compile-switches-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <switches>
+                                <switch>
+                                    <packageName>com.github.three_old_coders.blueprint.rundeck</packageName>
+                                    <className>CompilerSwitches</className>
+                                    <fields>
+                                        <field>
+                                            <fieldName>HIDE_IMPLEMENTATION</fieldName>
+                                            <fieldValue>true</fieldValue>
+                                        </field>
+                                    </fields>
+                                </switch>
+                            </switches>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <!-- https://issues.apache.org/jira/browse/MCOMPILER-346 -->
+                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                    <encoding>UTF-8</encoding>
+                    <excludes>
+                        <exclude>com/github/three_old_coders/blueprint/rundeck/CompilerSwitches.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>unpack-dependencies</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/generated-resources/META-INF/versions/11</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.github.three-old-coders.blueprint</groupId>
+                                    <artifactId>rundeck-jdk11-final-shade</artifactId>
+                                    <version>0.0.1-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <includes>**/*</includes>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <minimizeJar>true</minimizeJar>
+                            <!-- <finalName>${project.artifactId}-final-shade-${project.version}</finalName> replace original by shaded -->
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Multi-Release>true</Multi-Release>
+
+                                        <Rundeck-Plugin-Version>1.2</Rundeck-Plugin-Version>
+                                        <Rundeck-Plugin-Archive>true</Rundeck-Plugin-Archive>
+                                        <Rundeck-Plugin-Classnames>com.github.three_old_coders.blueprint.rundeck.RundeckJavaPicoliWorkflowStepPlugin</Rundeck-Plugin-Classnames>
+                                    </manifestEntries>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
