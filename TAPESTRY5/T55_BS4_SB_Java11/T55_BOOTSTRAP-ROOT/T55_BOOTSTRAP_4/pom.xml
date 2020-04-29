@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>de.3OC.blueprint.T55_BS_Java11.root</groupId>
+        <groupId>com.github.three-old-coders.blueprint.T55_BS_Java11.root</groupId>
         <artifactId>T55_Java11_bootstrap-ROOT</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -19,7 +19,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>de.3OC.blueprint.T55_BS_Java11.root</groupId>
+            <groupId>com.github.three-old-coders.blueprint.T55_BS_Java11.root</groupId>
             <artifactId>T55_Java11-bootstrap_common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
@@ -33,7 +33,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Tapestry-Module-Classes>de._3oc_.t55bs4.services.Bootstrap4Module</Tapestry-Module-Classes>
+                            <Tapestry-Module-Classes>com.github.three_old_coders.blueprint.t55bs4.services.Bootstrap4Module</Tapestry-Module-Classes>
                         </manifestEntries>
                     </archive>
                 </configuration>

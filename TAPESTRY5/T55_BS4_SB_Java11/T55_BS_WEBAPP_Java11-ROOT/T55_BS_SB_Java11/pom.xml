@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>de.3OC.blueprint.T55_BS_WEBAPP_Java11.root</groupId>
+        <groupId>com.github.three-old-coders.blueprint.T55_BS_WEBAPP_Java11.root</groupId>
         <artifactId>T55_BS_WEBAPP_Java11-ROOT</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -21,43 +21,64 @@
 
     <dependencies>
         <dependency>
-            <groupId>de.3OC.blueprint.T55_BS_Java11.root</groupId>
+            <groupId>com.github.three-old-coders.blueprint.T55_BS_Java11.root</groupId>
             <artifactId>T55_Java11-bootstrap_common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>de.3OC.blueprint.T55_BS_Java11.root</groupId>
+            <groupId>com.github.three-old-coders.blueprint.T55_BS_Java11.root</groupId>
             <artifactId>T55_Java11-bootstrap_v4</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>de.3OC.blueprint.T55_BS_WEBAPP_Java11.root</groupId>
+            <groupId>com.github.three-old-coders.blueprint.T55_BS_WEBAPP_Java11.root</groupId>
             <artifactId>T55_BS_WEBAPP_Java11-BASE</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
-            <groupId>de.3OC.blueprint.t55bs</groupId>
-            <artifactId>SpringBoot_Tapestry55_Java11</artifactId>
-            <version>0.1.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
             <version>2.2.4.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.2.4.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>2.2.5.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.2.4.RELEASE</version>
+        </dependency>
+
+        <!-- compile "org.apache.tapestry:tapestry-core:${versions.tapestry}" -->
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
     </dependencies>
 
     <build>
         <pluginManagement>
             <plugins>
+                <!-- code moved from jar to this project
+                      https://stackoverflow.com/questions/31508421/maven-install-lifecycle-does-not-execute-validate
+                      just call "mvn initialize" once to copy the LIB related artifacts to your M2, thinking about a better solution later
                 <plugin>
-                    <!--
-                          https://stackoverflow.com/questions/31508421/maven-install-lifecycle-does-not-execute-validate
-                          just call "mvn initialize" once to copy the LIB related artifacts to your M2, thinking about a better solution later
-                    -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>2.5.2</version>
@@ -70,7 +91,7 @@
                             <configuration>
                                 <pomFile>LIB/SpringBoot_Tapestry55_Java11-0.1.0-SNAPSHOT.pom</pomFile>
                                 <file>LIB/SpringBoot_Tapestry55_Java11-0.1.0-SNAPSHOT.jar</file>
-                                <groupId>de.3OC.blueprint.t55bs</groupId>
+                                <groupId>com.github.three-old-coders.blueprint.t55bs</groupId>
                                 <artifactId>SpringBoot_Tapestry55_Java11</artifactId>
                                 <version>0.1.0</version>
                                 <packaging>jar</packaging>
@@ -78,12 +99,13 @@
                         </execution>
                     </executions>
                 </plugin>
+                -->
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>2.2.4.RELEASE</version>
                     <configuration>
-                        <mainClass>de._3oc_.t55bssb.services.Tapestry55SBLauncher</mainClass>
+                        <mainClass>com.github.three_old_coders.blueprint.t55bssb.services.Tapestry55SBLauncher</mainClass>
                         <layout>ZIP</layout>
                     </configuration>
                     <executions>
