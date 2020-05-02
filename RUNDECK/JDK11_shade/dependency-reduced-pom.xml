@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <artifactId>rundeck</artifactId>
-    <groupId>com.github.three-old-coders.blueprint</groupId>
+    <artifactId>rundeck-plugins.root</artifactId>
+    <groupId>com.github.three-old-coders.blueprint.rundeck</groupId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.github.three-old-coders.blueprint</groupId>
+  <groupId>com.github.three-old-coders.blueprint.rundeck.plugin</groupId>
   <artifactId>rundeck-jdk11-shade</artifactId>
-  <name>rundeck-jdk11-shade (jar)</name>
+  <name>RUNDECK-JDK11-SHADE (jar)</name>
   <version>0.0.1-SNAPSHOT</version>
   <build>
     <plugins>
@@ -35,6 +35,12 @@
       <artifactId>rundeck-core</artifactId>
       <version>3.2.4-20200318</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.rundeck</groupId>
@@ -46,6 +52,12 @@
       <groupId>org.rundeck</groupId>
       <artifactId>rundeck-storage-conf</artifactId>
       <version>3.2.4-20200318</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.12</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>

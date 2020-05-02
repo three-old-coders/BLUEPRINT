@@ -3,25 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
+    <parent>
+        <groupId>com.github.three-old-coders.blueprint</groupId>
+        <artifactId>ENVIRONMENT</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.three-old-coders.blueprint</groupId>
-    <artifactId>rundeck</artifactId>
+    <groupId>com.github.three-old-coders.blueprint.rundeck</groupId>
+    <artifactId>rundeck-plugins.root</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rundeck (pom)</name>
-
-    <url>https://github.com/three-old-coders/BLUEPRINT</url>
-
-    <!-- 2. scm information -->
-    <scm>
-        <connection>scm:git:github.com/three-old-coders/BLUEPRINT.git</connection>
-        <developerConnection>scm:git:ssh://github.com/three-old-coders/BLUEPRINT.git</developerConnection>
-        <url>https://github.com/three-old-coders/BLUEPRINT.git</url>
-    </scm>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <name>RUNDECK-PLUGINS-BASE (jar)</name>
 
     <modules>
         <module>JDK8</module>
@@ -35,6 +29,12 @@
             <artifactId>rundeck-core</artifactId>
             <version>3.2.4-20200318</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.rundeck</groupId>
@@ -49,152 +49,4 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-    
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M4</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.surefire</groupId>
-                        <artifactId>surefire-junit47</artifactId>
-                        <version>3.0.0-M4</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <junitArtifactName>none:none</junitArtifactName>
-                    <testNGArtifactName>org.testng:testng</testNGArtifactName>
-                    <parallel>methods</parallel>
-                    <threadCount>10</threadCount>
-                    <excludes>
-                        <exclude>**/*TestCase*.java</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.2</version>
-            </plugin>
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0-M3</version>
-                <executions>
-                    <execution>
-                        <id>enforce-maven</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <requireMavenVersion><version>3.0.5</version></requireMavenVersion>
-                                <bannedDependencies>
-                                    <excludes>
-                                        <exclude>commons-logging:commons-logging</exclude>
-                                        <exclude>ch.qos.logback:logback-classic</exclude>
-                                    </excludes>
-                                </bannedDependencies>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
-        </plugins>
-    </build>
-
-    <profiles>
-        <profile>
-            <id>updates</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>versions-maven-plugin</artifactId>
-                        <version>2.7</version>
-                        <configuration>
-                            <!-- <rulesUri>file:///${project.basedir}/rules.xml</rulesUri> -->
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>display-dependency-updates</goal>
-                                    <goal>display-plugin-updates</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>release</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.1.1</version>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>3.2.1</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
-    <developers>
-        <developer>
-            <id>jb</id>
-            <name>Jens Breitenstein</name>
-            <email>jens.breitenstein@gd-inside.com</email>
-            <url>http://www.gd-inside.com</url>
-            <roles>
-                <role>developer</role>
-                <role>tester</role>
-            </roles>
-        </developer>
-    </developers>
-
-    <!-- 8. repository for uploading -->
-    <distributionManagement>
-        <snapshotRepository>
-            <id>BLUEPRINT-ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <!-- <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository> -->
-    </distributionManagement>
 </project>

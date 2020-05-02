@@ -3,19 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.three-old-coders.blueprint</groupId>
-    <artifactId>rundeck-jdk8</artifactId>
-    <packaging>jar</packaging>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>rundeck-jdk8 (jar)</name>
-
     <parent>
-        <groupId>com.github.three-old-coders.blueprint</groupId>
-        <artifactId>rundeck</artifactId>
+        <groupId>com.github.three-old-coders.blueprint.rundeck</groupId>
+        <artifactId>rundeck-plugins.root</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.github.three-old-coders.blueprint.rundeck.plugin</groupId>
+    <artifactId>rundeck-jdk8</artifactId>
+    <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>RUNDECK-JDK8 (jar)</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -35,7 +35,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.three-old-coders.blueprint</groupId>
+            <groupId>com.github.three-old-coders.blueprint.rundeck.plugin</groupId>
             <artifactId>rundeck-jdk11-shade</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>provided</scope>
@@ -122,8 +122,8 @@
                             <outputDirectory>${project.build.directory}/generated-resources/META-INF/versions/11</outputDirectory>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>com.github.three-old-coders.blueprint</groupId>
-                                    <artifactId>rundeck-jdk11-final-shade</artifactId>
+                                    <groupId>com.github.three-old-coders.blueprint.rundeck.plugin</groupId>
+                                    <artifactId>rundeck-jdk11-shade</artifactId>
                                     <version>0.0.1-SNAPSHOT</version>
                                     <type>jar</type>
                                     <includes>**/*</includes>

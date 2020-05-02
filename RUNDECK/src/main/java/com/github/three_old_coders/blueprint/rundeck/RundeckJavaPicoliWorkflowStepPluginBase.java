@@ -123,31 +123,25 @@ public abstract class RundeckJavaPicoliWorkflowStepPluginBase
                                     return o1.index().compareTo(o2.index());
                                 }
                             });
-/*
-System.out.println(a + " / " + a.required() + " / " + a.defaultValue() + " / " + a.isOption() + " / "
-                    + a.isPositional() + " / " + a.paramLabel() + " / " + StringUtils.join(a.description()) + " / " + a.type());
 
-    .property(PropertyBuilder.builder().string("bunny").title("Bunny").description("Bunny name").required(true).build())
-.property(PropertyBuilder.builder().booleanType("lampkin").title("Lampkin").description("Want Lampkin?").required(false).defaultValue("false").build())
-.property(PropertyBuilder.builder().freeSelect("color").title("Color").description("Your color").required(false).defaultValue("Blue").values("Blue", "Beige", "Black").build())
-.property(PropertyBuilder.builder().integer("many").title("Many").description("How many?").required(false).defaultValue("2").build())
-.property(PropertyBuilder.builder().longType("cramp").title("Cramp").description("How crampy more?").required(false).defaultValue("20").build())
-.property(PropertyBuilder.builder().select("rice").title("Rice Cream").description("Rice Cream Flavor").required(false).values("Flambe", "Crambo").build()).build();
+                            final List<String> jdks = new ArrayList<>();
+                            jdks.add("Rundeck JDK");
 
-11.0.3, x86_64:	"Java SE 11.0.3"	/Library/Java/JavaVirtualMachines/jdk-11.0.3.jdk/Contents/Home
-    1.8.0_241, x86_64:	"Java SE 8"	/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home
-    1.8.0_91, x86_64:	"Java SE 8"	/Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home
-    1.7.0_71, x86_64:	"Java SE 7"	/Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk/Contents/Home
-    1.7.0_65, x86_64:	"Java SE 7"	/Library/Java/JavaVirtualMachines/jdk1.7.0_65.jdk/Contents/Home
- */
+                            final File[] etcJdks = new File("/home/rundeck/etc").listFiles();
+                            if (null != etcJdks) {
+                                for (final File etcJdk : etcJdks) {
+                                    final String name = etcJdk.getName();
+                                    System.out.println(name);
+                                    if (name.startsWith("jdk") && !name.endsWith(".tar.gz")) {
+                                        jdks.add(name);
+                                    }
+                                }
+                            }
 
                             descriptionBuilder.property(
                                 PropertyBuilder.builder().select("JDK").title("Java Runtime")
-                                    .description("choose Java Runtime").required(true)
-                                    .values("1.8.0_241   x86_64 Java SE 8        /Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home",
-                                            "11.0.3      x86_64 Java SE 11.0.3   /Library/Java/JavaVirtualMachines/jdk-11.0.3.jdk/Contents/Home")
-                                        .build()
-                                    ).build();
+                                    .description("choose Java Runtime").required(true).values(jdks).build()
+                            ).build();
 
                             for (final CommandLine.Model.OptionSpec o : options) {
                                 descriptionBuilder.property(
@@ -177,3 +171,21 @@ System.out.println(a + " / " + a.required() + " / " + a.defaultValue() + " / " +
         return descriptionBuilder.build();
     }
 }
+
+/*
+System.out.println(a + " / " + a.required() + " / " + a.defaultValue() + " / " + a.isOption() + " / "
+                    + a.isPositional() + " / " + a.paramLabel() + " / " + StringUtils.join(a.description()) + " / " + a.type());
+
+    .property(PropertyBuilder.builder().string("bunny").title("Bunny").description("Bunny name").required(true).build())
+.property(PropertyBuilder.builder().booleanType("lampkin").title("Lampkin").description("Want Lampkin?").required(false).defaultValue("false").build())
+.property(PropertyBuilder.builder().freeSelect("color").title("Color").description("Your color").required(false).defaultValue("Blue").values("Blue", "Beige", "Black").build())
+.property(PropertyBuilder.builder().integer("many").title("Many").description("How many?").required(false).defaultValue("2").build())
+.property(PropertyBuilder.builder().longType("cramp").title("Cramp").description("How crampy more?").required(false).defaultValue("20").build())
+.property(PropertyBuilder.builder().select("rice").title("Rice Cream").description("Rice Cream Flavor").required(false).values("Flambe", "Crambo").build()).build();
+
+11.0.3, x86_64:	"Java SE 11.0.3"	/Library/Java/JavaVirtualMachines/jdk-11.0.3.jdk/Contents/Home
+    1.8.0_241, x86_64:	"Java SE 8"	/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home
+    1.8.0_91, x86_64:	"Java SE 8"	/Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home
+    1.7.0_71, x86_64:	"Java SE 7"	/Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk/Contents/Home
+    1.7.0_65, x86_64:	"Java SE 7"	/Library/Java/JavaVirtualMachines/jdk1.7.0_65.jdk/Contents/Home
+ */
