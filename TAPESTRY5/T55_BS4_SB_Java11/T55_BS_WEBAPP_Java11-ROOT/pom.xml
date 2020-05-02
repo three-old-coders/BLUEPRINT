@@ -17,7 +17,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>T55_BS_WEBAPP_Java11-ROOT</name>
+    <name>T55_BS_WEBAPP_Java11-ROOT (pom)</name>
 
     <modules>
         <module>T55_BS_WEBAPP_Java11-BASE</module>

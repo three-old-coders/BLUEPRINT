@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>T55_BS_Java11</name>
+    <name>T55_BS_Java11 (pom)</name>
 
     <parent>
         <groupId>com.github.three-old-coders.blueprint</groupId>

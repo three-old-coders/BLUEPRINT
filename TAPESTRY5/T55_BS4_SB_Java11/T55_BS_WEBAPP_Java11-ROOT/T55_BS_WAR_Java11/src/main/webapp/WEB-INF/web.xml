@@ -7,7 +7,7 @@
 
     <context-param>
         <param-name>tapestry.app-package</param-name>
-        <param-value>de._3oc_.t55bsBase</param-value>
+        <param-value>com.github.three_old_coders.blueprint.t55bsBase</param-value>
     </context-param>
     <context-param>
         <param-name>tapestry.app-catalog</param-name>

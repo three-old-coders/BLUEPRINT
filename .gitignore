@@ -1,6 +1,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+**/dependency-reduced-pom.xml
 
 # Ignore other unneeded files.
 *.swp
