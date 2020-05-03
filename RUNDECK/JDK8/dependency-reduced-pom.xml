@@ -74,6 +74,8 @@
             </goals>
             <configuration>
               <outputDirectory>${project.build.directory}/generated-resources/META-INF/versions/11</outputDirectory>
+              <excludeScope>provided</excludeScope>
+              <excludeGroupIds>junit</excludeGroupIds>
               <artifactItems>
                 <artifactItem>
                   <groupId>com.github.three-old-coders.blueprint.rundeck.plugin</groupId>
@@ -104,7 +106,7 @@
                     <Multi-Release>true</Multi-Release>
                     <Rundeck-Plugin-Version>1.2</Rundeck-Plugin-Version>
                     <Rundeck-Plugin-Archive>true</Rundeck-Plugin-Archive>
-                    <Rundeck-Plugin-Classnames>com.github.three_old_coders.blueprint.rundeck.RundeckJavaPicoliWorkflowStepPlugin</Rundeck-Plugin-Classnames>
+                    <Rundeck-Plugin-Classnames>com.github.three_old_coders.blueprint.rundeck.RundeckJavaPicoliSampleWorkflowStepPlugin</Rundeck-Plugin-Classnames>
                   </manifestEntries>
                 </transformer>
               </transformers>
@@ -115,12 +117,6 @@
     </plugins>
   </build>
   <dependencies>
-    <dependency>
-      <groupId>com.github.three-old-coders.blueprint.rundeck.plugin</groupId>
-      <artifactId>rundeck-jdk11-shade</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>provided</scope>
-    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -155,12 +151,6 @@
       <groupId>org.rundeck</groupId>
       <artifactId>rundeck-storage-conf</artifactId>
       <version>3.2.4-20200318</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.18.12</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>

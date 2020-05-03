@@ -1,36 +1,36 @@
 package com.github.three_old_coders.blueprint.rundeck;
 
-import com.dtolabs.rundeck.core.common.INodeEntry;
-import com.dtolabs.rundeck.core.common.INodeSet;
-import com.dtolabs.rundeck.core.execution.ExecutionException;
-import com.dtolabs.rundeck.core.execution.ExecutionLogger;
-import com.dtolabs.rundeck.core.execution.service.NodeExecutorResultImpl;
-import com.dtolabs.rundeck.core.execution.workflow.steps.FailureReason;
+import com.dtolabs.rundeck.core.execution.service.ProviderLoaderException;
 import com.dtolabs.rundeck.core.execution.workflow.steps.StepException;
 import com.dtolabs.rundeck.core.execution.workflow.steps.StepFailureReason;
-import com.dtolabs.rundeck.core.execution.workflow.steps.node.NodeStepFailureReason;
+import com.dtolabs.rundeck.core.plugins.PluginMetadata;
+import com.dtolabs.rundeck.core.plugins.ServiceProviderLoader;
 import com.dtolabs.rundeck.core.plugins.configuration.Describable;
 import com.dtolabs.rundeck.core.plugins.configuration.Description;
-import com.dtolabs.rundeck.core.resources.ScriptResourceModelSource;
+import com.dtolabs.rundeck.core.plugins.configuration.Property;
+import com.dtolabs.rundeck.plugins.ServiceNameConstants;
 import com.dtolabs.rundeck.plugins.step.PluginStepContext;
 import com.dtolabs.rundeck.plugins.step.StepPlugin;
 import com.dtolabs.rundeck.plugins.util.DescriptionBuilder;
 import com.dtolabs.rundeck.plugins.util.PropertyBuilder;
 import io.github.classgraph.*;
 import org.apache.commons.lang.StringUtils;
+import org.zeroturnaround.exec.ProcessExecutor;
 import picocli.CommandLine;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.concurrent.Executors;
 
 // see: https://github.com/rundeck/rundeck/blob/master/examples/example-java-nodeexecutor-plugin/src/main/java/org/rundeck/plugin/example/ExampleNodeExecutorPlugin.java
 
 public abstract class RundeckJavaPicoliWorkflowStepPluginBase
     implements StepPlugin, Describable
 {
+    public static final String RUNDECK_JDK = "Rundeck JDK";
+    public static final String JDK = "JDK";
+    public static final String HOME_RUNDECK_ETC = "/home/rundeck/etc";
+
     private final String _providerName;
     private final String _title;
     private final String _description;
@@ -45,42 +45,86 @@ public abstract class RundeckJavaPicoliWorkflowStepPluginBase
     @Override public void executeStep(final PluginStepContext pluginStepContext, final Map<String, Object> map)
         throws StepException
     {
-        System.out.println(pluginStepContext);
-        System.out.println(map);
-
         try {
+            // {JDK=jdk-11.0.7, -inputFile=default_in_file, arg 1 resultFileB=B, -apiKey=12345, arg 0 resultFileA=A}
+
             final List<String> scriptArgs = new ArrayList<>();
-            // /Library/Java/JavaVirtualMachines/jdk-11.0.3.jdk/Contents/Home/bin/java
-            scriptArgs.add("/Library/Java/JavaVirtualMachines/jdk-11.0.6.jdk/Contents/Home/bin/java");
-            // -cp ./JDK8/target/rundeck-jdk8-0.0.1-SNAPSHOT-final-shade.jar
+
+            final String jdk = (String)map.get(JDK);
+            if (RUNDECK_JDK.equals(jdk)) {
+                scriptArgs.add("java");
+            } else {
+                final File[] etcJdks = new File(HOME_RUNDECK_ETC).listFiles();
+                if (null != etcJdks) {
+                    for (final File etcJdk : etcJdks) {
+                        if (etcJdk.getName().equals(jdk)) {
+                            scriptArgs.add(new File(new File(etcJdk, "bin"), "java").getAbsolutePath());
+                        }
+                    }
+                }
+            }
+
+            if (scriptArgs.size() == 0) {
+                throw new IllegalStateException("no JDK found");
+            }
+
+            try {
+                final ServiceProviderLoader pm = pluginStepContext.getFramework().getPluginManager();
+                final PluginMetadata pmd = pm.getPluginMetadata(ServiceNameConstants.WorkflowStep, _providerName);
+
+                // -cp ./JDK8/target/rundeck-jdk8-0.0.1-SNAPSHOT-final-shade.jar
+                scriptArgs.add("-cp");
+                scriptArgs.add(pmd.getFile().getAbsolutePath());
+            } catch (final ProviderLoaderException e) {
+                throw new StepException("unable to detect plugin location", e, StepFailureReason.PluginFailed);
+            }
+
             // com.github.three_old_coders.blueprint.rundeck.Runner_PicoliCLI
-            // -apikey=MY_API_KEY
-            // resultFileA
-            // resultFileB
+            scriptArgs.add(getPicoliClass().getName());
 
+            final Description description = getDescription();
+            final SortedMap<Integer, String> args = new TreeMap<>();
+            for (final Map.Entry<String, Object> entry : map.entrySet()) {
+                final Object value = entry.getValue();
+                if (null != value) {
+                    final String key = entry.getKey();
+                    if (key.startsWith("arg ")) {
+                        final String[] keyParts = StringUtils.split(key, " ");
+                        args.put(Integer.parseInt(keyParts[1]), value.toString());
+                    } else if (! JDK.equals(key)) {
+                        // {JDK=jdk-11.0.7, inputFile=default_in_file, arg 1 resultFileB=B, apiKey=12345, arg 0 resultFileA=A}
+                        // convert to
+                        // java -cp JDK8/target/rundeck-jdk8-0.0.1-SNAPSHOT.jar com.github.three_old_coders.blueprint.rundeck.Runner_PicoliCLI -inFile=default_in_file -apikey=12345 A B
 
+                        for (final Property property : description.getProperties()) {
+                            if (key.equals(property.getName())) {
+                                scriptArgs.add(property.getTitle());
+                                scriptArgs.add(value.toString());
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
 
-            //            scriptArgs.add("python");
-//            scriptArgs.add(scriptPath.toString());
-//            scriptArgs.add("--input");
-//            scriptArgs.add(tmpDir.toString());
-//            scriptArgs.add("--output");
-//            scriptArgs.add(outputDir);
-//            scriptArgs.add("--javaChild");
-//            for (String arg : args) {
-//                scriptArgs.add(arg);
-//            }
+            for (final Map.Entry<Integer, String> integerStringEntry : args.entrySet()) {
+                scriptArgs.add(integerStringEntry.getValue());
+            }
 
-            final ProcessBuilder builder = new ProcessBuilder(scriptArgs);
-            builder.redirectError(ProcessBuilder.Redirect.INHERIT);
-            builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
-            final int exitCode = builder.start().waitFor();
+            System.out.println(scriptArgs);
 
+            // final ProcessBuilder builder = new ProcessBuilder(scriptArgs);
+            // builder.redirectError(ProcessBuilder.Redirect.INHERIT);
+            // builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+            // final int exitCode = builder.start().waitFor();
+
+            final int exitCode = new ProcessExecutor().command(scriptArgs).redirectOutput(System.out).execute().getExitValue();
             if (0 != exitCode) {
                 throw new StepException("external JVM process returned error [" + exitCode + "]", StepFailureReason.PluginFailed);
             }
+
         } catch (final Exception e) {
-            throw new StepException("failed to execute external JVM process", StepFailureReason.PluginFailed);
+            throw new StepException("failed to execute external JVM process", e, StepFailureReason.PluginFailed);
         }
     }
 
@@ -125,13 +169,12 @@ public abstract class RundeckJavaPicoliWorkflowStepPluginBase
                             });
 
                             final List<String> jdks = new ArrayList<>();
-                            jdks.add("Rundeck JDK");
+                            jdks.add(RUNDECK_JDK);
 
-                            final File[] etcJdks = new File("/home/rundeck/etc").listFiles();
+                            final File[] etcJdks = new File(HOME_RUNDECK_ETC).listFiles();
                             if (null != etcJdks) {
                                 for (final File etcJdk : etcJdks) {
                                     final String name = etcJdk.getName();
-                                    System.out.println(name);
                                     if (name.startsWith("jdk") && !name.endsWith(".tar.gz")) {
                                         jdks.add(name);
                                     }
@@ -139,14 +182,14 @@ public abstract class RundeckJavaPicoliWorkflowStepPluginBase
                             }
 
                             descriptionBuilder.property(
-                                PropertyBuilder.builder().select("JDK").title("Java Runtime")
+                                PropertyBuilder.builder().select(JDK).title("Java Runtime")
                                     .description("choose Java Runtime").required(true).values(jdks).build()
                             ).build();
 
                             for (final CommandLine.Model.OptionSpec o : options) {
                                 descriptionBuilder.property(
                                     PropertyBuilder.builder().title(o.shortestName())
-                                        .string("-" + o.paramLabel().replace("<", "").replace(">", ""))
+                                        .string(o.paramLabel().replace("<", "").replace(">", ""))
                                         .description(StringUtils.join(o.description()))
                                         .defaultValue(o.defaultValue()).required(o.required()).build()
                                 );
@@ -170,6 +213,12 @@ public abstract class RundeckJavaPicoliWorkflowStepPluginBase
 
         return descriptionBuilder.build();
     }
+
+    //
+    // ---->> PRIVATE
+    //
+
+
 }
 
 /*

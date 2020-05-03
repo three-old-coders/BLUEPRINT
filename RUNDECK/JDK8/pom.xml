@@ -38,7 +38,6 @@
             <groupId>com.github.three-old-coders.blueprint.rundeck.plugin</groupId>
             <artifactId>rundeck-jdk11-shade</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- test -->
@@ -120,6 +119,8 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${project.build.directory}/generated-resources/META-INF/versions/11</outputDirectory>
+                            <excludeScope>provided</excludeScope>
+                            <excludeGroupIds>junit</excludeGroupIds>
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>com.github.three-old-coders.blueprint.rundeck.plugin</groupId>
@@ -153,7 +154,7 @@
 
                                         <Rundeck-Plugin-Version>1.2</Rundeck-Plugin-Version>
                                         <Rundeck-Plugin-Archive>true</Rundeck-Plugin-Archive>
-                                        <Rundeck-Plugin-Classnames>com.github.three_old_coders.blueprint.rundeck.RundeckJavaPicoliWorkflowStepPlugin</Rundeck-Plugin-Classnames>
+                                        <Rundeck-Plugin-Classnames>com.github.three_old_coders.blueprint.rundeck.RundeckJavaPicoliSampleWorkflowStepPlugin</Rundeck-Plugin-Classnames>
                                     </manifestEntries>
                                 </transformer>
                             </transformers>

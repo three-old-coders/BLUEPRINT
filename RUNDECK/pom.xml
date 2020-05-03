@@ -15,7 +15,7 @@
     <artifactId>rundeck-plugins.root</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>RUNDECK-PLUGINS-BASE (jar)</name>
+    <name>rundeck-plugins.root (pom)</name>
 
     <modules>
         <module>JDK8</module>
@@ -47,6 +47,18 @@
             <artifactId>rundeck-storage-conf</artifactId>
             <version>3.2.4-20200318</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.zeroturnaround</groupId>
+            <artifactId>zt-exec</artifactId>
+            <version>1.11</version>
+            <exclusions>
+                <exclusion>
+                     <groupId>org.slf4j</groupId>
+                     <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>

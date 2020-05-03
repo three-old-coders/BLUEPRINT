@@ -9,11 +9,11 @@ public class TestCase_CliToDescriptionConversion
 {
     public void testRundeckPicoliPlugin()
     {
-        final RundeckJavaPicoliWorkflowStepPlugin p = new RundeckJavaPicoliWorkflowStepPlugin()
+        final RundeckJavaPicoliSampleWorkflowStepPlugin p = new RundeckJavaPicoliSampleWorkflowStepPlugin()
         {
             @Override protected Class getPicoliClass()
             {
-                return Runner_PicoliCLI.class;
+                return Runner_PicoliSampleCLI.class;
             }
         };
 
