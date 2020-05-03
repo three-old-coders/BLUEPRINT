@@ -7,7 +7,6 @@
         <groupId>com.github.three-old-coders.blueprint</groupId>
         <artifactId>ENVIRONMENT</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -18,47 +17,7 @@
     <name>rundeck-plugins.root (pom)</name>
 
     <modules>
-        <module>JDK8</module>
-        <module>JDK11</module>
-        <module>JDK11_shade</module>
+        <module>PLUGIN-BASE</module>
+        <module>PLUGIN-SAMPLE</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.rundeck</groupId>
-            <artifactId>rundeck-core</artifactId>
-            <version>3.2.4-20200318</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.rundeck</groupId>
-            <artifactId>rundeck-storage-api</artifactId>
-            <version>3.2.4-20200318</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.rundeck</groupId>
-            <artifactId>rundeck-storage-conf</artifactId>
-            <version>3.2.4-20200318</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.zeroturnaround</groupId>
-            <artifactId>zt-exec</artifactId>
-            <version>1.11</version>
-            <exclusions>
-                <exclusion>
-                     <groupId>org.slf4j</groupId>
-                     <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-    </dependencies>
 </project>

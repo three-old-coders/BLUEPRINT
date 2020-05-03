@@ -5,17 +5,16 @@
 
     <parent>
         <groupId>com.github.three-old-coders.blueprint.rundeck</groupId>
-        <artifactId>rundeck-plugins.root</artifactId>
+        <artifactId>rundeck-sample-plugins.root</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.three-old-coders.blueprint.rundeck.plugin</groupId>
-    <artifactId>rundeck-jdk8</artifactId>
+    <artifactId>rundeck-sample-plugin-jdk8</artifactId>
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>RUNDECK-JDK8 (jar)</name>
+    <name>RUNDECK-SAMPLE-PLUGIN-JDK8 (jar)</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -23,20 +22,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>info.picocli</groupId>
-            <artifactId>picocli</artifactId>
-            <version>4.2.0</version>
-            <!-- for our compile switch test in rundeck we try to instantiate the class thus we need the dependencies <scope>provided</scope> -->
-        </dependency>
-        <dependency>
-            <groupId>io.github.classgraph</groupId>
-            <artifactId>classgraph</artifactId>
-            <version>4.8.66</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.github.three-old-coders.blueprint.rundeck.plugin</groupId>
-            <artifactId>rundeck-jdk11-shade</artifactId>
+            <artifactId>rundeck-sample-plugin-jdk11-shade</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
@@ -124,7 +111,7 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>com.github.three-old-coders.blueprint.rundeck.plugin</groupId>
-                                    <artifactId>rundeck-jdk11-shade</artifactId>
+                                    <artifactId>rundeck-sample-plugin-jdk11-shade</artifactId>
                                     <version>0.0.1-SNAPSHOT</version>
                                     <type>jar</type>
                                     <includes>**/*</includes>
