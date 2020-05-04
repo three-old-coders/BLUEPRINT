@@ -1,0 +1,49 @@
+{
+  "id" : "com.github.three_old_coders.blueprint.rundeck.Runner_PicoliSampleCLI",
+  "args" : [
+    {
+      "isOption" : true,
+      "required" : true,
+      "type" : "java.lang.String",
+      "shortestName" : "-apikey",
+      "longestName" : "-apikey",
+      "label" : "<apiKey>",
+      "descriptions" : "ApiKey"
+    },
+    {
+      "isOption" : true,
+      "required" : false,
+      "type" : "java.io.File",
+      "shortestName" : "-inFile",
+      "longestName" : "-inFile",
+      "defaultValue" : "default_in_file",
+      "label" : "<inputFile>",
+      "descriptions" : "file to read"
+    },
+    {
+      "isOption" : true,
+      "required" : false,
+      "type" : "java.io.File",
+      "shortestName" : "-optionalFlag",
+      "longestName" : "-optionalFlag",
+      "label" : "<optionalFlag>",
+      "descriptions" : "optional flag"
+    },
+    {
+      "isPositional" : true,
+      "required" : true,
+      "index" : 0,
+      "type" : "java.io.File",
+      "label" : "<resultFileA>",
+      "descriptions" : "result file A"
+    },
+    {
+      "isPositional" : true,
+      "required" : true,
+      "index" : 1,
+      "type" : "java.io.File",
+      "label" : "<resultFileB>",
+      "descriptions" : "result file B"
+    }
+  ]
+}

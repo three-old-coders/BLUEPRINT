@@ -9,7 +9,7 @@ import java.util.concurrent.Callable;
     description = "test Picoli CLI class", name = "Runner_PicoliSampleCLI",
     mixinStandardHelpOptions = true, version = "0.1"
 )
-class Runner_PicoliSampleCLI
+public class Runner_PicoliSampleCLI
     implements Callable<Integer>
 {
     @CommandLine.Parameters(index = "1", description = "result file B")
@@ -31,17 +31,10 @@ class Runner_PicoliSampleCLI
 
     public static void main(final String[] args)
     {
-        System.exit(new CommandLine(new Runner_PicoliSampleCLI()).execute(args));
     }
 
     @Override public Integer call()
     {
-        if (CompilerSwitches.HIDE_IMPLEMENTATION) {
-            System.err.println("oh no");
-            throw new IllegalStateException("do not call me in this environment");
-        } else {
-            System.out.println("fair enough!");
-            return 0;
-        }
+        return 0;
     }
 }

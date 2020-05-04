@@ -8,7 +8,7 @@ import com.dtolabs.rundeck.plugins.ServiceNameConstants;
 
 @Plugin(name = RundeckJavaPicoliSampleWorkflowStepPlugin.PROVIDER_NAME, service = ServiceNameConstants.WorkflowStep)
 public class RundeckJavaPicoliSampleWorkflowStepPlugin
-    extends RundeckJavaPicoliWorkflowStepPluginBase
+    extends RundeckJavaPicoliMultiReleaseWorkflowStepPluginBase
 {
     public static final String PROVIDER_NAME = "three-old-coders";
 
@@ -17,8 +17,8 @@ public class RundeckJavaPicoliSampleWorkflowStepPlugin
         super(PROVIDER_NAME, "Java Picoli CLI Workflow Step",
             "WorkflowStep written in Java to execute Picoli CLI based Java classes");
     }
-    
-    protected Class getPicoliClass()
+
+    protected Class<?> getPicoliClass()
     {
         return Runner_PicoliSampleCLI.class;
     }
