@@ -14,7 +14,7 @@ public class PicoloCliToJsonConverter
 {
     public static void main(final String[] args) throws Exception
     {
-        final File destinationDir = new File(args[0]);
+        final File destinationDir = new File(args[0] + "/" + RundeckJavaPicoliJsonResourceWorkflowStepPluginBase.DATA_SUB_DIR);
         destinationDir.mkdirs();
 
         final List<Class<?>> classes = new ArrayList<>();
@@ -24,7 +24,7 @@ public class PicoloCliToJsonConverter
 
         final Map<Class<?>, JSONObject> jsons = PicoliUtils.createJSONsFrom(classes.toArray(new Class<?>[0]));
         for (final JSONObject jo : jsons.values()) {
-            final File filename = new File(destinationDir, jo.getString("id"));
+            final File filename = new File(destinationDir, jo.getString("id") + ".json");
             try (final Writer w = new FileWriter(filename)) {
                 IOUtils.write(jo.toString(), w);
             }

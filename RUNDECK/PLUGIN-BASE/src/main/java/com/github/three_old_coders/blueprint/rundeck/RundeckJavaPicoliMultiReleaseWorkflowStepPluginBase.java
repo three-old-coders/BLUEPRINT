@@ -1,5 +1,7 @@
 package com.github.three_old_coders.blueprint.rundeck;
 
+import com.dtolabs.rundeck.core.plugins.configuration.Description;
+import com.dtolabs.rundeck.plugins.util.DescriptionBuilder;
 import org.apache.tapestry5.json.JSONObject;
 import picocli.CommandLine;
 
@@ -13,17 +15,24 @@ public abstract class RundeckJavaPicoliMultiReleaseWorkflowStepPluginBase
         super(providerName, title, description);
     }
 
+    @Override public Description getDescription()
+    {
+        final Class<?> clazz = getPicoliClass();
+        final CommandLine cl = PicoliUtils.createFrom(clazz);
+        final JSONObject jo = PicoliUtils.convert(clazz.getName(), cl);
+        final DescriptionBuilder descriptionBuilder = createDescriptionBuilder();
+        DescriptionUtils.addProperties(descriptionBuilder, jo);
+        return descriptionBuilder.build();
+    }
+
     //
     // ---->> PROTECTED
     //
 
     protected abstract Class<?> getPicoliClass();
 
-    @Override protected JSONObject getCLI()
+    @Override protected String getExecutionClass()
     {
-        final Class<?> clazz = getPicoliClass();
-        final CommandLine cl = PicoliUtils.createFrom(clazz);
-
-        return PicoliUtils.convert(clazz.getName(), cl);
+        return getPicoliClass().getName();
     }
 }

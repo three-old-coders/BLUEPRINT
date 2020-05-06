@@ -8,33 +8,38 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-// see: https://github.com/rundeck/rundeck/blob/master/examples/example-java-nodeexecutor-plugin/src/main/java/org/rundeck/plugin/example/ExampleNodeExecutorPlugin.java
-
 /**
- * this base class creates rundeck plugin input fields by JSON definitions located in /META-INF/RUNDECK/BLUEPRINT-CLI/classname.json
+ * this base class creates rundeck plugin input fields by JSON definitions located in /META-DATA/RUNDECK/BLUEPRINT-CLI/classname.json
  */
 public abstract class RundeckJavaPicoliJsonResourceWorkflowStepPluginBase
     extends RundeckJavaPicoliJsonWorkflowStepPluginBase
 {
-    private final String jsonResourceName;
+    public static final String DATA_SUB_DIR = "META-DATA/RUNDECK-PLUGIN/BLUEPRINT-CLI/";
 
+    /**
+     * ctor
+     * @param providerName
+     * @param title
+     * @param description
+     * @param jsonResourceName  (without .json)
+     */
     public RundeckJavaPicoliJsonResourceWorkflowStepPluginBase(final String providerName,
                                                                final String title,
                                                                final String description,
                                                                final String jsonResourceName)
     {
-        super(providerName, title, description);
-        this.jsonResourceName = jsonResourceName;
+        super(providerName, title, description, readJSON(jsonResourceName));
     }
 
     //
-    // ---->> PROTECTED
+    // ---->> PRIVATE
     //
     
-    @Override protected JSONObject getCLI()
+    private static JSONObject readJSON(final String jsonResourceName)
     {
-        final ClassLoader cl = this.getClass().getClassLoader();
-        try (final InputStream is = cl.getResourceAsStream("META-DATA/RUNDECK-PLUGIN/BLUEPRINT-CLI/" + jsonResourceName)) {
+        final ClassLoader cl = RundeckJavaPicoliJsonResourceWorkflowStepPluginBase.class.getClassLoader();
+        // final ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        try (final InputStream is = cl.getResourceAsStream(DATA_SUB_DIR + jsonResourceName + ".json")) {
             final List<String> strings = IOUtils.readLines(is, StandardCharsets.UTF_8);
             return new JSONObject(StringUtils.join(strings, ""));
         } catch (final Exception e) {

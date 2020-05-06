@@ -14,14 +14,10 @@ import com.dtolabs.rundeck.plugins.step.StepPlugin;
 import com.dtolabs.rundeck.plugins.util.DescriptionBuilder;
 import com.dtolabs.rundeck.plugins.util.PropertyBuilder;
 import org.apache.commons.lang.StringUtils;
-import org.apache.tapestry5.json.JSONArray;
-import org.apache.tapestry5.json.JSONObject;
 import org.zeroturnaround.exec.ProcessExecutor;
 
 import java.io.File;
 import java.util.*;
-
-// see: https://github.com/rundeck/rundeck/blob/master/examples/example-java-nodeexecutor-plugin/src/main/java/org/rundeck/plugin/example/ExampleNodeExecutorPlugin.java
 
 public abstract class RundeckJavaPicoliWorkflowStepPluginBase
     implements StepPlugin, Describable
@@ -39,11 +35,6 @@ public abstract class RundeckJavaPicoliWorkflowStepPluginBase
         _providerName = providerName;
         _title = title;
         _description = description;
-    }
-
-    public Description getDescription()
-    {
-        return createDescription(getCLI());
     }
 
     @Override public void executeStep(final PluginStepContext pluginStepContext, final Map<String, Object> map)
@@ -83,9 +74,7 @@ public abstract class RundeckJavaPicoliWorkflowStepPluginBase
                 throw new StepException("unable to detect plugin location", e, StepFailureReason.PluginFailed);
             }
 
-            // com.github.three_old_coders.blueprint.rundeck.Runner_PicoliCLI
-            final JSONObject joCLI = getCLI();
-            scriptArgs.add(joCLI.getString("id"));
+            scriptArgs.add(getExecutionClass());
 
             final Description description = getDescription();
             final SortedMap<Integer, String> args = new TreeMap<>();
@@ -134,12 +123,12 @@ public abstract class RundeckJavaPicoliWorkflowStepPluginBase
     }
 
     //
-    // ---->> PROTECTED
+    //  ---->> PROTECTED
     //
 
-    protected abstract JSONObject getCLI();
+    protected abstract String getExecutionClass();
 
-    protected Description createDescription(final JSONObject jo)
+    protected DescriptionBuilder createDescriptionBuilder()
     {
         final DescriptionBuilder descriptionBuilder = DescriptionBuilder.builder().name(_providerName).title(_title).description(_description);
 
@@ -157,36 +146,10 @@ public abstract class RundeckJavaPicoliWorkflowStepPluginBase
         }
 
         descriptionBuilder.property(
-            PropertyBuilder.builder().select(JDK).title("Java Runtime")
-                    .description("choose Java Runtime").required(true).values(jdks).build()
+                PropertyBuilder.builder().select(JDK).title("Java Runtime")
+                        .description("choose Java Runtime").required(true).values(jdks).build()
         ).build();
 
-        // ----
-        
-        final JSONArray args = jo.getJSONArray("args");
-        for (int i=0; i < args.length(); i++) {
-            final JSONObject joi = args.getJSONObject(i);
-            if (joi.has("isOption")) {
-                descriptionBuilder.property(
-                    PropertyBuilder.builder().title(joi.getString("shortestName"))
-                        .string(joi.getString("label").replace("<", "").replace(">", ""))
-                        .description(joi.getString("descriptions"))
-                        .defaultValue(joi.has("defaultValue") ? joi.getString("defaultValue") : null)
-                        .required(joi.getBoolean("required"))
-                    .build()
-                );
-            } else if (joi.has("isPositional")) {
-                descriptionBuilder.property(
-                    PropertyBuilder.builder().title(joi.getString("label"))
-                        .string("arg " + joi.getInt("index") + " " + joi.getString("label").replace("<", "").replace(">", ""))
-                        .description(joi.getString("descriptions"))
-                        .defaultValue(joi.has("defaultValue") ? joi.getString("defaultValue") : null)
-                        .required(joi.getBoolean("required"))
-                    .build()
-                );
-            }
-        }
-
-        return descriptionBuilder.build();
+        return descriptionBuilder;
     }
 }
