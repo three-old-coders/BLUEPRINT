@@ -29,7 +29,7 @@ public abstract class DockerInfoBase
                                 final Object o = aClass.getDeclaredConstructor().newInstance();
 
                                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                                System.setErr(new PrintStream(baos, true, StandardCharsets.UTF_8));
+                                System.setErr(new PrintStream(baos, true, StandardCharsets.UTF_8.name()));
                                 new CommandLine(o).execute(args);
                                 String s = baos.toString();
                                 final int index = s.indexOf("Usage: ");

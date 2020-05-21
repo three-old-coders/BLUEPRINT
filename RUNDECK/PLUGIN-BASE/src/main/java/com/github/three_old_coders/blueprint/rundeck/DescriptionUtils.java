@@ -16,22 +16,30 @@ public class DescriptionUtils
         final JSONArray args = jo.getJSONArray("args");
         for (int i=0; i < args.length(); i++) {
             final JSONObject joi = args.getJSONObject(i);
+            final String defaultValue = joi.has("defaultValue") ? joi.getString("defaultValue") : null;
+            final boolean required = joi.getBoolean("required");
+            final String description = joi.getString("descriptions");
             if (joi.has("isOption")) {
-                descriptionBuilder.property(
-                        PropertyBuilder.builder().title(joi.getString("shortestName"))
-                                .string(joi.getString("label").replace("<", "").replace(">", ""))
-                                .description(joi.getString("descriptions"))
-                                .defaultValue(joi.has("defaultValue") ? joi.getString("defaultValue") : null)
-                                .required(joi.getBoolean("required"))
-                                .build()
-                );
+                final String classType = joi.getString("type");
+                final String name = joi.getString("shortestName");
+                if ("boolean".equals(classType)) {
+                    descriptionBuilder.booleanProperty(name, defaultValue, required, name, description).build();
+                } else {
+                    descriptionBuilder.property(
+                        PropertyBuilder.builder()
+                            .title(name).string(joi.getString("label").replace("<", "").replace(">", ""))
+                            .description(description)
+                            .defaultValue(defaultValue)
+                            .required(required)
+                            .build());
+                }
             } else if (joi.has("isPositional")) {
                 descriptionBuilder.property(
                         PropertyBuilder.builder().title(joi.getString("label"))
                                 .string("arg " + joi.getInt("index") + " " + joi.getString("label").replace("<", "").replace(">", ""))
-                                .description(joi.getString("descriptions"))
-                                .defaultValue(joi.has("defaultValue") ? joi.getString("defaultValue") : null)
-                                .required(joi.getBoolean("required"))
+                                .description(description)
+                                .defaultValue(defaultValue)
+                                .required(required)
                                 .build()
                 );
             }

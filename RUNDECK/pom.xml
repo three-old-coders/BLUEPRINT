@@ -18,6 +18,8 @@
 
     <modules>
         <module>PLUGIN-BASE</module>
+        <!-- plugin to bridge JDK8 to JDK11 using compile switches -->
         <module>PLUGIN-SAMPLE</module>
+        <module>PLUGINS-GENERIC-JDK8</module>
     </modules>
 </project>

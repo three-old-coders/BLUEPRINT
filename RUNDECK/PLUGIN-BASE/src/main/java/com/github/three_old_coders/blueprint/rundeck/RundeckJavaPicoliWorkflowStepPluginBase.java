@@ -92,8 +92,14 @@ public abstract class RundeckJavaPicoliWorkflowStepPluginBase
 
                         for (final Property property : description.getProperties()) {
                             if (key.equals(property.getName())) {
-                                scriptArgs.add(property.getTitle());
-                                scriptArgs.add(value.toString());
+                                if ("Boolean".equals(property.getType().name())) {
+                                    if ("true".equals(value.toString())) {
+                                        scriptArgs.add(property.getTitle());
+                                    }
+                                } else {
+                                    scriptArgs.add(property.getTitle());
+                                    scriptArgs.add(value.toString());
+                                }
                                 break;
                             }
                         }

@@ -21,6 +21,9 @@ public class Runner_PicoliSampleCLI
     @CommandLine.Option(names = {"-apikey"}, description = "ApiKey", required = true)
     private String apiKey;
 
+    @CommandLine.Option(names = {"-bool"}, description = "boolean type", required = true, defaultValue = "true")
+    private boolean boolAttr;
+
     @CommandLine.Option(names = {"-inFile"}, description = "file to read", required = true, defaultValue = "default_in_file")
     private File inputFile;
 

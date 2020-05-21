@@ -63,7 +63,7 @@ public class CompactingUtils
             }
             baos.close();
 
-            return baos.toString(StandardCharsets.UTF_8);
+            return baos.toString(StandardCharsets.UTF_8.name());
         } catch (final Exception e) {
             throw new IllegalStateException("unable to compact data", e);
         }
