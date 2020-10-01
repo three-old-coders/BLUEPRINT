@@ -11,8 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
  * -Dspring.profiles.active=clamav_service-default -Dlog4j.debug
  */
 @SpringBootApplication
-@EnableEurekaClient
-@EnableDiscoveryClient
+// @EnableEurekaClient
+// @EnableDiscoveryClient
 @ComponentScan(basePackages = { "com.github.three_old_coders.blueprint.clamav.controller" })
 @ConfigurationPropertiesScan
 public class ClamAvSBApplication
