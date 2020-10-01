@@ -8,7 +8,15 @@
     <artifactId>infrastructure-netflix</artifactId>
     <packaging>jar</packaging>
     <version>0.1-SNAPSHOT</version>
+
     <name>infrastructure netflix (jar)</name>
+
+    <parent>
+        <groupId>com.github.three-old-coders.blueprint</groupId>
+        <artifactId>ENVIRONMENT</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
     <url>https://github.com/three-old-coders/BLUEPRINT</url>
 
