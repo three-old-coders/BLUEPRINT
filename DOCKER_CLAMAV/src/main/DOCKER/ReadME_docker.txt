@@ -8,7 +8,6 @@ https://spring.io/guides/gs/spring-boot-docker/
 https://stackoverflow.com/questions/1771679/difference-between-threads-context-class-loader-and-normal-classloader
 https://stackoverflow.com/questions/999489/invalid-signature-file-when-attempting-to-run-a-jar/6743609#6743609
 https://dzone.com/articles/docker-bridge-and-overlay-network-with-compose-var#:~:text=Bridge%20networks%20can%20cater%20to,networks%20are%20for%20multiple%20hosts.&text=If%20the%20sample%20application%20is,how%20to%20set%20this%20up.
-
 https://github.com/three-old-coders/BLUEPRINT
 
 ------------
@@ -16,10 +15,7 @@ https://github.com/three-old-coders/BLUEPRINT
 mvn package spring-boot:repackage
 
 docker build -t clamav-sb-scanner .
-
 # docker image rm clamav-sb-scanner
-
-
 
 # docker ps
 CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS              PORTS                    NAMES

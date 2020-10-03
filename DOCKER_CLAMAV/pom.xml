@@ -34,6 +34,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- required to start plain springboot app -->
         <dependency>
             <groupId>com.github.three-old-coders.blueprint</groupId>
             <artifactId>infrastructure-netflix</artifactId>
@@ -144,6 +145,7 @@
         </plugins>
     </build>
 
+    <!--
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -155,4 +157,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    -->
 </project>
