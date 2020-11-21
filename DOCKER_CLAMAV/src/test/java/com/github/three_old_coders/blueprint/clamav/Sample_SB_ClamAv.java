@@ -34,9 +34,12 @@ public class Sample_SB_ClamAv
             final HttpEntity httpEntity = MultipartEntityBuilder.create()
                 .addBinaryBody("files", is1, ContentType.IMAGE_PNG, uploadFile1.getName())
                 .addBinaryBody("files", is2, ContentType.WILDCARD, uploadFile2.getName())
+                .setContentType(ContentType.create("multipart/*", StandardCharsets.US_ASCII))
                 .setCharset(StandardCharsets.US_ASCII).build();
 
             final HttpPost httpPost = new HttpPost("http://localhost:3316/scan");
+            // final HttpPost httpPost = new HttpPost("http://172.17.0.3:8762/scan");
+            // final HttpPost httpPost = new HttpPost("http://localhost:8762/scan");
             httpPost.setEntity(httpEntity);
 
             final HttpClient httpClient = new DefaultHttpClient();

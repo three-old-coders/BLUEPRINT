@@ -12,9 +12,9 @@ https://github.com/three-old-coders/BLUEPRINT
 
 ------------
 
-mvn package spring-boot:repackage
+# mvn package spring-boot:repackage
 
-docker build -t clamav-sb-scanner .
+# docker build -t clamav-sb-scanner .
 # docker image rm clamav-sb-scanner
 
 # docker ps
@@ -27,6 +27,7 @@ b197776975e4        arangodb/arangodb:3.7.2.1   "/entrypoint.sh aran…"   3 day
 
 # docker container inspect bf504a437a2e
 
-docker run -p 3316:3316 -e SPRING_PROFILE=clamav_service-default 651691a723b3
+# docker run -p 3316:3316 -e SPRING_PROFILE=clamav_service-default 651691a723b3
 
-docker exec -it 63112cf54ddd /bin/sh
+# docker exec -it 63112cf54ddd /bin/sh
+# docker system prune

@@ -2,6 +2,7 @@
 /log/*.log
 /tmp
 **/dependency-reduced-pom.xml
+/docker_sb_clamav-FULL.jar
 
 # Ignore other unneeded files.
 *.swp
