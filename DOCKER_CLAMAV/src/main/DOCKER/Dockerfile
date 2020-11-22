@@ -15,7 +15,7 @@ COPY etc /etc/
 # todo: detect file automatically
 COPY docker_sb_clamav-FULL.jar app.jar
 
-# todo: make port configurable, see etc/clamav/clamd.conf
-EXPOSE 3316/tcp
+# made port configurable, see etc/clamav/clamd.conf
+# EXPOSE ${CLAMAV_REST_API_PORT}/tcp
 CMD ["supervisord", "-c", "/etc/supervisord.conf"]
 

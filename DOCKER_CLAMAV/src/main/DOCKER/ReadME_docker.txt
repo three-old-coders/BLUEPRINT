@@ -17,6 +17,12 @@ https://github.com/three-old-coders/BLUEPRINT
 # docker build -t clamav-sb-scanner .
 # docker image rm clamav-sb-scanner
 
+Using dockerfile inside docker-compose (all env variables passed to springboot):
+
+# docker-compose --env-file .env-clamav-local up --build
+# docker-compose --env-file .env-clamav-local up -d
+
+
 # docker ps
 CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS              PORTS                    NAMES
 bf504a437a2e        clamav-sb-scanner           "java -Dspring.profi…"   6 seconds ago       Up 5 seconds        3310/tcp, 3316/tcp       stoic_jackson

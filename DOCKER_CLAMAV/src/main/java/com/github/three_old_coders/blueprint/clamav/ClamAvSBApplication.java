@@ -35,6 +35,15 @@ public class ClamAvSBApplication
     }
 
     @Configuration
+    @Profile("clamav_service-generic")
+    @EnableEurekaClient
+    @EnableDiscoveryClient
+    private class EurekaZuulGenericEnvironment
+    {
+        public EurekaZuulGenericEnvironment() { System.out.println("using Eureka/Zuul generic environment"); }
+    }
+
+    @Configuration
     @Profile("clamav_service-standalone")
     private class StandaloneEnvironment
     {
