@@ -5,10 +5,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.three-old-coders.blueprint</groupId>
-    <artifactId>ENVIRONMENT</artifactId>
+    <artifactId>blueprint.root</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>blueprint environment (pom)</name>
+    <name>blueprint-java (pom)</name>
 
     <url>https://github.com/three-old-coders/BLUEPRINT</url>
 
@@ -25,7 +25,7 @@
 
     <modules>
         <module>COMMON</module>
-        <module>DOCKER_CLAMAV</module>
+        <module>DOCKER</module>
         <module>INFRASTRUCTURE</module>
         <module>RUNDECK</module>
         <module>TAPESTRY5</module>
