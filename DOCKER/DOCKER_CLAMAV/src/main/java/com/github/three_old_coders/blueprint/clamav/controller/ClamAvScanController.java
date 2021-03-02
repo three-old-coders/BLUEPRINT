@@ -63,7 +63,7 @@ public class ClamAvScanController
 
     @PostMapping(value = "/scan", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String doScan(@RequestParam(value = "files", required = false) List<MultipartFile> files)
+    public String doScan(@RequestParam(value = "files", required = false) final List<MultipartFile> files)
     {
         boolean virusFound = false;
         final JSONArray jaScanResults = new JSONArray();
@@ -82,7 +82,7 @@ public class ClamAvScanController
             }
         }
 
-        return new JSONObject(STATUS, virusFound ? STATUS_CHECKED : STATUS_DANGER,
+        return new JSONObject(STATUS, virusFound ? STATUS_DANGER : STATUS_CHECKED,
                               "scanResults", jaScanResults).toCompactString();
     }
 

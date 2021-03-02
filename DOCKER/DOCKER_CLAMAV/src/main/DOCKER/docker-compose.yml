@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 
 services:
   clamav_rest_service:
@@ -15,7 +15,7 @@ services:
       - EUREKA_ENABLED=${EUREKA_ENABLED}
       - EUREKA_URI=${EUREKA_URI}
       - CLAMAV_REST_API_PORT=${CLAMAV_REST_API_PORT:-3316}
-      - CLAMAV_REST_SERVICE_NAME=clamav-rest-servce_${CLAMAV_REST_API_PORT}
+      - CLAMAV_REST_SERVICE_NAME=clamav-rest-servce_${CLAMAV_REST_API_PORT:-3316}
     ports:
       - ${CLAMAV_REST_API_PORT:-3316}:3316
     networks:

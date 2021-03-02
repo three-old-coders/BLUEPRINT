@@ -19,7 +19,6 @@ public class Sample_SB_ClamAv
 {
     public static void main(final String[] args)
     {
-        // final ClassLoader ccl = Thread.currentThread().getContextClassLoader();
         final ClassLoader cl = Sample_SB_ClamAv.class.getClassLoader();
 
         final URL resource1 = cl.getResource("Brain.png");

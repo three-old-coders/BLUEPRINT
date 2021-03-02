@@ -12,15 +12,24 @@ https://github.com/three-old-coders/BLUEPRINT
 
 ------------
 
-# mvn package spring-boot:repackage
+# cd DOCKER/DOCKER_CLAMAV
+# mvn install spring-boot:repackage
 
+# cd src/main/DOCKER
 # docker build -t clamav-sb-scanner .
 # docker image rm clamav-sb-scanner
 
-Using dockerfile inside docker-compose (all env variables passed to springboot):
+--- Using dockerfile inside docker-compose (all env variables passed to springboot):
 
-# docker-compose --env-file .env-clamav-local up --build
+# docker-compose --env-file .env-clamav-local up -d --build
 # docker-compose --env-file .env-clamav-local up -d
+
+--- transfer image
+
+# docker image ls
+# docker save clamav-restapi-jb:latest | gzip > clamav-restapi-jb.tar.gz
+# docker load < clamav-restapi-jb.tar.gz
+
 
 
 # docker ps
@@ -37,3 +46,5 @@ b197776975e4        arangodb/arangodb:3.7.2.1   "/entrypoint.sh aran…"   3 day
 
 # docker exec -it 63112cf54ddd /bin/sh
 # docker system prune
+
+
