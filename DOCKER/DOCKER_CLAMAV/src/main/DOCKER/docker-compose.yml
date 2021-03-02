@@ -2,8 +2,7 @@ version: '3.3'
 
 services:
   clamav_rest_service:
-    container_name: ${CLAMAV_CONTAINER_ID:-clamav_restapi}
-    # container_name: clamav_rest_service
+    container_name: ${CLAMAV_CONTAINER_ID:-clamav-restapi}
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,6 +10,7 @@ services:
       # see springboot config: bootstrap-clamav_service-generic.properties
       # passed to supervisord run.conf as "ENV_SPRING_PROFILE"
       - SPRING_PROFILE=clamav_service-generic
+      # - JAVA_OPTIONS=-Dlogging.level.org.springframework=TRACE
       # seems we have to evaluate all properties, otherwise springboot does not recognize them
       - EUREKA_ENABLED=${EUREKA_ENABLED}
       - EUREKA_URI=${EUREKA_URI}

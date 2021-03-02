@@ -1,3 +1,6 @@
+NEVER EVER USE _ AS PART OF THE SERVICE NAME --> RFC822
+
+
 https://github.com/ragnar-lothbrok/clamav-spring-reactjs
 https://medium.com/faun/part2-dockerized-filevirus-detection-service-using-clamav-and-spring-boot-541c689e3634
 https://stackoverflow.com/questions/46057625/externalising-spring-boot-properties-when-deploying-to-docker
@@ -30,6 +33,9 @@ https://github.com/three-old-coders/BLUEPRINT
 # docker save clamav-restapi-jb:latest | gzip > clamav-restapi-jb.tar.gz
 # docker load < clamav-restapi-jb.tar.gz
 
+--- test with curl
+
+curl -v http://localhost:3316/scan -X POST -F "files=@docker-compose.yml" -H "Content-Type: multipart/form-data"
 
 
 # docker ps
