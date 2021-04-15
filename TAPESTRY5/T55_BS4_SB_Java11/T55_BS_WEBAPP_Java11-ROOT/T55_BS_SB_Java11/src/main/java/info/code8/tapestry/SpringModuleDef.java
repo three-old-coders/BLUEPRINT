@@ -1,12 +1,18 @@
 package info.code8.tapestry;
 
-import org.apache.tapestry5.internal.AbstractContributionDef;
-import org.apache.tapestry5.ioc.*;
+import org.apache.tapestry5.commons.AnnotationProvider;
+import org.apache.tapestry5.commons.ObjectLocator;
+import org.apache.tapestry5.commons.ObjectProvider;
+import org.apache.tapestry5.commons.OrderedConfiguration;
+import org.apache.tapestry5.commons.util.CollectionFactory;
+import org.apache.tapestry5.http.internal.AbstractContributionDef;
+import org.apache.tapestry5.ioc.ModuleBuilderSource;
+import org.apache.tapestry5.ioc.OperationTracker;
+import org.apache.tapestry5.ioc.ServiceResources;
 import org.apache.tapestry5.ioc.def.ContributionDef;
 import org.apache.tapestry5.ioc.def.DecoratorDef;
 import org.apache.tapestry5.ioc.def.ModuleDef;
 import org.apache.tapestry5.ioc.def.ServiceDef;
-import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 import org.apache.tapestry5.plastic.PlasticUtils;
 import org.springframework.context.ApplicationContext;
@@ -56,7 +62,6 @@ public class SpringModuleDef implements ModuleDef {
     }
 
     private ContributionDef createContributionToMasterObjectProvider() {
-
         return new AbstractContributionDef() {
             @Override
             public String getServiceId() {

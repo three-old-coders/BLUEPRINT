@@ -7,13 +7,13 @@
     <parent>
         <groupId>com.github.three-old-coders.blueprint.T55_BS_Java11</groupId>
         <artifactId>T55_BS_Java11</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>5.7.2-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>com.github.three-old-coders.blueprint.T55_BS_Java11.root</groupId>
     <artifactId>T55_Java11_bootstrap-ROOT</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>5.7.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>T55_Java11_bootstrap-ROOT (pom)</name>

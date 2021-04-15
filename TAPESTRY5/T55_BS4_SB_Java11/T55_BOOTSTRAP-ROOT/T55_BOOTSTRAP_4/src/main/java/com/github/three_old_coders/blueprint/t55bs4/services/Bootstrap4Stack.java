@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Bootstrap4Stack implements JavaScriptStack
 {
-	public static final String BOOTSTRAP = "bootstrap-4.4.1-dist";
+	public static final String BOOTSTRAP = "bootstrap-4.6.0-dist";
 
 	public static final String PATH_BS4_S = "classpath:/META-INF/assets/" + BOOTSTRAP + "/";
 

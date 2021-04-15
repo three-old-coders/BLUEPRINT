@@ -1,10 +1,10 @@
 package info.code8.tapestry;
 
 import org.apache.tapestry5.SymbolConstants;
+import org.apache.tapestry5.http.internal.SingleKeySymbolProvider;
+import org.apache.tapestry5.http.internal.TapestryAppInitializer;
+import org.apache.tapestry5.http.internal.util.DelegatingSymbolProvider;
 import org.apache.tapestry5.internal.InternalConstants;
-import org.apache.tapestry5.internal.SingleKeySymbolProvider;
-import org.apache.tapestry5.internal.TapestryAppInitializer;
-import org.apache.tapestry5.internal.util.DelegatingSymbolProvider;
 import org.apache.tapestry5.ioc.Registry;
 import org.apache.tapestry5.ioc.internal.services.SystemPropertiesSymbolProvider;
 import org.apache.tapestry5.ioc.services.ServiceActivityScoreboard;
@@ -51,8 +51,9 @@ public class TapestryBeanFactoryPostProcessor
         return Ordered.LOWEST_PRECEDENCE;
     }
 
-    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+    @Override public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory)
+        throws BeansException
+    {
         Collection<String> packagesToScan = findPackagesToScan(applicationContext);
         String appModuleClass = findAppModule(packagesToScan, applicationContext.getEnvironment());
         

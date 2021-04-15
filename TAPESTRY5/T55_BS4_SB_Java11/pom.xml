@@ -6,7 +6,7 @@
 
     <groupId>com.github.three-old-coders.blueprint.T55_BS_Java11</groupId>
     <artifactId>T55_BS_Java11</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>5.7.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>T55_BS_Java11 (pom)</name>
@@ -14,7 +14,7 @@
     <parent>
         <groupId>com.github.three-old-coders.blueprint</groupId>
         <artifactId>blueprint-tapestry5.root</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>5.7.2-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 

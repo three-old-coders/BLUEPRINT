@@ -1,6 +1,6 @@
 package com.github.three_old_coders.blueprint.t55bs.services;
 
-import org.apache.tapestry5.ioc.Configuration;
+import org.apache.tapestry5.commons.Configuration;
 import org.apache.tapestry5.services.LibraryMapping;
 
 @SuppressWarnings("unused")
