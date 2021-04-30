@@ -20,6 +20,9 @@
     </scm>
 
     <properties>
+        <!-- https://stackoverflow.com/questions/58836862/jdk-11-and-javadoc -->
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -143,10 +146,16 @@
             <id>release</id>
             <build>
                 <plugins>
+                    <!-- https://github.com/assertj/assertj-core/issues/1403 -->
+                    <!-- https://stackoverflow.com/questions/58836862/jdk-11-and-javadoc -->
+                    <!--
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.1.1</version>
+                        <version>3.2.0</version>
+                        <configuration>
+                            <source>8</source>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -156,6 +165,7 @@
                             </execution>
                         </executions>
                     </plugin>
+                    -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
