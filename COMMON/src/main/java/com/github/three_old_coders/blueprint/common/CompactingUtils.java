@@ -13,7 +13,7 @@ public class CompactingUtils
     }
 
     /**
-     * in --> zip --> base64 --> out
+     * in --&gt; zip --&gt; base64 --&gt; out
      *
      * @param s
      * @return
@@ -42,7 +42,7 @@ public class CompactingUtils
     }
 
     /**
-     * in --> un-base64 --> un-zip --> out
+     * in --&gt; un-base64 --&gt; un-zip --&gt; out
      *
      * @param s
      * @return
