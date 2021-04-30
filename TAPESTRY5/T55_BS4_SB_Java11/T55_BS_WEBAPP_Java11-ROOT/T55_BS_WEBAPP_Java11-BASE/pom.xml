@@ -26,6 +26,38 @@
             <version>5.7.2-SNAPSHOT</version>
         </dependency>
 
+        <!--  security -->
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>1.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.tynamo</groupId>
+            <artifactId>tapestry-security</artifactId>
+            <version>0.9.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.tapestry</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.tynamo.security</groupId>
+            <artifactId>tynamo-federatedaccounts-core</artifactId>
+            <version>0.7.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- other -->
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
