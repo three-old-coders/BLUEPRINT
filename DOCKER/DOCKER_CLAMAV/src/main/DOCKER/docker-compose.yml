@@ -16,8 +16,12 @@ services:
       - EUREKA_URI=${EUREKA_URI}
       - CLAMAV_REST_API_PORT=${CLAMAV_REST_API_PORT:-3316}
       - CLAMAV_REST_SERVICE_NAME=clamav-rest-servce_${CLAMAV_REST_API_PORT:-3316}
+      - CLAMAV_REST_MULTIPART_MAX_FILE_SIZE=${CLAMAV_REST_MULTIPART_MAX_FILE_SIZE:-5MB}
     ports:
       - ${CLAMAV_REST_API_PORT:-3316}:3316
+      # - 127.0.0.1:3310:3310
+    volumes:
+      - /Users/_shared_/dev.projects/PRIVATE/TRENDLINK/trendlink-2020/DOCKER/CLAMAV/DANGER_CLAMAV_SCAN_DIR:/DANGER_SCAN_DIR:ro
     networks:
       - network_internal
 
