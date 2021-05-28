@@ -13,10 +13,10 @@ buildscript {
 
 description = "Use Spring Boot with Tapestry (Java 11)"
 group = "de.3OC.blueprint.t55bs4"
-version = "0.1.0-SNAPSHOT"
+version = "5.7.2-SNAPSHOT"
 ext {
     versions =  [
-            tapestry:   '5.5.0',
+            tapestry:   '5.7.2',
             junit:      '4.13'
     ]
 }

@@ -7,6 +7,7 @@
         <groupId>com.github.three-old-coders.blueprint.rundeck</groupId>
         <artifactId>rundeck-plugins.root</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>

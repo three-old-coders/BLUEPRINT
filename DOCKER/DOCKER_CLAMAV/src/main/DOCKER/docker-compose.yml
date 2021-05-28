@@ -21,7 +21,8 @@ services:
       - ${CLAMAV_REST_API_PORT:-3316}:3316
       # - 127.0.0.1:3310:3310
     volumes:
-      - /Users/_shared_/dev.projects/PRIVATE/TRENDLINK/trendlink-2020/DOCKER/CLAMAV/DANGER_CLAMAV_SCAN_DIR:/DANGER_SCAN_DIR:ro
+      # - <LOCAL>/DANGER_CLAMAV_SCAN_DIR:/DANGER_SCAN_DIR:ro
+      - ${PWD}/DANGER_SCANIT:/DANGER_SCAN_DIR:ro
     networks:
       - network_internal
 
