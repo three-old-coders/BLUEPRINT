@@ -1,0 +1,438 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] blueprint tapestry5 (pom)                                          [pom]
+[INFO] T55_BS_Java11 (pom)                                                [pom]
+[INFO] T55_Java11_bootstrap-ROOT (pom)                                    [pom]
+[INFO] T55_Java11-bootstrap_common                                        [jar]
+[INFO] T55_Java11-bootstrap_v4.6                                          [jar]
+[INFO] T55_BS_WEBAPP_Java11-ROOT (pom)                                    [pom]
+[INFO] T55_BS_WEBAPP_Java11-BASE                                          [jar]
+[INFO] T55_BS_SB_Java11                                                   [jar]
+[INFO] T55_BS_WAR_Java11                                                  [war]
+[INFO] 
+[INFO] ---< com.github.three-old-coders.blueprint:blueprint-tapestry5.root >---
+[INFO] Building blueprint tapestry5 (pom) 5.7.2-SNAPSHOT                  [1/9]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ blueprint-tapestry5.root ---
+[INFO] com.github.three-old-coders.blueprint:blueprint-tapestry5.root:pom:5.7.2-SNAPSHOT
+[INFO] \- org.projectlombok:lombok:jar:1.18.20:provided
+[INFO] 
+[INFO] --< com.github.three-old-coders.blueprint.T55_BS_Java11:T55_BS_Java11 >--
+[INFO] Building T55_BS_Java11 (pom) 5.7.2-SNAPSHOT                        [2/9]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ T55_BS_Java11 ---
+[INFO] com.github.three-old-coders.blueprint.T55_BS_Java11:T55_BS_Java11:pom:5.7.2-SNAPSHOT
+[INFO] \- org.projectlombok:lombok:jar:1.18.20:provided
+[INFO] 
+[INFO] --< com.github.three-old-coders.blueprint.T55_BS_Java11.root:T55_Java11_bootstrap-ROOT >--
+[INFO] Building T55_Java11_bootstrap-ROOT (pom) 5.7.2-SNAPSHOT            [3/9]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ T55_Java11_bootstrap-ROOT ---
+[INFO] com.github.three-old-coders.blueprint.T55_BS_Java11.root:T55_Java11_bootstrap-ROOT:pom:5.7.2-SNAPSHOT
+[INFO] \- org.projectlombok:lombok:jar:1.18.20:provided
+[INFO] 
+[INFO] --< com.github.three-old-coders.blueprint.T55_BS_Java11.root:T55_Java11-bootstrap_common >--
+[INFO] Building T55_Java11-bootstrap_common 5.7.2-SNAPSHOT                [4/9]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ T55_Java11-bootstrap_common ---
+[INFO] com.github.three-old-coders.blueprint.T55_BS_Java11.root:T55_Java11-bootstrap_common:jar:5.7.2-SNAPSHOT
+[INFO] +- org.apache.tapestry:tapestry5-annotations:jar:5.7.2:compile
+[INFO] +- org.apache.tapestry:tapestry-core:jar:5.7.2:compile
+[INFO] |  +- org.apache.tapestry:tapestry-ioc:jar:5.7.2:compile
+[INFO] |  |  +- org.apache.tapestry:tapestry-func:jar:5.7.2:compile
+[INFO] |  |  +- org.apache.tapestry:plastic:jar:5.7.2:compile
+[INFO] |  |  +- javax.inject:javax.inject:jar:1:compile
+[INFO] |  |  +- javax.annotation:javax.annotation-api:jar:1.3.2:compile
+[INFO] |  |  \- org.slf4j:slf4j-api:jar:1.7.25:compile
+[INFO] |  +- org.apache.tapestry:tapestry-json:jar:5.7.2:compile
+[INFO] |  +- org.apache.tapestry:beanmodel:jar:5.7.2:compile
+[INFO] |  |  +- org.apache.tapestry:commons:jar:5.7.2:compile
+[INFO] |  |  \- org.antlr:antlr-runtime:jar:3.5.2:compile
+[INFO] |  +- org.apache.tapestry:tapestry-http:jar:5.7.2:compile
+[INFO] |  +- jakarta.annotation:jakarta.annotation-api:jar:1.3.4:compile
+[INFO] |  +- jakarta.xml.bind:jakarta.xml.bind-api:jar:2.3.2:compile
+[INFO] |  |  \- jakarta.activation:jakarta.activation-api:jar:1.2.1:compile
+[INFO] |  +- org.glassfish.jaxb:jaxb-runtime:jar:2.3.2:compile
+[INFO] |  |  +- org.glassfish.jaxb:txw2:jar:2.3.2:compile
+[INFO] |  |  +- com.sun.istack:istack-commons-runtime:jar:3.0.8:compile
+[INFO] |  |  +- org.jvnet.staxex:stax-ex:jar:1.8.1:compile
+[INFO] |  |  \- com.sun.xml.fastinfoset:FastInfoset:jar:1.2.16:compile
+[INFO] |  +- com.sun.xml.ws:jaxws-rt:jar:2.3.2:compile
+[INFO] |  |  +- jakarta.xml.ws:jakarta.xml.ws-api:jar:2.3.2:compile
+[INFO] |  |  +- jakarta.xml.soap:jakarta.xml.soap-api:jar:1.4.1:compile
+[INFO] |  |  +- jakarta.jws:jakarta.jws-api:jar:1.1.1:compile
+[INFO] |  |  +- com.sun.xml.ws:policy:jar:2.7.6:compile
+[INFO] |  |  +- org.glassfish.gmbal:gmbal:jar:4.0.0:compile
+[INFO] |  |  |  +- org.glassfish.external:management-api:jar:3.2.1:compile
+[INFO] |  |  |  +- org.glassfish.pfl:pfl-basic:jar:4.0.1:compile
+[INFO] |  |  |  +- org.glassfish.pfl:pfl-tf:jar:4.0.1:compile
+[INFO] |  |  |  |  +- org.glassfish.pfl:pfl-asm:jar:4.0.1:compile
+[INFO] |  |  |  |  \- org.glassfish.pfl:pfl-dynamic:jar:4.0.1:compile
+[INFO] |  |  |  +- org.glassfish.pfl:pfl-basic-tools:jar:4.0.1:compile
+[INFO] |  |  |  \- org.glassfish.pfl:pfl-tf-tools:jar:4.0.1:compile
+[INFO] |  |  +- com.sun.xml.stream.buffer:streambuffer:jar:1.5.7:compile
+[INFO] |  |  +- org.jvnet.mimepull:mimepull:jar:1.9.11:compile
+[INFO] |  |  +- org.glassfish.ha:ha-api:jar:3.1.12:compile
+[INFO] |  |  +- com.sun.xml.messaging.saaj:saaj-impl:jar:1.5.1:compile
+[INFO] |  |  +- com.fasterxml.woodstox:woodstox-core:jar:5.1.0:runtime
+[INFO] |  |  \- org.codehaus.woodstox:stax2-api:jar:4.1:runtime
+[INFO] |  +- javax.xml.ws:jaxws-api:jar:2.3.1:compile
+[INFO] |  |  +- javax.xml.bind:jaxb-api:jar:2.3.1:compile
+[INFO] |  |  |  \- javax.activation:javax.activation-api:jar:1.2.0:compile
+[INFO] |  |  \- javax.xml.soap:javax.xml.soap-api:jar:1.4.0:compile
+[INFO] |  \- commons-codec:commons-codec:jar:1.10:compile
+[INFO] +- org.apache.commons:commons-lang3:jar:3.9:compile
+[INFO] \- org.projectlombok:lombok:jar:1.18.20:provided
+[INFO] 
+[INFO] --< com.github.three-old-coders.blueprint.T55_BS_Java11.root:T55_Java11-bootstrap_v4 >--
+[INFO] Building T55_Java11-bootstrap_v4.6 5.7.2-SNAPSHOT                  [5/9]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ T55_Java11-bootstrap_v4 ---
+[INFO] com.github.three-old-coders.blueprint.T55_BS_Java11.root:T55_Java11-bootstrap_v4:jar:5.7.2-SNAPSHOT
+[INFO] +- com.github.three-old-coders.blueprint.T55_BS_Java11.root:T55_Java11-bootstrap_common:jar:5.7.2-SNAPSHOT:compile
+[INFO] |  +- org.apache.tapestry:tapestry5-annotations:jar:5.7.2:compile
+[INFO] |  +- org.apache.tapestry:tapestry-core:jar:5.7.2:compile
+[INFO] |  |  +- org.apache.tapestry:tapestry-ioc:jar:5.7.2:compile
+[INFO] |  |  |  +- org.apache.tapestry:tapestry-func:jar:5.7.2:compile
+[INFO] |  |  |  +- org.apache.tapestry:plastic:jar:5.7.2:compile
+[INFO] |  |  |  +- javax.inject:javax.inject:jar:1:compile
+[INFO] |  |  |  +- javax.annotation:javax.annotation-api:jar:1.3.2:compile
+[INFO] |  |  |  \- org.slf4j:slf4j-api:jar:1.7.25:compile
+[INFO] |  |  +- org.apache.tapestry:tapestry-json:jar:5.7.2:compile
+[INFO] |  |  +- org.apache.tapestry:beanmodel:jar:5.7.2:compile
+[INFO] |  |  |  +- org.apache.tapestry:commons:jar:5.7.2:compile
+[INFO] |  |  |  \- org.antlr:antlr-runtime:jar:3.5.2:compile
+[INFO] |  |  +- org.apache.tapestry:tapestry-http:jar:5.7.2:compile
+[INFO] |  |  +- jakarta.annotation:jakarta.annotation-api:jar:1.3.4:compile
+[INFO] |  |  +- jakarta.xml.bind:jakarta.xml.bind-api:jar:2.3.2:compile
+[INFO] |  |  |  \- jakarta.activation:jakarta.activation-api:jar:1.2.1:compile
+[INFO] |  |  +- org.glassfish.jaxb:jaxb-runtime:jar:2.3.2:compile
+[INFO] |  |  |  +- org.glassfish.jaxb:txw2:jar:2.3.2:compile
+[INFO] |  |  |  +- com.sun.istack:istack-commons-runtime:jar:3.0.8:compile
+[INFO] |  |  |  +- org.jvnet.staxex:stax-ex:jar:1.8.1:compile
+[INFO] |  |  |  \- com.sun.xml.fastinfoset:FastInfoset:jar:1.2.16:compile
+[INFO] |  |  +- com.sun.xml.ws:jaxws-rt:jar:2.3.2:compile
+[INFO] |  |  |  +- jakarta.xml.ws:jakarta.xml.ws-api:jar:2.3.2:compile
+[INFO] |  |  |  +- jakarta.xml.soap:jakarta.xml.soap-api:jar:1.4.1:compile
+[INFO] |  |  |  +- jakarta.jws:jakarta.jws-api:jar:1.1.1:compile
+[INFO] |  |  |  +- com.sun.xml.ws:policy:jar:2.7.6:compile
+[INFO] |  |  |  +- org.glassfish.gmbal:gmbal:jar:4.0.0:compile
+[INFO] |  |  |  |  +- org.glassfish.external:management-api:jar:3.2.1:compile
+[INFO] |  |  |  |  +- org.glassfish.pfl:pfl-basic:jar:4.0.1:compile
+[INFO] |  |  |  |  +- org.glassfish.pfl:pfl-tf:jar:4.0.1:compile
+[INFO] |  |  |  |  |  +- org.glassfish.pfl:pfl-asm:jar:4.0.1:compile
+[INFO] |  |  |  |  |  \- org.glassfish.pfl:pfl-dynamic:jar:4.0.1:compile
+[INFO] |  |  |  |  +- org.glassfish.pfl:pfl-basic-tools:jar:4.0.1:compile
+[INFO] |  |  |  |  \- org.glassfish.pfl:pfl-tf-tools:jar:4.0.1:compile
+[INFO] |  |  |  +- com.sun.xml.stream.buffer:streambuffer:jar:1.5.7:compile
+[INFO] |  |  |  +- org.jvnet.mimepull:mimepull:jar:1.9.11:compile
+[INFO] |  |  |  +- org.glassfish.ha:ha-api:jar:3.1.12:compile
+[INFO] |  |  |  +- com.sun.xml.messaging.saaj:saaj-impl:jar:1.5.1:compile
+[INFO] |  |  |  +- com.fasterxml.woodstox:woodstox-core:jar:5.1.0:runtime
+[INFO] |  |  |  \- org.codehaus.woodstox:stax2-api:jar:4.1:runtime
+[INFO] |  |  +- javax.xml.ws:jaxws-api:jar:2.3.1:compile
+[INFO] |  |  |  +- javax.xml.bind:jaxb-api:jar:2.3.1:compile
+[INFO] |  |  |  |  \- javax.activation:javax.activation-api:jar:1.2.0:compile
+[INFO] |  |  |  \- javax.xml.soap:javax.xml.soap-api:jar:1.4.0:compile
+[INFO] |  |  \- commons-codec:commons-codec:jar:1.10:compile
+[INFO] |  \- org.apache.commons:commons-lang3:jar:3.9:compile
+[INFO] \- org.projectlombok:lombok:jar:1.18.20:provided
+[INFO] 
+[INFO] --< com.github.three-old-coders.blueprint.T55_BS_WEBAPP_Java11.root:T55_BS_WEBAPP_Java11-ROOT >--
+[INFO] Building T55_BS_WEBAPP_Java11-ROOT (pom) 5.7.2-SNAPSHOT            [6/9]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ T55_BS_WEBAPP_Java11-ROOT ---
+[INFO] com.github.three-old-coders.blueprint.T55_BS_WEBAPP_Java11.root:T55_BS_WEBAPP_Java11-ROOT:pom:5.7.2-SNAPSHOT
+[INFO] \- org.projectlombok:lombok:jar:1.18.20:provided
+[INFO] 
+[INFO] --< com.github.three-old-coders.blueprint.T55_BS_WEBAPP_Java11.root:T55_BS_WEBAPP_Java11-BASE >--
+[INFO] Building T55_BS_WEBAPP_Java11-BASE 5.7.2-SNAPSHOT                  [7/9]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ T55_BS_WEBAPP_Java11-BASE ---
+[INFO] com.github.three-old-coders.blueprint.T55_BS_WEBAPP_Java11.root:T55_BS_WEBAPP_Java11-BASE:jar:5.7.2-SNAPSHOT
+[INFO] +- com.github.three-old-coders.blueprint.T55_BS_Java11.root:T55_Java11-bootstrap_v4:jar:5.7.2-SNAPSHOT:compile
+[INFO] |  \- com.github.three-old-coders.blueprint.T55_BS_Java11.root:T55_Java11-bootstrap_common:jar:5.7.2-SNAPSHOT:compile
+[INFO] |     +- org.apache.tapestry:tapestry5-annotations:jar:5.7.2:compile
+[INFO] |     +- org.apache.tapestry:tapestry-core:jar:5.7.2:compile
+[INFO] |     |  +- org.apache.tapestry:tapestry-ioc:jar:5.7.2:compile
+[INFO] |     |  |  +- org.apache.tapestry:tapestry-func:jar:5.7.2:compile
+[INFO] |     |  |  +- org.apache.tapestry:plastic:jar:5.7.2:compile
+[INFO] |     |  |  +- javax.inject:javax.inject:jar:1:compile
+[INFO] |     |  |  \- javax.annotation:javax.annotation-api:jar:1.3.2:compile
+[INFO] |     |  +- org.apache.tapestry:tapestry-json:jar:5.7.2:compile
+[INFO] |     |  +- org.apache.tapestry:beanmodel:jar:5.7.2:compile
+[INFO] |     |  |  +- org.apache.tapestry:commons:jar:5.7.2:compile
+[INFO] |     |  |  \- org.antlr:antlr-runtime:jar:3.5.2:compile
+[INFO] |     |  +- org.apache.tapestry:tapestry-http:jar:5.7.2:compile
+[INFO] |     |  +- jakarta.annotation:jakarta.annotation-api:jar:1.3.4:compile
+[INFO] |     |  +- jakarta.xml.bind:jakarta.xml.bind-api:jar:2.3.2:compile
+[INFO] |     |  |  \- jakarta.activation:jakarta.activation-api:jar:1.2.1:compile
+[INFO] |     |  +- org.glassfish.jaxb:jaxb-runtime:jar:2.3.2:compile
+[INFO] |     |  |  +- org.glassfish.jaxb:txw2:jar:2.3.2:compile
+[INFO] |     |  |  +- com.sun.istack:istack-commons-runtime:jar:3.0.8:compile
+[INFO] |     |  |  +- org.jvnet.staxex:stax-ex:jar:1.8.1:compile
+[INFO] |     |  |  \- com.sun.xml.fastinfoset:FastInfoset:jar:1.2.16:compile
+[INFO] |     |  +- com.sun.xml.ws:jaxws-rt:jar:2.3.2:compile
+[INFO] |     |  |  +- jakarta.xml.ws:jakarta.xml.ws-api:jar:2.3.2:compile
+[INFO] |     |  |  +- jakarta.xml.soap:jakarta.xml.soap-api:jar:1.4.1:compile
+[INFO] |     |  |  +- jakarta.jws:jakarta.jws-api:jar:1.1.1:compile
+[INFO] |     |  |  +- com.sun.xml.ws:policy:jar:2.7.6:compile
+[INFO] |     |  |  +- org.glassfish.gmbal:gmbal:jar:4.0.0:compile
+[INFO] |     |  |  |  +- org.glassfish.external:management-api:jar:3.2.1:compile
+[INFO] |     |  |  |  +- org.glassfish.pfl:pfl-basic:jar:4.0.1:compile
+[INFO] |     |  |  |  +- org.glassfish.pfl:pfl-tf:jar:4.0.1:compile
+[INFO] |     |  |  |  |  +- org.glassfish.pfl:pfl-asm:jar:4.0.1:compile
+[INFO] |     |  |  |  |  \- org.glassfish.pfl:pfl-dynamic:jar:4.0.1:compile
+[INFO] |     |  |  |  +- org.glassfish.pfl:pfl-basic-tools:jar:4.0.1:compile
+[INFO] |     |  |  |  \- org.glassfish.pfl:pfl-tf-tools:jar:4.0.1:compile
+[INFO] |     |  |  +- com.sun.xml.stream.buffer:streambuffer:jar:1.5.7:compile
+[INFO] |     |  |  +- org.jvnet.mimepull:mimepull:jar:1.9.11:compile
+[INFO] |     |  |  +- org.glassfish.ha:ha-api:jar:3.1.12:compile
+[INFO] |     |  |  +- com.sun.xml.messaging.saaj:saaj-impl:jar:1.5.1:compile
+[INFO] |     |  |  +- com.fasterxml.woodstox:woodstox-core:jar:5.1.0:runtime
+[INFO] |     |  |  \- org.codehaus.woodstox:stax2-api:jar:4.1:runtime
+[INFO] |     |  \- javax.xml.ws:jaxws-api:jar:2.3.1:compile
+[INFO] |     |     +- javax.xml.bind:jaxb-api:jar:2.3.1:compile
+[INFO] |     |     |  \- javax.activation:javax.activation-api:jar:1.2.0:compile
+[INFO] |     |     \- javax.xml.soap:javax.xml.soap-api:jar:1.4.0:compile
+[INFO] |     \- org.apache.commons:commons-lang3:jar:3.9:compile
+[INFO] +- org.apache.shiro:shiro-web:jar:1.7.1:compile
+[INFO] |  +- org.apache.shiro:shiro-core:jar:1.7.1:compile
+[INFO] |  |  +- org.apache.shiro:shiro-lang:jar:1.7.1:compile
+[INFO] |  |  +- org.apache.shiro:shiro-cache:jar:1.7.1:compile
+[INFO] |  |  +- org.apache.shiro:shiro-crypto-hash:jar:1.7.1:compile
+[INFO] |  |  |  \- org.apache.shiro:shiro-crypto-core:jar:1.7.1:compile
+[INFO] |  |  +- org.apache.shiro:shiro-crypto-cipher:jar:1.7.1:compile
+[INFO] |  |  +- org.apache.shiro:shiro-config-core:jar:1.7.1:compile
+[INFO] |  |  +- org.apache.shiro:shiro-config-ogdl:jar:1.7.1:compile
+[INFO] |  |  |  \- commons-beanutils:commons-beanutils:jar:1.9.4:compile
+[INFO] |  |  |     \- commons-collections:commons-collections:jar:3.2.2:compile
+[INFO] |  |  \- org.apache.shiro:shiro-event:jar:1.7.1:compile
+[INFO] |  \- org.owasp.encoder:encoder:jar:1.2.2:compile
+[INFO] +- org.tynamo:tapestry-security:jar:0.9.0:compile
+[INFO] |  \- org.tynamo:tynamo-common:jar:0.0.3:compile
+[INFO] +- org.tynamo.security:tynamo-federatedaccounts-core:jar:0.7.0:compile
+[INFO] |  +- org.apache.httpcomponents:httpclient:jar:4.5.3:compile
+[INFO] |  |  +- org.apache.httpcomponents:httpcore:jar:4.4.6:compile
+[INFO] |  |  \- commons-codec:commons-codec:jar:1.9:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:1.7.2:compile
+[INFO] +- org.slf4j:slf4j-log4j12:jar:1.7.30:compile
+[INFO] |  \- log4j:log4j:jar:1.2.17:compile
+[INFO] \- org.projectlombok:lombok:jar:1.18.20:provided
+[INFO] 
+[INFO] --< com.github.three-old-coders.blueprint.T55_BS_WEBAPP_Java11.root:T55_BS_SB_Java11 >--
+[INFO] Building T55_BS_SB_Java11 5.7.2-SNAPSHOT                           [8/9]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ T55_BS_SB_Java11 ---
+[INFO] com.github.three-old-coders.blueprint.T55_BS_WEBAPP_Java11.root:T55_BS_SB_Java11:jar:5.7.2-SNAPSHOT
+[INFO] +- com.github.three-old-coders.blueprint.T55_BS_Java11.root:T55_Java11-bootstrap_common:jar:5.7.2-SNAPSHOT:compile
+[INFO] |  +- org.apache.tapestry:tapestry5-annotations:jar:5.7.2:compile
+[INFO] |  +- org.apache.tapestry:tapestry-core:jar:5.7.2:compile
+[INFO] |  |  +- org.apache.tapestry:tapestry-ioc:jar:5.7.2:compile
+[INFO] |  |  |  +- org.apache.tapestry:tapestry-func:jar:5.7.2:compile
+[INFO] |  |  |  +- org.apache.tapestry:plastic:jar:5.7.2:compile
+[INFO] |  |  |  +- javax.inject:javax.inject:jar:1:compile
+[INFO] |  |  |  \- javax.annotation:javax.annotation-api:jar:1.3.2:compile
+[INFO] |  |  +- org.apache.tapestry:tapestry-json:jar:5.7.2:compile
+[INFO] |  |  +- org.apache.tapestry:beanmodel:jar:5.7.2:compile
+[INFO] |  |  |  +- org.apache.tapestry:commons:jar:5.7.2:compile
+[INFO] |  |  |  \- org.antlr:antlr-runtime:jar:3.5.2:compile
+[INFO] |  |  +- org.apache.tapestry:tapestry-http:jar:5.7.2:compile
+[INFO] |  |  +- jakarta.xml.bind:jakarta.xml.bind-api:jar:2.3.2:compile
+[INFO] |  |  |  \- jakarta.activation:jakarta.activation-api:jar:1.2.1:compile
+[INFO] |  |  +- org.glassfish.jaxb:jaxb-runtime:jar:2.3.2:compile
+[INFO] |  |  |  +- org.glassfish.jaxb:txw2:jar:2.3.2:compile
+[INFO] |  |  |  +- com.sun.istack:istack-commons-runtime:jar:3.0.8:compile
+[INFO] |  |  |  +- org.jvnet.staxex:stax-ex:jar:1.8.1:compile
+[INFO] |  |  |  \- com.sun.xml.fastinfoset:FastInfoset:jar:1.2.16:compile
+[INFO] |  |  +- com.sun.xml.ws:jaxws-rt:jar:2.3.2:compile
+[INFO] |  |  |  +- jakarta.xml.ws:jakarta.xml.ws-api:jar:2.3.2:compile
+[INFO] |  |  |  +- jakarta.xml.soap:jakarta.xml.soap-api:jar:1.4.1:compile
+[INFO] |  |  |  +- jakarta.jws:jakarta.jws-api:jar:1.1.1:compile
+[INFO] |  |  |  +- com.sun.xml.ws:policy:jar:2.7.6:compile
+[INFO] |  |  |  +- org.glassfish.gmbal:gmbal:jar:4.0.0:compile
+[INFO] |  |  |  |  +- org.glassfish.external:management-api:jar:3.2.1:compile
+[INFO] |  |  |  |  +- org.glassfish.pfl:pfl-basic:jar:4.0.1:compile
+[INFO] |  |  |  |  +- org.glassfish.pfl:pfl-tf:jar:4.0.1:compile
+[INFO] |  |  |  |  |  +- org.glassfish.pfl:pfl-asm:jar:4.0.1:compile
+[INFO] |  |  |  |  |  \- org.glassfish.pfl:pfl-dynamic:jar:4.0.1:compile
+[INFO] |  |  |  |  +- org.glassfish.pfl:pfl-basic-tools:jar:4.0.1:compile
+[INFO] |  |  |  |  \- org.glassfish.pfl:pfl-tf-tools:jar:4.0.1:compile
+[INFO] |  |  |  +- com.sun.xml.stream.buffer:streambuffer:jar:1.5.7:compile
+[INFO] |  |  |  +- org.jvnet.mimepull:mimepull:jar:1.9.11:compile
+[INFO] |  |  |  +- org.glassfish.ha:ha-api:jar:3.1.12:compile
+[INFO] |  |  |  +- com.sun.xml.messaging.saaj:saaj-impl:jar:1.5.1:compile
+[INFO] |  |  |  +- com.fasterxml.woodstox:woodstox-core:jar:5.1.0:runtime
+[INFO] |  |  |  \- org.codehaus.woodstox:stax2-api:jar:4.1:runtime
+[INFO] |  |  +- javax.xml.ws:jaxws-api:jar:2.3.1:compile
+[INFO] |  |  |  +- javax.xml.bind:jaxb-api:jar:2.3.1:compile
+[INFO] |  |  |  |  \- javax.activation:javax.activation-api:jar:1.2.0:compile
+[INFO] |  |  |  \- javax.xml.soap:javax.xml.soap-api:jar:1.4.0:compile
+[INFO] |  |  \- commons-codec:commons-codec:jar:1.10:compile
+[INFO] |  \- org.apache.commons:commons-lang3:jar:3.9:compile
+[INFO] +- com.github.three-old-coders.blueprint.T55_BS_Java11.root:T55_Java11-bootstrap_v4:jar:5.7.2-SNAPSHOT:compile
+[INFO] +- com.github.three-old-coders.blueprint.T55_BS_WEBAPP_Java11.root:T55_BS_WEBAPP_Java11-BASE:jar:5.7.2-SNAPSHOT:compile
+[INFO] |  +- org.apache.shiro:shiro-web:jar:1.7.1:compile
+[INFO] |  |  +- org.apache.shiro:shiro-core:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.shiro:shiro-lang:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.shiro:shiro-cache:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.shiro:shiro-crypto-hash:jar:1.7.1:compile
+[INFO] |  |  |  |  \- org.apache.shiro:shiro-crypto-core:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.shiro:shiro-crypto-cipher:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.shiro:shiro-config-core:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.shiro:shiro-config-ogdl:jar:1.7.1:compile
+[INFO] |  |  |  |  \- commons-beanutils:commons-beanutils:jar:1.9.4:compile
+[INFO] |  |  |  |     \- commons-collections:commons-collections:jar:3.2.2:compile
+[INFO] |  |  |  \- org.apache.shiro:shiro-event:jar:1.7.1:compile
+[INFO] |  |  \- org.owasp.encoder:encoder:jar:1.2.2:compile
+[INFO] |  +- org.tynamo:tapestry-security:jar:0.9.0:compile
+[INFO] |  |  \- org.tynamo:tynamo-common:jar:0.0.3:compile
+[INFO] |  +- org.tynamo.security:tynamo-federatedaccounts-core:jar:0.7.0:compile
+[INFO] |  |  +- org.apache.httpcomponents:httpclient:jar:4.5.3:compile
+[INFO] |  |  |  \- org.apache.httpcomponents:httpcore:jar:4.4.6:compile
+[INFO] |  |  \- org.slf4j:slf4j-api:jar:1.7.2:compile
+[INFO] |  \- org.slf4j:slf4j-log4j12:jar:1.7.30:compile
+[INFO] |     \- log4j:log4j:jar:1.2.17:compile
+[INFO] +- org.springframework.boot:spring-boot-devtools:jar:2.2.4.RELEASE:compile
+[INFO] |  +- org.springframework.boot:spring-boot:jar:2.2.4.RELEASE:compile
+[INFO] |  |  \- org.springframework:spring-context:jar:5.2.3.RELEASE:compile
+[INFO] |  \- org.springframework.boot:spring-boot-autoconfigure:jar:2.2.4.RELEASE:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-web:jar:2.2.4.RELEASE:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-json:jar:2.2.4.RELEASE:compile
+[INFO] |  |  +- com.fasterxml.jackson.core:jackson-databind:jar:2.10.2:compile
+[INFO] |  |  |  +- com.fasterxml.jackson.core:jackson-annotations:jar:2.10.2:compile
+[INFO] |  |  |  \- com.fasterxml.jackson.core:jackson-core:jar:2.10.2:compile
+[INFO] |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.10.2:compile
+[INFO] |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.10.2:compile
+[INFO] |  |  \- com.fasterxml.jackson.module:jackson-module-parameter-names:jar:2.10.2:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-tomcat:jar:2.2.4.RELEASE:compile
+[INFO] |  |  +- org.apache.tomcat.embed:tomcat-embed-core:jar:9.0.30:compile
+[INFO] |  |  +- org.apache.tomcat.embed:tomcat-embed-el:jar:9.0.30:compile
+[INFO] |  |  \- org.apache.tomcat.embed:tomcat-embed-websocket:jar:9.0.30:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-validation:jar:2.2.4.RELEASE:compile
+[INFO] |  |  +- jakarta.validation:jakarta.validation-api:jar:2.0.2:compile
+[INFO] |  |  \- org.hibernate.validator:hibernate-validator:jar:6.0.18.Final:compile
+[INFO] |  |     +- org.jboss.logging:jboss-logging:jar:3.3.2.Final:compile
+[INFO] |  |     \- com.fasterxml:classmate:jar:1.3.4:compile
+[INFO] |  \- org.springframework:spring-webmvc:jar:5.2.3.RELEASE:compile
+[INFO] |     +- org.springframework:spring-aop:jar:5.2.3.RELEASE:compile
+[INFO] |     \- org.springframework:spring-expression:jar:5.2.3.RELEASE:compile
+[INFO] +- org.springframework.boot:spring-boot-starter:jar:2.2.5.RELEASE:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-logging:jar:2.2.5.RELEASE:compile
+[INFO] |  |  +- org.apache.logging.log4j:log4j-to-slf4j:jar:2.12.1:compile
+[INFO] |  |  |  \- org.apache.logging.log4j:log4j-api:jar:2.12.1:compile
+[INFO] |  |  \- org.slf4j:jul-to-slf4j:jar:1.7.30:compile
+[INFO] |  +- jakarta.annotation:jakarta.annotation-api:jar:1.3.5:compile
+[INFO] |  +- org.springframework:spring-core:jar:5.2.4.RELEASE:compile
+[INFO] |  |  \- org.springframework:spring-jcl:jar:5.2.4.RELEASE:compile
+[INFO] |  \- org.yaml:snakeyaml:jar:1.25:runtime
+[INFO] +- org.springframework:spring-web:jar:5.2.4.RELEASE:compile
+[INFO] |  \- org.springframework:spring-beans:jar:5.2.4.RELEASE:compile
+[INFO] +- javax.servlet:javax.servlet-api:jar:3.1.0:compile
+[INFO] \- org.projectlombok:lombok:jar:1.18.20:provided
+[INFO] 
+[INFO] --< com.github.three-old-coders.blueprint.T55_BS_WEBAPP_Java11.root:T55_BS_WAR_Java11 >--
+[INFO] Building T55_BS_WAR_Java11 5.7.2-SNAPSHOT                          [9/9]
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ T55_BS_WAR_Java11 ---
+[INFO] com.github.three-old-coders.blueprint.T55_BS_WEBAPP_Java11.root:T55_BS_WAR_Java11:war:5.7.2-SNAPSHOT
+[INFO] +- com.github.three-old-coders.blueprint.T55_BS_Java11.root:T55_Java11-bootstrap_common:jar:5.7.2-SNAPSHOT:compile
+[INFO] |  +- org.apache.tapestry:tapestry5-annotations:jar:5.7.2:compile
+[INFO] |  +- org.apache.tapestry:tapestry-core:jar:5.7.2:compile
+[INFO] |  |  +- org.apache.tapestry:tapestry-ioc:jar:5.7.2:compile
+[INFO] |  |  |  +- org.apache.tapestry:tapestry-func:jar:5.7.2:compile
+[INFO] |  |  |  +- org.apache.tapestry:plastic:jar:5.7.2:compile
+[INFO] |  |  |  +- javax.inject:javax.inject:jar:1:compile
+[INFO] |  |  |  \- javax.annotation:javax.annotation-api:jar:1.3.2:compile
+[INFO] |  |  +- org.apache.tapestry:tapestry-json:jar:5.7.2:compile
+[INFO] |  |  +- org.apache.tapestry:beanmodel:jar:5.7.2:compile
+[INFO] |  |  |  +- org.apache.tapestry:commons:jar:5.7.2:compile
+[INFO] |  |  |  \- org.antlr:antlr-runtime:jar:3.5.2:compile
+[INFO] |  |  +- org.apache.tapestry:tapestry-http:jar:5.7.2:compile
+[INFO] |  |  +- jakarta.annotation:jakarta.annotation-api:jar:1.3.4:compile
+[INFO] |  |  +- jakarta.xml.bind:jakarta.xml.bind-api:jar:2.3.2:compile
+[INFO] |  |  |  \- jakarta.activation:jakarta.activation-api:jar:1.2.1:compile
+[INFO] |  |  +- org.glassfish.jaxb:jaxb-runtime:jar:2.3.2:compile
+[INFO] |  |  |  +- org.glassfish.jaxb:txw2:jar:2.3.2:compile
+[INFO] |  |  |  +- com.sun.istack:istack-commons-runtime:jar:3.0.8:compile
+[INFO] |  |  |  +- org.jvnet.staxex:stax-ex:jar:1.8.1:compile
+[INFO] |  |  |  \- com.sun.xml.fastinfoset:FastInfoset:jar:1.2.16:compile
+[INFO] |  |  +- com.sun.xml.ws:jaxws-rt:jar:2.3.2:compile
+[INFO] |  |  |  +- jakarta.xml.ws:jakarta.xml.ws-api:jar:2.3.2:compile
+[INFO] |  |  |  +- jakarta.xml.soap:jakarta.xml.soap-api:jar:1.4.1:compile
+[INFO] |  |  |  +- jakarta.jws:jakarta.jws-api:jar:1.1.1:compile
+[INFO] |  |  |  +- com.sun.xml.ws:policy:jar:2.7.6:compile
+[INFO] |  |  |  +- org.glassfish.gmbal:gmbal:jar:4.0.0:compile
+[INFO] |  |  |  |  +- org.glassfish.external:management-api:jar:3.2.1:compile
+[INFO] |  |  |  |  +- org.glassfish.pfl:pfl-basic:jar:4.0.1:compile
+[INFO] |  |  |  |  +- org.glassfish.pfl:pfl-tf:jar:4.0.1:compile
+[INFO] |  |  |  |  |  +- org.glassfish.pfl:pfl-asm:jar:4.0.1:compile
+[INFO] |  |  |  |  |  \- org.glassfish.pfl:pfl-dynamic:jar:4.0.1:compile
+[INFO] |  |  |  |  +- org.glassfish.pfl:pfl-basic-tools:jar:4.0.1:compile
+[INFO] |  |  |  |  \- org.glassfish.pfl:pfl-tf-tools:jar:4.0.1:compile
+[INFO] |  |  |  +- com.sun.xml.stream.buffer:streambuffer:jar:1.5.7:compile
+[INFO] |  |  |  +- org.jvnet.mimepull:mimepull:jar:1.9.11:compile
+[INFO] |  |  |  +- org.glassfish.ha:ha-api:jar:3.1.12:compile
+[INFO] |  |  |  +- com.sun.xml.messaging.saaj:saaj-impl:jar:1.5.1:compile
+[INFO] |  |  |  +- com.fasterxml.woodstox:woodstox-core:jar:5.1.0:runtime
+[INFO] |  |  |  \- org.codehaus.woodstox:stax2-api:jar:4.1:runtime
+[INFO] |  |  +- javax.xml.ws:jaxws-api:jar:2.3.1:compile
+[INFO] |  |  |  +- javax.xml.bind:jaxb-api:jar:2.3.1:compile
+[INFO] |  |  |  |  \- javax.activation:javax.activation-api:jar:1.2.0:compile
+[INFO] |  |  |  \- javax.xml.soap:javax.xml.soap-api:jar:1.4.0:compile
+[INFO] |  |  \- commons-codec:commons-codec:jar:1.10:compile
+[INFO] |  \- org.apache.commons:commons-lang3:jar:3.9:compile
+[INFO] +- com.github.three-old-coders.blueprint.T55_BS_Java11.root:T55_Java11-bootstrap_v4:jar:5.7.2-SNAPSHOT:compile
+[INFO] +- com.github.three-old-coders.blueprint.T55_BS_WEBAPP_Java11.root:T55_BS_WEBAPP_Java11-BASE:jar:5.7.2-SNAPSHOT:compile
+[INFO] |  +- org.apache.shiro:shiro-web:jar:1.7.1:compile
+[INFO] |  |  +- org.apache.shiro:shiro-core:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.shiro:shiro-lang:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.shiro:shiro-cache:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.shiro:shiro-crypto-hash:jar:1.7.1:compile
+[INFO] |  |  |  |  \- org.apache.shiro:shiro-crypto-core:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.shiro:shiro-crypto-cipher:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.shiro:shiro-config-core:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.shiro:shiro-config-ogdl:jar:1.7.1:compile
+[INFO] |  |  |  |  \- commons-beanutils:commons-beanutils:jar:1.9.4:compile
+[INFO] |  |  |  |     \- commons-collections:commons-collections:jar:3.2.2:compile
+[INFO] |  |  |  \- org.apache.shiro:shiro-event:jar:1.7.1:compile
+[INFO] |  |  \- org.owasp.encoder:encoder:jar:1.2.2:compile
+[INFO] |  +- org.tynamo:tapestry-security:jar:0.9.0:compile
+[INFO] |  |  \- org.tynamo:tynamo-common:jar:0.0.3:compile
+[INFO] |  +- org.tynamo.security:tynamo-federatedaccounts-core:jar:0.7.0:compile
+[INFO] |  |  \- org.apache.httpcomponents:httpclient:jar:4.5.3:compile
+[INFO] |  |     \- org.apache.httpcomponents:httpcore:jar:4.4.6:compile
+[INFO] |  \- org.slf4j:slf4j-log4j12:jar:1.7.30:compile
+[INFO] |     \- log4j:log4j:jar:1.2.17:compile
+[INFO] +- org.slf4j:slf4j-jdk14:jar:1.7.30:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:1.7.30:compile
+[INFO] \- org.projectlombok:lombok:jar:1.18.20:provided
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for blueprint tapestry5 (pom) 5.7.2-SNAPSHOT:
+[INFO] 
+[INFO] blueprint tapestry5 (pom) .......................... SUCCESS [  0.619 s]
+[INFO] T55_BS_Java11 (pom) ................................ SUCCESS [  0.007 s]
+[INFO] T55_Java11_bootstrap-ROOT (pom) .................... SUCCESS [  0.007 s]
+[INFO] T55_Java11-bootstrap_common ........................ SUCCESS [  0.202 s]
+[INFO] T55_Java11-bootstrap_v4.6 .......................... SUCCESS [  0.046 s]
+[INFO] T55_BS_WEBAPP_Java11-ROOT (pom) .................... SUCCESS [  0.005 s]
+[INFO] T55_BS_WEBAPP_Java11-BASE .......................... SUCCESS [  0.201 s]
+[INFO] T55_BS_SB_Java11 ................................... SUCCESS [  0.223 s]
+[INFO] T55_BS_WAR_Java11 .................................. SUCCESS [  0.038 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.665 s
+[INFO] Finished at: 2021-05-03T01:59:35+02:00
+[INFO] ------------------------------------------------------------------------

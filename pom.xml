@@ -22,8 +22,8 @@
     <properties>
         <!-- https://stackoverflow.com/questions/58836862/jdk-11-and-javadoc -->
         <maven.javadoc.skip>true</maven.javadoc.skip>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <lombok.version>1.18.20</lombok.version>
     </properties>
 
     <modules>

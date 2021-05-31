@@ -56,7 +56,7 @@ public abstract class TocSecurityRealmBase<T extends ITocSecurityUser>
         final Set<String> permissions = createPermissions(user, roles);
 
         final TocSecurityUserContainer securityUser = new TocSecurityUserContainer(user, roles, permissions);
-        final SimpleAuthenticationInfo sai = new SimpleAuthenticationInfo(securityUser, null, _realmName);
+        final SimpleAuthenticationInfo sai = new SimpleAuthenticationInfo(securityUser, token.getCredentials(), _realmName);
 
         return sai;
     }
