@@ -103,7 +103,7 @@
                 <configuration>
                     <mainClass>com.github.three_old_coders.blueprint.clamav.ClamAvSBApplication</mainClass>
                     <layout>ZIP</layout>
-                    <outputDirectory>${project.build.directory}/../src/main/DOCKER</outputDirectory>
+                    <outputDirectory>src/main/BUILD</outputDirectory>
                     <finalName>docker_sb_clamav-FULL</finalName>
                 </configuration>
             </plugin>
@@ -120,7 +120,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputFile>${project.build.directory}/../src/main/DOCKER/docker_sb_clamav-FULL.jar</outputFile>
+                            <outputFile>COMPOSE/docker_sb_clamav-FULL.jar</outputFile>
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
