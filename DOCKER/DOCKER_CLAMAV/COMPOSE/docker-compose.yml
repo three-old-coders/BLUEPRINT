@@ -9,7 +9,8 @@ services:
     environment:
       # see springboot config: bootstrap-clamav_service-generic.properties
       # passed to supervisord run.conf as "ENV_SPRING_PROFILE"
-      - SPRING_PROFILE=clamav_service-generic
+      # - SPRING_PROFILE=clamav_service-generic
+      - SPRING_PROFILE=clamav_service-standalone
       # - JAVA_OPTIONS=-Dlogging.level.org.springframework=TRACE
       # seems we have to evaluate all properties, otherwise springboot does not recognize them
       - EUREKA_ENABLED=${EUREKA_ENABLED}
@@ -18,7 +19,7 @@ services:
       - CLAMAV_REST_SERVICE_NAME=clamav-rest-servce_${CLAMAV_REST_API_PORT:-3316}
       - CLAMAV_REST_MULTIPART_MAX_FILE_SIZE=${CLAMAV_REST_MULTIPART_MAX_FILE_SIZE:-5MB}
     ports:
-      - ${CLAMAV_REST_API_PORT:-3316}:3316
+      - 127.0.0.1:${CLAMAV_REST_API_PORT:-3316}:3316
       # - 127.0.0.1:3310:3310
     volumes:
       # - <LOCAL>/DANGER_CLAMAV_SCAN_DIR:/DANGER_SCAN_DIR:ro

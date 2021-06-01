@@ -96,6 +96,7 @@
                 </configuration>
             </plugin>
 
+            <!-- to create the spring boot final jar used by docker compose: mvn install spring-boot:repackage -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -103,11 +104,11 @@
                 <configuration>
                     <mainClass>com.github.three_old_coders.blueprint.clamav.ClamAvSBApplication</mainClass>
                     <layout>ZIP</layout>
-                    <outputDirectory>src/main/BUILD</outputDirectory>
+                    <outputDirectory>src/../COMPOSE</outputDirectory>
                     <finalName>docker_sb_clamav-FULL</finalName>
                 </configuration>
             </plugin>
-
+<!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -132,6 +133,9 @@
                                 </filter>
                             </filters>
                             <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.github.three_old_coders.blueprint.clamav.ClamAvSBApplication</mainClass>
+                                </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/spring.factories</resource>
                                 </transformer>
@@ -140,10 +144,10 @@
                     </execution>
                 </executions>
             </plugin>
+-->
         </plugins>
     </build>
 
-    <!--
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -155,5 +159,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    -->
 </project>
