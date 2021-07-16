@@ -9,26 +9,22 @@ public class BlockingExecutorService
     public BlockingExecutorService(final int noOfThreads, final int workQueueSize, final int abortIfStalled_sec)
     {
         final ArrayBlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<>(workQueueSize);
-        final RejectedExecutionHandler reh = new RejectedExecutionHandler() {
-            @Override
-            public void rejectedExecution(final Runnable r, final ThreadPoolExecutor executor)
-            {
-                final long start_sec = System.currentTimeMillis() / 1000;
-                while (0 == workQueue.remainingCapacity()) {
-                    try {
-                        final long end_sec = System.currentTimeMillis() / 1000;
-                        if (end_sec - start_sec > abortIfStalled_sec) {
-                            throw new IllegalStateException("executor service seems stalled. no changes after [" + abortIfStalled_sec + "_sec]");
-                        }
-                        Thread.sleep(100);
-                        // System.out.println("waited [1_sec]");
-                    } catch (final InterruptedException e) {
+        final RejectedExecutionHandler reh = (r, executor) -> {
+            final long start_sec = System.currentTimeMillis() / 1000;
+            while (0 == workQueue.remainingCapacity()) {
+                try {
+                    final long end_sec = System.currentTimeMillis() / 1000;
+                    if (end_sec - start_sec > abortIfStalled_sec) {
+                        throw new IllegalStateException("executor service seems stalled. no changes after [" + abortIfStalled_sec + "_sec]");
                     }
+                    Thread.sleep(100);
+                    // System.out.println("waited [1_sec]");
+                } catch (final InterruptedException e) {
                 }
-
-                execute(r);
-                // System.out.println("re-submitted [" + r + "]");
             }
+
+            execute(r);
+            // System.out.println("re-submitted [" + r + "]");
         };
 
          _executorService = new ThreadPoolExecutor(noOfThreads, noOfThreads, 0L, TimeUnit.MILLISECONDS, workQueue, reh);

@@ -44,7 +44,6 @@ public abstract class RundeckJavaPicoliWorkflowStepPluginBase
             // {JDK=jdk-11.0.7, -inputFile=default_in_file, arg 1 resultFileB=B, -apiKey=12345, arg 0 resultFileA=A}
 
             final List<String> scriptArgs = new ArrayList<>();
-
             final String jdk = (String) map.get(JDK);
             if (RUNDECK_JDK.equals(jdk)) {
                 scriptArgs.add("java");
@@ -74,49 +73,61 @@ public abstract class RundeckJavaPicoliWorkflowStepPluginBase
                 throw new StepException("unable to detect plugin location", e, StepFailureReason.PluginFailed);
             }
 
-            scriptArgs.add(getExecutionClass());
-
             final Description description = getDescription();
-            final SortedMap<Integer, String> args = new TreeMap<>();
+            final SortedMap<Integer, String> orderedArgs = new TreeMap<>();
+            List<String> jvmArgs = null;
+            List<String> programParams = new ArrayList<>();
             for (final Map.Entry<String, Object> entry : map.entrySet()) {
                 final Object value = entry.getValue();
                 if (null != value) {
-                    final String key = entry.getKey();
-                    if (key.startsWith("arg ")) {
-                        final String[] keyParts = StringUtils.split(key, " ");
-                        args.put(Integer.parseInt(keyParts[1]), value.toString());
-                    } else if (!JDK.equals(key)) {
+                    final String argKey = entry.getKey();
+                    String argValue = StringUtils.trimToEmpty(value.toString());
+                    // be careful: logs passwords System.out.println("argKey: " + argKey + ", argValue: " + argValue);
+                    // handle unnamed arguments (keep order 0..n)
+                    if (argKey.startsWith("arg ")) {
+                        final String[] keyParts = StringUtils.split(argKey, " ");
+                        final String orderNumber = keyParts[1];
+                        orderedArgs.put(Integer.parseInt(orderNumber), argValue);
+                    } else if (!JDK.equals(argKey)) {
                         // {JDK=jdk-11.0.7, inputFile=default_in_file, arg 1 resultFileB=B, apiKey=12345, arg 0 resultFileA=A}
                         // convert to
                         // java -cp JDK8/target/rundeck-jdk8-0.0.1-SNAPSHOT.jar com.github.three_old_coders.blueprint.rundeck.Runner_PicoliCLI -inFile=default_in_file -apikey=12345 A B
-
-                        for (final Property property : description.getProperties()) {
-                            if (key.equals(property.getName())) {
-                                if ("Boolean".equals(property.getType().name())) {
-                                    if ("true".equals(value.toString())) {
-                                        scriptArgs.add(property.getTitle());
+                        if ("jvmSettings".equals(argKey)) {
+                            if (argValue.startsWith("\"") && argValue.endsWith("\"")) {
+                                argValue = argValue.substring(1, argValue.length()-1);
+                            }
+                            jvmArgs = Arrays.asList(StringUtils.split(argValue, " "));
+                        } else {
+                            for (final Property property : description.getProperties()) {
+                                if (argKey.equals(property.getName())) {
+                                    if ("Boolean".equals(property.getType().name())) {
+                                        if ("true".equals(argValue)) {
+                                            programParams.add(property.getTitle());
+                                        }
+                                    } else {
+                                        programParams.add(property.getTitle());
+                                        programParams.add(argValue);
                                     }
-                                } else {
-                                    scriptArgs.add(property.getTitle());
-                                    scriptArgs.add(value.toString());
+                                    break;
                                 }
-                                break;
                             }
                         }
                     }
                 }
             }
 
-            for (final Map.Entry<Integer, String> integerStringEntry : args.entrySet()) {
+            if (null != jvmArgs) {
+                scriptArgs.addAll(jvmArgs);
+            }
+
+            scriptArgs.add(getExecutionClass());
+            scriptArgs.addAll(programParams);
+            for (final Map.Entry<Integer, String> integerStringEntry : orderedArgs.entrySet()) {
                 scriptArgs.add(integerStringEntry.getValue());
             }
 
-            System.out.println(scriptArgs);
-
-            // final ProcessBuilder builder = new ProcessBuilder(scriptArgs);
-            // builder.redirectError(ProcessBuilder.Redirect.INHERIT);
-            // builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
-            // final int exitCode = builder.start().waitFor();
+            // be careful: logs passwords System.out.println("argKey: " + argKey + ", argValue: " + argValue);
+            // System.out.println(scriptArgs);
 
             final int exitCode = new ProcessExecutor().command(scriptArgs).redirectOutput(System.out).execute().getExitValue();
             if (0 != exitCode) {
