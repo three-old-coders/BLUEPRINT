@@ -24,7 +24,7 @@
         <dependency>
             <groupId>org.rundeck</groupId>
             <artifactId>rundeck-core</artifactId>
-            <version>3.2.4-20200318</version>
+            <version>3.3.14-20210827</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
