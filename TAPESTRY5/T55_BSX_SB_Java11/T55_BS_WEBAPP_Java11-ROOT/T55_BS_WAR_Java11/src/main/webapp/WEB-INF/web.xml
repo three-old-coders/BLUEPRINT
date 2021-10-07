@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+    <display-name>Tapestry 5 Application (Bootstrap 3,4,5)</display-name>
+
+    <context-param>
+        <param-name>tapestry.app-package</param-name>
+        <param-value>com.github.three_old_coders.blueprint.t55bsBase</param-value>
+    </context-param>
+    <context-param>
+        <param-name>tapestry.app-catalog</param-name>
+        <param-value>classpath:WEB-INF/Application.properties</param-value>
+    </context-param>
+    <context-param>
+        <param-name>tapestry-execution-mode-listener.defaultValueIfNoSystemPropertyIsDefined</param-name>
+        <param-value>DevelopmentMode</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>tapestry.bootstrapX-modules</param-name>
+        <param-value>com.github.three_old_coders.blueprint.t55bsX.services.BootstrapXModule</param-value>
+    </context-param>
+    <context-param>
+        <param-name>tapestry.securityRealmForTestingOnly-modules</param-name>
+        <param-value>com.github.three_old_coders.blueprint.t55bsBase.services.security.test.TocSecurityTestOnlyModule</param-value>
+    </context-param>
+
+    <filter>
+        <filter-name>T55AppBase</filter-name>
+        <filter-class>org.apache.tapestry5.TapestryFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>T55AppBase</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+</web-app>

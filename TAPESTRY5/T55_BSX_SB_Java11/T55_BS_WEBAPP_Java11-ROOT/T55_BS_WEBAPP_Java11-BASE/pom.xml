@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.three-old-coders.blueprint.T55_BS_WEBAPP_Java11.root</groupId>
+        <artifactId>T55_BS_WEBAPP_Java11-ROOT</artifactId>
+        <version>5.7.3-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>T55_BS_WEBAPP_Java11-BASE</artifactId>
+    <version>5.7.3-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>T55_BS_WEBAPP_Java11-BASE</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.three-old-coders.blueprint.T55_BS_Java11.root</groupId>
+            <artifactId>T55_Java11-bootstrap_X</artifactId>
+            <version>5.7.3-SNAPSHOT</version>
+        </dependency>
+
+        <!--  security -->
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>1.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.tynamo</groupId>
+            <artifactId>tapestry-security</artifactId>
+            <version>0.9.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.tapestry</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--
+        <dependency>
+            <groupId>org.tynamo.security</groupId>
+            <artifactId>tynamo-federatedaccounts-core</artifactId>
+            <version>0.7.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        -->
+
+        <!-- other -->
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <apestry-Module-Classes>com.github.three_old_coders.blueprint.t55bsBase.services.T55AppBaseModule</apestry-Module-Classes>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

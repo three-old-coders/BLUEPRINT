@@ -1,0 +1,67 @@
+<html t:type="BSLayout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
+
+<h1>Bootstrap - Alert Demo (using T5x components)</h1>
+
+<t:t55bs.Alert theme="Secondary">
+    This is a success alert as Tapestry component with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</t:t55bs.Alert>
+
+<t:t55bs.Alert theme="Success" text="This is a success alert as Tapestry component, no body, no link"/>
+
+<t:t55bs.GridRow>
+    <t:t55bs.GridCol class="test1" xl="8" lg="3" xxl="3">
+        <div class="alert alert-danger" role="alert">
+            This is a danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+        </div>
+    </t:t55bs.GridCol>
+    <t:t55bs.GridCol class="test2" xl="4" lg="3">
+        <div class="alert alert-warning" role="alert">
+            This is a warning alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+        </div>
+    </t:t55bs.GridCol>
+</t:t55bs.GridRow>
+
+<div class="alert alert-info" role="alert">
+    This is a info alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+<div class="alert alert-light" role="alert">
+    This is a light alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+<div class="alert alert-dark" role="alert">
+    This is a dark alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+
+<a href="${message:bootstrap-url}/components/alerts">Goto Bootstrap 4 Alert sample page</a>
+
+<div class="alert alert-primary" role="alert">
+    This is a primary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+
+
+
+<h1>Bootstrap - Alert Demo (using bootstrap CSS classes, some will fail, due to wrong col css classes)</h1>
+
+<t:t55bs.GridRow>
+    <t:t55bs.GridCol lg="4">
+        <div class="row">
+            <div class="col-md-8"><div class="alert alert-danger" role="alert">BS3 left</div></div>
+            <div class="col-offset-1 col-md-3"><div class="alert alert-danger" role="alert">BS3 right</div></div>
+        </div>
+    </t:t55bs.GridCol>
+    <t:t55bs.GridCol lg="4">
+        <div class="row">
+            <div class="col-md-8"><div class="alert alert-danger" role="alert">BS4 left</div></div>
+            <div class="offset-md-1 col-md-3"><div class="alert alert-danger" role="alert">BS4 right</div></div>
+        </div>
+    </t:t55bs.GridCol>
+    <t:t55bs.GridCol lg="4">
+        <div class="row">
+            <div class="col-md-8"><div class="alert alert-danger" role="alert">BS5 left</div></div>
+            <div class="offset-md-1 col-md-3"><div class="alert alert-danger" role="alert">BS5 right</div></div>
+        </div>
+    </t:t55bs.GridCol>
+</t:t55bs.GridRow>
+
+
+
+</html>

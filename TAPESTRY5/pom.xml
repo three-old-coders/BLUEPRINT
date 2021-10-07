@@ -13,20 +13,15 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>blueprint-tapestry5.root</artifactId>
     <packaging>pom</packaging>
-    <version>5.7.2-SNAPSHOT</version>
-    
+    <version>5.7.3-SNAPSHOT</version>
     <name>blueprint tapestry5 (pom)</name>
 
     <properties>
-        <tapestry.version>5.7.2</tapestry.version>
-
-        <java.version>11</java.version>
-        <maven.compiler.source>$(java.version}</maven.compiler.source>
-        <maven.compiler.target>$(java.version}</maven.compiler.target>
+        <tapestry.version>5.7.3</tapestry.version>
     </properties>
 
     <modules>
-        <module>T55_BS4_SB_Java11</module>
+        <module>T55_BSX_SB_Java11</module>
     </modules>
 
     <dependencies>
@@ -45,9 +40,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <release>${java.version}</release>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <release>${maven.compiler.target}</release>
                     <forceJavacCompilerUse>true</forceJavacCompilerUse>
                     <encoding>UTF-8</encoding>
                 </configuration>
