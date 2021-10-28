@@ -11,13 +11,20 @@ public class TestCase_PicoliUtils
 {
     public void testConversion()
     {
-        final JSONObject jo = PicoliUtils.convert(Runner_PicoliSampleCLI.class.getName(), new CommandLine(new Runner_PicoliSampleCLI()));
+        final JSONObject jo = PicoliUtils.convert(Runner_PicoSampleCLI_2.class.getName(), new CommandLine(new Runner_PicoSampleCLI_2()));
 
         final JSONArray ja = jo.getJSONArray("args");
-        Assert.assertEquals(5, ja.length());
+        System.out.println(ja);
+        Assert.assertEquals(7, ja.length());
 
-        Assert.assertEquals("-apikey", ja.getJSONObject(0).get("shortestName"));
-        Assert.assertFalse(ja.getJSONObject(1).getBoolean("required"));
-        Assert.assertEquals(1, ja.getJSONObject(4).getInt("index"));
+        Assert.assertEquals("-apikey", ja.getJSONObject(1).get("shortestName"));
+        Assert.assertFalse(ja.getJSONObject(2).getBoolean("required"));
+        Assert.assertEquals(1, ja.getJSONObject(6).getInt("index"));
+
+        try {
+            Runner_PicoSampleCLI_2.main(new String[]{"-Da", "-Db=c", "-apikey APIKEY"});
+        } catch (final Exception e) {
+            Assert.assertTrue(e.getMessage().contains("Missing required parameters: '<resultFileA>', '<resultFileB>'"));
+        }
     }
 }

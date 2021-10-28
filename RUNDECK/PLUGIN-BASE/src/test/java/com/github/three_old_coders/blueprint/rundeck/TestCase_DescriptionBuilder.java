@@ -13,8 +13,8 @@ public class TestCase_DescriptionBuilder
     public void test()
     {
         final DescriptionBuilder descriptionBuilder = DescriptionBuilder.builder().name("providerName").title("title").description("description");
-        final CommandLine commandLine = PicoliUtils.createFrom(Runner_PicoliSampleCLI.class);
-        final JSONObject jo = PicoliUtils.convert(Runner_PicoliSampleCLI.class.getName(), commandLine);
+        final CommandLine commandLine = PicoliUtils.createFrom(Runner_PicoSampleCLI_2.class);
+        final JSONObject jo = PicoliUtils.convert(Runner_PicoSampleCLI_2.class.getName(), commandLine);
 
         DescriptionUtils.addProperties(descriptionBuilder, jo);
 

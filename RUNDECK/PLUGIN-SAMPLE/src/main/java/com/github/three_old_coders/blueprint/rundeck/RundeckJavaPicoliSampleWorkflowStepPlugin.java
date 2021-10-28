@@ -20,6 +20,6 @@ public class RundeckJavaPicoliSampleWorkflowStepPlugin
 
     protected Class<?> getPicoliClass()
     {
-        return Runner_PicoliSampleCLI.class;
+        return Runner_PicoliSampleCLI_1.class;
     }
 }

@@ -3,14 +3,13 @@ package com.github.three_old_coders.blueprint.rundeck;
 import picocli.CommandLine;
 
 import java.io.File;
-import java.util.concurrent.Callable;
 
 @CommandLine.Command(
-    description = "test Picoli CLI class", name = "Runner_PicoliSampleCLI",
+    description = "test Pico CLI class", name = "Runner_PicoSampleCLI_2",
     mixinStandardHelpOptions = true, version = "0.1"
 )
-public class Runner_PicoliSampleCLI
-    implements Callable<Integer>
+public class Runner_PicoSampleCLI_2
+    extends PicoCLIBase
 {
     @CommandLine.Parameters(index = "1", description = "result file B")
     private File resultFileB;
@@ -27,13 +26,14 @@ public class Runner_PicoliSampleCLI
     @CommandLine.Option(names = {"-inFile"}, description = "file to read", required = true, defaultValue = "default_in_file")
     private File inputFile;
 
-    @CommandLine.Option(names = {"-optionalFlag"}, description = "optional flag", required = false)
+    @CommandLine.Option(names = {"-optionalFlag"}, description = "optional flag")
     private File optionalFlag;
 
     // ----
 
     public static void main(final String[] args)
     {
+        System.exit(new CommandLine(new Runner_PicoSampleCLI_2()).execute(args));
     }
 
     @Override public Integer call()

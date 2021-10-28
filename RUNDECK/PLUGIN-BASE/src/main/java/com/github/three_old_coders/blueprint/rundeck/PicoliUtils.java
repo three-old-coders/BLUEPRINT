@@ -7,6 +7,8 @@ import org.apache.tapestry5.json.JSONObject;
 import picocli.CommandLine;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Member;
+import java.lang.reflect.Method;
 import java.util.*;
 
 public class PicoliUtils
@@ -24,19 +26,17 @@ public class PicoliUtils
             if (a instanceof CommandLine.Model.PositionalParamSpec) {
                 params.add((CommandLine.Model.PositionalParamSpec)a);
             } else if (a instanceof CommandLine.Model.OptionSpec) {
-                if (! ((Field)a.userObject()).getDeclaringClass().getName().endsWith("CommandLine$AutoHelpMixin")) {
+                if (a.userObject() instanceof Field) {
+                    if (! ((Field)a.userObject()).getDeclaringClass().getName().endsWith("CommandLine$AutoHelpMixin")) {
+                        options.add((CommandLine.Model.OptionSpec)a);
+                    }
+                } else if (a.userObject() instanceof Method) {
                     options.add((CommandLine.Model.OptionSpec)a);
                 }
             }
         }
 
-        Collections.sort(params, new Comparator<CommandLine.Model.PositionalParamSpec>()
-        {
-            @Override public int compare(final CommandLine.Model.PositionalParamSpec o1, final CommandLine.Model.PositionalParamSpec o2)
-            {
-                return o1.index().compareTo(o2.index());
-            }
-        });
+        Collections.sort(params, Comparator.comparing(CommandLine.Model.PositionalParamSpec::index));
 
         final JSONArray ja = new JSONArray();
         for (CommandLine.Model.OptionSpec o : options) {
@@ -72,7 +72,7 @@ public class PicoliUtils
                 }
             }
 
-            throw new NullPointerException("missing picoli command line");
+            throw new NullPointerException("missing picocli command line");
         } catch (final Exception e) {
             throw new IllegalStateException("unable to create JSON description", e);
         }
