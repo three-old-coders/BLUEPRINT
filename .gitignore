@@ -1,6 +1,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+/temp
 **/dependency-reduced-pom.xml
 docker_sb_clamav-FULL.jar
 

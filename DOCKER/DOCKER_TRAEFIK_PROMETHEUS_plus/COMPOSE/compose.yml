@@ -1,0 +1,77 @@
+version: '3.9'
+
+networks:
+  prometheus_network:
+    driver: bridge
+
+services:
+  traefik:
+    image: traefik:v2.5.4
+    command:
+      - "--log.level=DEBUG"
+      - "--api.dashboard=true"
+      # ----
+      # NOT WORKING - "--entryPoints.metrics.address=&#58;8082"
+      # NOT WORKING - "--entryPoints.metrics.address=:8082"
+      - "--metrics.prometheus=true"
+      - "--metrics.prometheus.buckets=0.1,0.3,1.2,5.0"
+      # - "--metrics.prometheus.entryPoint=metrics"
+      # - "--metrics.prometheus.manualrouting=true"
+      # ----
+      - "--providers.docker=true"
+      - "--providers.docker.watch"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 80:80
+      - 8080:8080
+    labels:
+      # GET RID OF CONFIG ENTRIES (use admin/admin as default) - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_BASIC_AUTH}"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_BASIC_AUTH:-admin:$$apr1$$gaS8tVEe$$MjqM8IlBvz2PRFEWcwha1/}"
+      - "traefik.http.middlewares.traefik-auth.basicauth.removeheader=true"
+      - "traefik.http.routers.traefik-ui.service=api@internal"
+      - "traefik.http.routers.traefik-ui.middlewares=traefik-auth"
+      # GET RID OF CONFIG ENTRIES - "traefik.http.routers.traefik-ui.rule=Host(`${TRAEFIK_URL}`)"
+      - "traefik.http.routers.traefik-ui.rule=Host(`${TRAEFIK_URL:-traefik.localhost}`)"
+      # ----
+      - "traefik.http.routers.metrics.middlewares=myauth"
+      # "traefik.http.routers.metrics.rule=PathPrefix(`/metrics`)"
+      - "traefik.http.routers.metrics.rule=Host(`${TRAEFIK_URL:-traefik.localhost}`)"
+      - "traefik.http.routers.metrics.tls=true"
+      - "traefik.http.routers.metrics.tls.certResolver=sec"
+      - "traefik.http.routers.metrics.service=metrics"
+      - "traefik.http.services.metrics.loadbalancer.server.port=8082"
+      # ----
+      - "traefik.docker.network=proxy"
+    networks:
+      - prometheus_network
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  prometheus:
+    image: prom/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.size=256MB'
+    volumes:
+      - ${PROMETHEUS_CONFIG:-./config/dev/prometheus}:/etc/prometheus/
+      - ${PROMETHEUS_DATA:-./temp/dev/prometheus.data}:/prometheus
+    ports:
+      - 9090:9090
+    labels:
+      - "traefik.http.routers.prometheus.rule=Host(`${PROMETHEUS_URL:-'prometheus.localhost'}`)"
+      - "traefik.http.routers.prometheus.service=prometheus"
+      - "traefik.http.routers.prometheus.middlewares=traefik-auth"
+      - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
+      - "traefik.docker.network=inbound"
+    networks:
+      - prometheus_network
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"

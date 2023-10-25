@@ -1,0 +1,21 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+  external_labels:
+      monitor: 'DEV-EXAMPLE'
+
+rule_files:
+  - 'alert.rules'
+
+scrape_configs:
+  - job_name: 'prometheus-dev'
+    scrape_interval: 5s
+    static_configs:
+         - targets: ['localhost:9090']
+
+  - job_name: traefik
+    metrics_path: /metrics
+    static_configs:
+      # BE CAREFUL, REDUNDANT TO compose.yml
+      - targets:
+        - traefik.localhost:8080
