@@ -11,12 +11,12 @@ scrape_configs:
   - job_name: 'prometheus-dev'
     scrape_interval: 5s
     static_configs:
-      - targets: ['prometheus.localhost:9090']
+      - targets: ['localhost:9090']
 
   - job_name: 'pushgateway-dev'
     honor_labels: true
     static_configs:
-      - targets: ['pushgateway.localhost:9091']
+      - targets: ['pushgateway:9091']
 
   - job_name: 'traefik-dev'
     honor_labels: true
@@ -24,5 +24,5 @@ scrape_configs:
     static_configs:
       # BE CAREFUL, REDUNDANT TO compose.yml
       - targets:
-        - "traefik.localhost:8080"
+        - "localhost:8080"
 
