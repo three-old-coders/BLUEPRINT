@@ -3,6 +3,7 @@ package com.github.three_old_coders.blueprint.infrastructure.prometheus;
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Counter;
 import io.prometheus.client.Info;
+import io.prometheus.client.exporter.BasicAuthHttpConnectionFactory;
 import io.prometheus.client.exporter.PushGateway;
 import lombok.SneakyThrows;
 
@@ -18,6 +19,7 @@ public class PrometheusPushgatewaySampleRunner
     public static void main(final String[] args)
     {
         final PushGateway client = new PushGateway(new URL("http://localhost:9091"));
+        client.setConnectionFactory(new BasicAuthHttpConnectionFactory("admin", "admin"));
         final CollectorRegistry registry = CollectorRegistry.defaultRegistry;
 
         final String processName = PrometheusPushgatewaySampleRunner.class.getName();

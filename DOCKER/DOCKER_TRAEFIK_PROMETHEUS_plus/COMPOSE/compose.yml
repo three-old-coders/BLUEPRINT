@@ -132,8 +132,6 @@ services:
       - prometheus
     expose:
       - 9091
-    ports:
-      - "9091:9091"
     labels:
       - traefik.enable=true
       - traefik.http.routers.pushgateway.rule=Host(`${PUSH_GATEWAY_URL:-pushgateway.localhost}`)
@@ -144,7 +142,7 @@ services:
       - traefik.http.routers.pushgateway.service=pushgateway-service
       - traefik.http.services.pushgateway-service.loadbalancer.server.port=9091
       # connect our global traefik-auth basicauth middleware to this service to protect it
-      #- traefik.http.routers.pushgateway.middlewares=traefik-auth
+      - traefik.http.routers.pushgateway.middlewares=traefik-auth
       # https access
       ###- traefik.http.routers.pushgateway.tls=true
 
