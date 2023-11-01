@@ -14,6 +14,7 @@ docker_sb_clamav-FULL.jar
 target/
 build/
 token.txt
+GITHUB.TOKEN
 
 # Ignore eclipse/idea and other files
 .DS_Store

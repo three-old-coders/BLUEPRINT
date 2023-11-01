@@ -16,7 +16,7 @@ scrape_configs:
 
   - job_name: 'pushgateway-dev'
     honor_labels: true
-    metrics_path: /metrics
+    metrics_path: /pushgateway/metrics
     static_configs:
       - targets: ['pushgateway:9091']
 

@@ -4,6 +4,9 @@ import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Counter;
 import io.prometheus.client.Info;
 import io.prometheus.client.exporter.PushGateway;
+import lombok.SneakyThrows;
+
+import java.net.URL;
 
 public class PrometheusPushgatewaySampleRunner
 {
@@ -11,9 +14,10 @@ public class PrometheusPushgatewaySampleRunner
     public static final String HELP_TEXT_OF = "help text of ";
     public static final String PROCESS = "Process";
 
+    @SneakyThrows
     public static void main(final String[] args)
     {
-        final PushGateway client = new PushGateway("pushgateway.localhost:9091");
+        final PushGateway client = new PushGateway(new URL("http://localhost:9091"));
         final CollectorRegistry registry = CollectorRegistry.defaultRegistry;
 
         final String processName = PrometheusPushgatewaySampleRunner.class.getName();
