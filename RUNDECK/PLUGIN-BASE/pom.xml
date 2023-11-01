@@ -23,18 +23,6 @@
     <dependencies>
         <dependency>
             <groupId>org.rundeck</groupId>
-            <artifactId>rundeck-core</artifactId>
-            <version>3.2.4-20200318</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.rundeck</groupId>
             <artifactId>rundeck-storage-api</artifactId>
             <version>3.2.4-20200318</version>
             <scope>provided</scope>

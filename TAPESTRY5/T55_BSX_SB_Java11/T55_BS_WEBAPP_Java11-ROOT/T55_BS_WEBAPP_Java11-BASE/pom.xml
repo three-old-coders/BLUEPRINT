@@ -43,26 +43,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.tynamo.security</groupId>
-            <artifactId>tynamo-federatedaccounts-core</artifactId>
-            <version>0.7.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        -->
 
         <!-- other -->
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.30</version>
         </dependency>
     </dependencies>
 

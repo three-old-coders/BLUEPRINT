@@ -25,18 +25,6 @@
             <artifactId>rundeck-plugin-base</artifactId>
             <version>0.0.2-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>org.rundeck</groupId>
-            <artifactId>rundeck-core</artifactId>
-            <version>3.2.4-20200318</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 
         <dependency>
             <groupId>com.github.three-old-coders.blueprint</groupId>
