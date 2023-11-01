@@ -9,10 +9,11 @@ services:
       - "443:443"
     command:
       # Entrypoints configuration.
-      # Define 2 entrypoints called http80 and http443, that will listen on port 80 and 443 of the Traefik container
+      # Define 3 entrypoints called http80, http443 and http8082 that will listen on port 80, 443 and 8082 of the Traefik container
       - --entrypoints.http80.address=:80
       - --entrypoints.http443.address=:443
-      - --entrypoints.metrics.address=:8082
+      # port 8082 is only opened internally - see above open docker ports!
+      - --entrypoints.http8082.address=:8082
       # Docker provider configuration -> enables the docker provider
       - --providers.docker=true
       # Makes sure that services have to explicitly direct Traefik to expose them
@@ -32,20 +33,20 @@ services:
       # https://doc.traefik.io/traefik/observability/metrics/prometheus/
       # enable prometheus metrics
       - --metrics.prometheus=true
-      - --metrics.prometheus.entryPoint=metrics
-      # NOT WORKING create a manual router instead of the default one
-      # - --metrics.prometheus.manualrouting=true
+      - --metrics.prometheus.entryPoint=http80
+      # create a manual router instead of the default one
+      - --metrics.prometheus.manualrouting=true
       # enable metrics on entry points.
-      # - --metrics.prometheus.addEntryPointsLabels=true
+      - --metrics.prometheus.addEntryPointsLabels=true
       # enable metrics on services.
-      # - --metrics.prometheus.addServicesLabels=true
+      - --metrics.prometheus.addServicesLabels=true
       # enable metrics on routers.
-      # - --metrics.prometheus.addrouterslabels=true
+      - --metrics.prometheus.addrouterslabels=true
       # define extra labels for the requests_total metrics
-      # - --metrics.prometheus.headerlabels.forwardedHost=X-Forwarded-Host
-      # - --metrics.prometheus.headerlabels.forwardedFor=X-Forwarded-For
-      # - --metrics.prometheus.headerlabels.realIp=X-Real-Ip
-      # - --metrics.prometheus.headerlabels.userAgent=User-Agent
+      - --metrics.prometheus.headerlabels.forwardedHost=X-Forwarded-Host
+      - --metrics.prometheus.headerlabels.forwardedFor=X-Forwarded-For
+      - --metrics.prometheus.headerlabels.realIp=X-Real-Ip
+      - --metrics.prometheus.headerlabels.userAgent=User-Agent
       # Global HTTP to HTTPS redirect. The easiest and probably most used variant is to redirect to HTTPS globally.
       # Once configured all your running services will use it
       # to enable https->https redirect do the following:
@@ -60,24 +61,25 @@ services:
       - traefik.http.routers.traefik-api-dashboard.service=api@internal
       - traefik.http.routers.traefik-api-dashboard.entrypoints=http80
       - traefik.http.routers.traefik-api-dashboard.middlewares=traefik-auth
+      # traefik metrics router configuration
+      # we create 2 routes traefik-metrics-external is basicauth protected and
+      # traefik-metrics-internal does not require basicauth
+      - traefik.http.routers.traefik-metrics-external.rule=Host(`${TRAEFIK_URL:-traefik.localhost}`) && PathPrefix(`/{path:metrics}`)
+      - traefik.http.routers.traefik-metrics-external.entrypoints=http80
+      - traefik.http.routers.traefik-metrics-external.service=prometheus@internal
+      - traefik.http.routers.traefik-metrics-external.middlewares=traefik-auth
+#      - traefik.http.routers.traefik-metrics-internal.rule=Host(`traefik`) && PathPrefix(`/{path:traefik-metrics[6-9]}`)
+      - traefik.http.routers.traefik-metrics-internal.rule=Host(`traefik`) && PathPrefix(`/metrics`)
+      - traefik.http.routers.traefik-metrics-internal.entrypoints=http8082
+      - traefik.http.routers.traefik-metrics-internal.service=prometheus@internal
       # https access
       ###- traefik.http.routers.traefik-metrics.tls=true
       # global auth middleware with user / password -> admin/admin
       - traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_BASIC_AUTH:-admin:$$apr1$$gaS8tVEe$$MjqM8IlBvz2PRFEWcwha1/}
       # https access
       ###- traefik.http.routers.traefik-api-dashboard.tls=true
-      # metrics router configuration
-      - traefik.http.routers.traefik-metrics.entrypoints=http80
-      - traefik.http.routers.traefik-metrics.service=prometheus@internal
-      - traefik.http.routers.traefik-metrics.rule=Host(`${TRAEFIK_URL:-traefik.localhost}`) && PathPrefix(`/metrics`)
-      - traefik.http.routers.traefik-metrics.tls=true
-      - traefik.http.routers.traefik-metrics.tls.certResolver=sec
-      - traefik.http.routers.traefik-metrics.service=metrics
-      - traefik.http.routers.traefik-metrics.middlewares=traefik-auth
-      - traefik.http.services.traefik-metrics.loadbalancer.server.port=8082
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-
     logging:
       options:
         max-size: "10m"
@@ -107,18 +109,6 @@ services:
       - traefik.http.routers.prometheus.middlewares=traefik-auth
       # https access
       ###- traefik.http.routers.prometheus.tls=true
-      # custom path for prometheus metrics
-      # - "traefik.http.middlewares.admin-auth-metrics.basicauth.users=USERNAME:PASSWORD"
-      - "traefik.http.routers.traefik-public-metrics-http.rule=Host(`${PROMETHEUS_URL:-prometheus.localhost}`) && PathPrefix(`/traefik-metrics`)"
-      - "traefik.http.routers.traefik-public-metrics-http.entrypoints=http"
-      # - "traefik.http.routers.traefik-public-metrics-http.middlewares=https-redirect"
-      # - "traefik.http.routers.traefik-public-metrics-https.middlewares=secHeaders@file"
-      # - "traefik.http.routers.traefik-public-metrics-https.rule=Host(`${PROMETHEUS_URL:-prometheus.localhost}`) && PathPrefix(`/traefik-metrics`)"
-      # - "traefik.http.routers.traefik-public-metrics-https.entrypoints=https"
-      # - "traefik.http.routers.traefik-public-metrics-https.tls=true"
-      # - "traefik.http.routers.traefik-public-metrics-https.service=prometheus@internal"
-      # - "traefik.http.routers.traefik-public-metrics-https.tls.certresolver=le-tls"
-      # - "traefik.http.routers.traefik-public-metrics-https.middlewares=secHeaders@file,admin-auth-metrics,def-compress"      -
     logging:
       options:
         max-size: "10m"
@@ -128,21 +118,24 @@ services:
     image: prom/pushgateway:v1.6.2
     # container_name: pushgateway
     restart: unless-stopped
+    command:
+      - --web.external-url=/pushgateway
     depends_on:
       - prometheus
     expose:
       - 9091
     labels:
       - traefik.enable=true
-      - traefik.http.routers.pushgateway.rule=Host(`${PUSH_GATEWAY_URL:-pushgateway.localhost}`)
+      - traefik.http.routers.pushgateway.rule=Host(`${PUSH_GATEWAY_URL:-localhost}`) && PathPrefix(`/pushgateway`)
       - traefik.http.routers.pushgateway.entrypoints=http80
-      # - traefik.http.routers.pushgateway.rule=Host(`${TRAEFIK_URL:-localhost}`) && PathPrefix(`/pushgateway`)
+      # connect our global traefik-auth basicauth middleware to this service to protect it
+      - traefik.http.routers.pushgateway.middlewares=traefik-auth
+#      - traefik.http.middlewares.pushgateway-stripprefix.stripprefix.prefixes=/pushgateway
+#      - traefik.http.routers.pushgateway.middlewares=pushgateway-stripprefix
       # the next 2 lines could be deleted, as traefik can do its magic ....
       # in this case I prefer explicit configuration
       - traefik.http.routers.pushgateway.service=pushgateway-service
       - traefik.http.services.pushgateway-service.loadbalancer.server.port=9091
-      # connect our global traefik-auth basicauth middleware to this service to protect it
-      - traefik.http.routers.pushgateway.middlewares=traefik-auth
       # https access
       ###- traefik.http.routers.pushgateway.tls=true
 

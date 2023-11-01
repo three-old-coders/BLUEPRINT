@@ -18,7 +18,7 @@ public class PrometheusPushgatewaySampleRunner
     @SneakyThrows
     public static void main(final String[] args)
     {
-        final PushGateway client = new PushGateway(new URL("http://localhost:9091"));
+        final PushGateway client = new PushGateway(new URL("http://localhost/pushgateway"));
         client.setConnectionFactory(new BasicAuthHttpConnectionFactory("admin", "admin"));
         final CollectorRegistry registry = CollectorRegistry.defaultRegistry;
 
