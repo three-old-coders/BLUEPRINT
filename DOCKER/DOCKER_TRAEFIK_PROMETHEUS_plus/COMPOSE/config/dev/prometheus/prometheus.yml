@@ -10,11 +10,13 @@ rule_files:
 scrape_configs:
   - job_name: 'prometheus-dev'
     scrape_interval: 5s
+    metrics_path: /metrics
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ['prometheus:9090']
 
   - job_name: 'pushgateway-dev'
     honor_labels: true
+    metrics_path: /metrics
     static_configs:
       - targets: ['pushgateway:9091']
 
@@ -24,5 +26,5 @@ scrape_configs:
     static_configs:
       # BE CAREFUL, REDUNDANT TO compose.yml
       - targets:
-        - "localhost:8080"
+        - "traefik:8082"
 

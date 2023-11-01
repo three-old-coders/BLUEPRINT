@@ -13,7 +13,7 @@ public class PrometheusPushgatewaySampleRunner
 
     public static void main(final String[] args)
     {
-        final PushGateway client = new PushGateway("localhost:9091");
+        final PushGateway client = new PushGateway("pushgateway.localhost:9091");
         final CollectorRegistry registry = CollectorRegistry.defaultRegistry;
 
         final String processName = PrometheusPushgatewaySampleRunner.class.getName();

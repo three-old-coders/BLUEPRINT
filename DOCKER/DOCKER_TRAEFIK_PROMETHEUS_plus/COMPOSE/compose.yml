@@ -12,6 +12,7 @@ services:
       # Define 2 entrypoints called http80 and http443, that will listen on port 80 and 443 of the Traefik container
       - --entrypoints.http80.address=:80
       - --entrypoints.http443.address=:443
+      - --entrypoints.metrics.address=:8082
       # Docker provider configuration -> enables the docker provider
       - --providers.docker=true
       # Makes sure that services have to explicitly direct Traefik to expose them
@@ -34,6 +35,10 @@ services:
       #    - uncomment all triple commented lines '###'
       ###- --entrypoints.http80.http.redirections.entrypoint.to=http443
       ###- --entrypoints.http80.http.redirections.entrypoint.scheme=https
+      # Send metrics to Prometheus
+      - --metrics.prometheus=true
+      - --metrics.prometheus.entryPoint=metrics
+      # - --metrics.prometheus.manualrouting=true
     labels:
       - traefik.enable=true
       # configure router to access dashboard and api
@@ -45,6 +50,13 @@ services:
       - traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_BASIC_AUTH:-admin:$$apr1$$gaS8tVEe$$MjqM8IlBvz2PRFEWcwha1/}
       # https access
       ###- traefik.http.routers.traefik-api-dashboard.tls=true
+      # metrics
+      - traefik.http.routers.metrics.rule=Host(`${TRAEFIK_URL:-traefik.localhost}`) && PathPrefix(`/metrics`)
+      - traefik.http.routers.metrics.tls=true
+      - traefik.http.routers.metrics.tls.certResolver=sec
+      - traefik.http.routers.metrics.service=metrics
+      - traefik.http.routers.metrics.middlewares=myauth
+      - traefik.http.services.metrics.loadbalancer.server.port=8082
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     logging:
@@ -76,6 +88,18 @@ services:
       - traefik.http.routers.prometheus.middlewares=traefik-auth
       # https access
       ###- traefik.http.routers.prometheus.tls=true
+      # custom path for prometheus metrics
+      # - "traefik.http.middlewares.admin-auth-metrics.basicauth.users=USERNAME:PASSWORD"
+      - "traefik.http.routers.traefik-public-metrics-http.rule=Host(`${PROMETHEUS_URL:-prometheus.localhost}`) && PathPrefix(`/traefik-metrics`)"
+      - "traefik.http.routers.traefik-public-metrics-http.entrypoints=http"
+      # - "traefik.http.routers.traefik-public-metrics-http.middlewares=https-redirect"
+      # - "traefik.http.routers.traefik-public-metrics-https.middlewares=secHeaders@file"
+      # - "traefik.http.routers.traefik-public-metrics-https.rule=Host(`${PROMETHEUS_URL:-prometheus.localhost}`) && PathPrefix(`/traefik-metrics`)"
+      # - "traefik.http.routers.traefik-public-metrics-https.entrypoints=https"
+      # - "traefik.http.routers.traefik-public-metrics-https.tls=true"
+      # - "traefik.http.routers.traefik-public-metrics-https.service=prometheus@internal"
+      # - "traefik.http.routers.traefik-public-metrics-https.tls.certresolver=le-tls"
+      # - "traefik.http.routers.traefik-public-metrics-https.middlewares=secHeaders@file,admin-auth-metrics,def-compress"      -
     logging:
       options:
         max-size: "10m"
