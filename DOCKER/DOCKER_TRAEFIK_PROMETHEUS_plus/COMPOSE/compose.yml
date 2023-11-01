@@ -27,6 +27,23 @@ services:
       # enable api and dashboard in the recommended secure way instead of opening 8080
       - --api.dashboard=true
       - --api=true
+      # Prometheus metrics
+      # https://doc.traefik.io/traefik/observability/metrics/prometheus/
+      # enable prometheus metrics
+      - --metrics.prometheus=true
+      # create a manual router instead of the default one
+      - --metrics.prometheus.manualrouting=true
+      # enable metrics on entry points.
+      - --metrics.prometheus.addEntryPointsLabels=true
+      # enable metrics on services.
+      - --metrics.prometheus.addServicesLabels=true
+      # enable metrics on routers.
+      - --metrics.prometheus.addrouterslabels=true
+      # define extra labels for the requests_total metrics
+      - --metrics.prometheus.headerlabels.forwardedHost=X-Forwarded-Host
+      - --metrics.prometheus.headerlabels.forwardedFor=X-Forwarded-For
+      - --metrics.prometheus.headerlabels.realIp=X-Real-Ip
+      - --metrics.prometheus.headerlabels.userAgent=User-Agent
       # Global HTTP to HTTPS redirect. The easiest and probably most used variant is to redirect to HTTPS globally.
       # Once configured all your running services will use it
       # to enable https->https redirect do the following:
@@ -41,6 +58,13 @@ services:
       - traefik.http.routers.traefik-api-dashboard.service=api@internal
       - traefik.http.routers.traefik-api-dashboard.entrypoints=http80
       - traefik.http.routers.traefik-api-dashboard.middlewares=traefik-auth
+      # metrics router configuration
+      - traefik.http.routers.traefik-metrics.rule=Host(`${TRAEFIK_URL:-traefik.localhost}`) && PathPrefix(`/metrics`)
+      - traefik.http.routers.traefik-metrics.entrypoints=http80
+      - traefik.http.routers.traefik-metrics.service=prometheus@internal
+      - traefik.http.routers.traefik-metrics.middlewares=traefik-auth
+      # https access
+      ###- traefik.http.routers.traefik-metrics.tls=true
       # global auth middleware with user / password -> admin/admin
       - traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_BASIC_AUTH:-admin:$$apr1$$gaS8tVEe$$MjqM8IlBvz2PRFEWcwha1/}
       # https access
@@ -163,3 +187,18 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+
+#  # https://github.com/Tecnativa/docker-socket-proxy
+#  socket_proxy:
+#    image: tecnativa/docker-socket-proxy:latest
+#    restart: unless-stopped
+#    environment:
+#      NETWORKS: 1
+#      SERVICES: 1
+#      CONTAINERS: 1
+#      TASKS: 1
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock:ro
+#    networks:
+#      - traefik_public
+#      - socket_proxy
