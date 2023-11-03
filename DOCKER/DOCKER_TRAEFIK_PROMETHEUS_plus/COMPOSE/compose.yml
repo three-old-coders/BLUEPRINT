@@ -57,14 +57,14 @@ services:
     labels:
       - traefik.enable=true
       # configure router to access dashboard and api
-      - traefik.http.routers.traefik-api-dashboard.rule=Host(`${TRAEFIK_URL:-traefik.localhost}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+      - traefik.http.routers.traefik-api-dashboard.rule=Host(`${TRAEFIK_HOST:-localhost}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
       - traefik.http.routers.traefik-api-dashboard.service=api@internal
       - traefik.http.routers.traefik-api-dashboard.entrypoints=http80
       - traefik.http.routers.traefik-api-dashboard.middlewares=traefik-auth
       # traefik metrics router configuration
       # we create 2 routes traefik-metrics-external is basicauth protected and
       # traefik-metrics-internal does not require basicauth
-      - traefik.http.routers.traefik-metrics-external.rule=Host(`${TRAEFIK_URL:-traefik.localhost}`) && PathPrefix(`/{path:metrics}`)
+      - traefik.http.routers.traefik-metrics-external.rule=Host(`${TRAEFIK_HOST:-localhost}`) && PathPrefix(`/{path:metrics}`)
       - traefik.http.routers.traefik-metrics-external.entrypoints=http80
       - traefik.http.routers.traefik-metrics-external.service=prometheus@internal
       - traefik.http.routers.traefik-metrics-external.middlewares=traefik-auth
@@ -86,7 +86,7 @@ services:
         max-file: "3"
 
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:v2.47.2
     restart: unless-stopped
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -99,7 +99,7 @@ services:
       - 9090
     labels:
       - traefik.enable=true
-      - traefik.http.routers.prometheus.rule=Host(`${PROMETHEUS_URL:-prometheus.localhost}`)
+      - traefik.http.routers.prometheus.rule=Host(`${PROMETHEUS_HOST:-prometheus.localhost}`)
       - traefik.http.routers.prometheus.entrypoints=http80
       # the next 2 lines could be deleted, as traefik can do its magic ....
       # in this case I prefer explicit configuration
@@ -119,14 +119,14 @@ services:
     # container_name: pushgateway
     restart: unless-stopped
     command:
-      - --web.external-url=/pushgateway
+      - --web.external-url=${PUSH_GATEWAY_WEBCONTEXT:-/pushgateway}
     depends_on:
       - prometheus
     expose:
       - 9091
     labels:
       - traefik.enable=true
-      - traefik.http.routers.pushgateway.rule=Host(`${PUSH_GATEWAY_URL:-localhost}`) && PathPrefix(`/pushgateway`)
+      - traefik.http.routers.pushgateway.rule=Host(`${PUSH_GATEWAY_HOST:-localhost}`) && PathPrefix(`${PUSH_GATEWAY_WEBCONTEXT:-/pushgateway}`)
       - traefik.http.routers.pushgateway.entrypoints=http80
       # connect our global traefik-auth basicauth middleware to this service to protect it
       - traefik.http.routers.pushgateway.middlewares=traefik-auth
@@ -147,18 +147,10 @@ services:
     depends_on:
       - prometheus
     volumes:
-      - ${GRAFANA_CONFIG:-./config/dev/grafana/provisioning}:/etc/grafana/provisioning
-      - ${GRAFANA_DATA:-./temp/dev/grafana.data}:/var/lib/grafana
-    environment:
-      # - GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: "false"
-      - "GF_PATHS_CONFIG: /etc/grafana/provisioning/grafana.ini"
-      # - GF_INSTALL_PLUGINS: grafana-piechart-panel
-      # - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
-      # - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
-      # - GF_USERS_ALLOW_SIGN_UP=false
+      - ${GRAFANA_CONFIG_ETC:-./config/dev/grafana}:/etc/grafana
     labels:
       - traefik.enable=true
-      - traefik.http.routers.grafana.rule=Host(`${GRAFANA_URL:-grafana.localhost}`)
+      - traefik.http.routers.grafana.rule=Host(`${GRAFANA_HOST:-grafana.localhost}`)
       - traefik.http.routers.grafana.entrypoints=http80
       - traefik.http.routers.grafana.service=grafana-service
       - traefik.http.services.grafana-service.loadbalancer.server.port=3000
@@ -175,14 +167,14 @@ services:
       - traefik.enable=true
       - traefik.http.routers.whoami.entrypoints=http80
       #- traefik.http.routers.whoami.entrypoints=http80,http443
-      - traefik.http.routers.whoami.rule=Host(`whoami.localhost`)
+      - traefik.http.routers.whoami.rule=Host(`whoami.${TRAEFIK_HOST:-localhost}`)
       # connect our global traefik-auth auth middleware to this service to protect it
       #- traefik.http.routers.whoami.middlewares=traefik-auth
       # https access
       ###- traefik.http.routers.whoami.tls=true
 
   nginx:
-    image: nginx
+    image: nginx:latest
     restart: unless-stopped
     depends_on:
       - traefik
@@ -193,7 +185,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.nginx.entrypoints=http80
-      - traefik.http.routers.nginx.rule=Host(`localhost`)
+      - traefik.http.routers.nginx.rule=Host(`${TRAEFIK_HOST:-localhost}`)
       # https access
       ###- traefik.http.routers.nginx.tls=true
     logging:
