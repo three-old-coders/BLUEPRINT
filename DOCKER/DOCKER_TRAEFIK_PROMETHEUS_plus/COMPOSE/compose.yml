@@ -11,7 +11,7 @@ services:
       # Entrypoints configuration.
       # Define 3 entrypoints called http80, http443 and http8082 that will listen on port 80, 443 and 8082 of the Traefik container
       - --entrypoints.http80.address=:80
-      - --entrypoints.http443.address=:443
+      ###- --entrypoints.http443.address=:443
       # port 8082 is only opened internally - see above open docker ports!
       - --entrypoints.http8082.address=:8082
       # Docker provider configuration -> enables the docker provider
@@ -26,6 +26,14 @@ services:
       # - --providers.docker.network=traefik_default
       # Logging levels are DEBUG, PANIC, FATAL, ERROR, WARN, and INFO.
       - --log.level=debug
+      - --accesslog=false
+      - --accesslog.fields.names.StartUTC=drop
+      # Configuring Multiple Filters
+      #- --accesslog.filepath=/path/to/access.log
+      #- --accesslog.format=json
+      #- --accesslog.filters.statuscodes=200,300-302
+      #- --accesslog.filters.retryattempts
+      #- --accesslog.filters.minduration=10ms
       # enable api and dashboard in the recommended secure way instead of opening 8080
       - --api.dashboard=true
       - --api=true
@@ -33,7 +41,7 @@ services:
       # https://doc.traefik.io/traefik/observability/metrics/prometheus/
       # enable prometheus metrics
       - --metrics.prometheus=true
-      - --metrics.prometheus.entryPoint=http80
+      - --metrics.prometheus.entryPoint=http8082
       # create a manual router instead of the default one
       - --metrics.prometheus.manualrouting=true
       # enable metrics on entry points.
@@ -49,37 +57,39 @@ services:
       - --metrics.prometheus.headerlabels.userAgent=User-Agent
       # Global HTTP to HTTPS redirect. The easiest and probably most used variant is to redirect to HTTPS globally.
       # Once configured all your running services will use it
-      # to enable https->https redirect do the following:
-      #    - replace all entrypoints with http80 -> http443
-      #    - uncomment all triple commented lines '###'
-      ###- --entrypoints.http80.http.redirections.entrypoint.to=http443
-      ###- --entrypoints.http80.http.redirections.entrypoint.scheme=https
+      # to enable http->https redirect and using letsencrypt https-ssl certificates do the following:
+      #    - uncomment all triple commented lines '###' in this file currently 2 locations and setup your DNS provider
+      - --entrypoints.http80.http.redirections.entrypoint.to=http443
+      - --entryPoints.http80.http.redirections.entrypoint.scheme=https
+      ###- --entrypoints.http443.http.tls.certresolver=leresolver
+      - --certificatesresolvers.leresolver.acme.tlschallenge=true
+      # letsencrypt staging environment
+      #- --certificatesresolvers.leresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.leresolver.acme.email=support@gd-inside.de
+      - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json
     labels:
       - traefik.enable=true
       # configure router to access dashboard and api
       - traefik.http.routers.traefik-api-dashboard.rule=Host(`${TRAEFIK_HOST:-localhost}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
       - traefik.http.routers.traefik-api-dashboard.service=api@internal
-      - traefik.http.routers.traefik-api-dashboard.entrypoints=http80
       - traefik.http.routers.traefik-api-dashboard.middlewares=traefik-auth
       # traefik metrics router configuration
       # we create 2 routes traefik-metrics-external is basicauth protected and
       # traefik-metrics-internal does not require basicauth
       - traefik.http.routers.traefik-metrics-external.rule=Host(`${TRAEFIK_HOST:-localhost}`) && PathPrefix(`/{path:metrics}`)
-      - traefik.http.routers.traefik-metrics-external.entrypoints=http80
       - traefik.http.routers.traefik-metrics-external.service=prometheus@internal
       - traefik.http.routers.traefik-metrics-external.middlewares=traefik-auth
 #      - traefik.http.routers.traefik-metrics-internal.rule=Host(`traefik`) && PathPrefix(`/{path:traefik-metrics[6-9]}`)
       - traefik.http.routers.traefik-metrics-internal.rule=Host(`traefik`) && PathPrefix(`/metrics`)
       - traefik.http.routers.traefik-metrics-internal.entrypoints=http8082
       - traefik.http.routers.traefik-metrics-internal.service=prometheus@internal
-      # https access
-      ###- traefik.http.routers.traefik-metrics.tls=true
       # global auth middleware with user / password -> admin/admin
       - traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_BASIC_AUTH:-admin:$$apr1$$gaS8tVEe$$MjqM8IlBvz2PRFEWcwha1/}
-      # https access
-      ###- traefik.http.routers.traefik-api-dashboard.tls=true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${TRAEFIK_LE_STORAGE:-./letsencrypt}:/letsencrypt
+    environment:
+      - TZ=Europe/Berlin
     logging:
       options:
         max-size: "10m"
@@ -89,9 +99,9 @@ services:
     image: prom/prometheus:v2.47.2
     restart: unless-stopped
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--storage.tsdb.retention.size=256MB'
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.size=256MB
     volumes:
       - ${PROMETHEUS_CONFIG:-./config/dev/prometheus}:/etc/prometheus
       - ${PROMETHEUS_DATA:-./temp/dev/prometheus.data}:/prometheus
@@ -99,16 +109,16 @@ services:
       - 9090
     labels:
       - traefik.enable=true
+      # If the container exposes a single port, then Traefik uses this port for private communication, so
+      # it auto-detects port 9090 in next line.
+      # https://doc.traefik.io/traefik/providers/docker/#port-detection
       - traefik.http.routers.prometheus.rule=Host(`${PROMETHEUS_HOST:-prometheus.localhost}`)
-      - traefik.http.routers.prometheus.entrypoints=http80
-      # the next 2 lines could be deleted, as traefik can do its magic ....
-      # in this case I prefer explicit configuration
-      - traefik.http.routers.prometheus.service=prometheus-service
-      - traefik.http.services.prometheus-service.loadbalancer.server.port=9090
+      # If a container exposes multiple ports or does not expose any port, then you must manually specify which
+      # port Traefik should use for communication by using the label
+      # traefik.http.services.<service_name>.loadbalancer.server.port like
+      # - traefik.http.services.prometheus.loadbalancer.server.port=XXXX
       # connect our global traefik-auth basicauth middleware to this service to protect it
       - traefik.http.routers.prometheus.middlewares=traefik-auth
-      # https access
-      ###- traefik.http.routers.prometheus.tls=true
     logging:
       options:
         max-size: "10m"
@@ -126,19 +136,12 @@ services:
       - 9091
     labels:
       - traefik.enable=true
+      # container exposes a single port, so traefik auto-detects port 9091 in next line
       - traefik.http.routers.pushgateway.rule=Host(`${PUSH_GATEWAY_HOST:-localhost}`) && PathPrefix(`${PUSH_GATEWAY_WEBCONTEXT:-/pushgateway}`)
-      - traefik.http.routers.pushgateway.entrypoints=http80
       # connect our global traefik-auth basicauth middleware to this service to protect it
       - traefik.http.routers.pushgateway.middlewares=traefik-auth
 #      - traefik.http.middlewares.pushgateway-stripprefix.stripprefix.prefixes=/pushgateway
 #      - traefik.http.routers.pushgateway.middlewares=pushgateway-stripprefix
-      # the next 2 lines could be deleted, as traefik can do its magic ....
-      # in this case I prefer explicit configuration
-      - traefik.http.routers.pushgateway.service=pushgateway-service
-      - traefik.http.services.pushgateway-service.loadbalancer.server.port=9091
-      # https access
-      ###- traefik.http.routers.pushgateway.tls=true
-
   grafana:
     image: grafana/grafana-oss:10.1.5-ubuntu
     restart: unless-stopped
@@ -148,14 +151,11 @@ services:
       - prometheus
     volumes:
       - ${GRAFANA_CONFIG_ETC:-./config/dev/grafana}:/etc/grafana
+      - ${GRAFANA_DATA:-./temp/dev/grafana.data}:/var/lib/grafana
     labels:
       - traefik.enable=true
+      # container exposes a single port, so traefik auto-detects port 3000 in next line
       - traefik.http.routers.grafana.rule=Host(`${GRAFANA_HOST:-grafana.localhost}`)
-      - traefik.http.routers.grafana.entrypoints=http80
-      - traefik.http.routers.grafana.service=grafana-service
-      - traefik.http.services.grafana-service.loadbalancer.server.port=3000
-      # https access
-      ###- traefik.http.routers.grafana.tls=true
     logging:
       options:
         max-size: "10m"
@@ -165,13 +165,8 @@ services:
     image: traefik/whoami:latest
     labels:
       - traefik.enable=true
-      - traefik.http.routers.whoami.entrypoints=http80
-      #- traefik.http.routers.whoami.entrypoints=http80,http443
+      # container exposes a single port, so traefik auto-detects port 80 in next line
       - traefik.http.routers.whoami.rule=Host(`whoami.${TRAEFIK_HOST:-localhost}`)
-      # connect our global traefik-auth auth middleware to this service to protect it
-      #- traefik.http.routers.whoami.middlewares=traefik-auth
-      # https access
-      ###- traefik.http.routers.whoami.tls=true
 
   nginx:
     image: nginx:latest
@@ -184,10 +179,8 @@ services:
       - ${NGINX_HTMLDIR:-./config/dev/nginx}:/usr/share/nginx/html:ro
     labels:
       - traefik.enable=true
-      - traefik.http.routers.nginx.entrypoints=http80
+      # container exposes a single port, so traefik auto-detects port 80 in next line
       - traefik.http.routers.nginx.rule=Host(`${TRAEFIK_HOST:-localhost}`)
-      # https access
-      ###- traefik.http.routers.nginx.tls=true
     logging:
       options:
         max-size: "10m"
