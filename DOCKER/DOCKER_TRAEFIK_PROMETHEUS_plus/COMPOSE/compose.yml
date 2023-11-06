@@ -87,13 +87,28 @@ services:
       - traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_BASIC_AUTH:-admin:$$apr1$$gaS8tVEe$$MjqM8IlBvz2PRFEWcwha1/}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ${TRAEFIK_LE_STORAGE:-./letsencrypt}:/letsencrypt
+      - ${TRAEFIK_LE_ACME_STORAGE:-./config/dev/traefik}:/letsencrypt
     environment:
       - TZ=Europe/Berlin
     logging:
       options:
         max-size: "10m"
         max-file: "3"
+
+  certdumper:
+    # image from 01.11.2023
+    image: ghcr.io/kereis/traefik-certs-dumper:sha-ebd9267-alpine
+    volumes:
+#      - ./traefik/acme:/traefik:ro
+      - ${TRAEFIK_LE_ACME_STORAGE:-./config/dev/traefik}:/traefik:ro
+      - ${TRAEFIK_LE_CERT_STORAGE:-./temp/dev/traefik/ssl}:/output:rw
+    environment:
+    # ACME_FILE=/traefik/acme.json is the default
+    #  - ACME_FILE=/traefik/acme.json
+      - CONVERT_KEYS_TO_RSA=yes
+      - COMBINED_PEM=combined.pem
+    # Don't set DOMAIN, if we want to dump all certificates
+    #  - DOMAIN=digital7-exchange.com,digital7.exchange
 
   prometheus:
     image: prom/prometheus:v2.47.2
