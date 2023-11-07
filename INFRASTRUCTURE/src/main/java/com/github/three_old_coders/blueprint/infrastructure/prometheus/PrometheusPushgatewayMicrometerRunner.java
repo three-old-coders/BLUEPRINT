@@ -1,6 +1,7 @@
 package com.github.three_old_coders.blueprint.infrastructure.prometheus;
 
 import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics;
 import io.micrometer.prometheus.PrometheusConfig;
@@ -13,27 +14,37 @@ import lombok.SneakyThrows;
 import java.net.URL;
 
 public class PrometheusPushgatewayMicrometerRunner {
-    public static final String PROCESS = "Process";
+    // prometheus objects
+    private final PushGateway _pushGateway;
+    private final CollectorRegistry _collectorRegistry;
+    private final MeterRegistry _meterRegistry;
+
+    @SneakyThrows
+    public PrometheusPushgatewayMicrometerRunner() {
+        _pushGateway = new PushGateway(new URL("http://localhost/pushgateway"));
+        _pushGateway.setConnectionFactory(new BasicAuthHttpConnectionFactory("admin", "admin"));
+
+        // Default metrics
+        final PrometheusMeterRegistry prometheusMeterRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
+        _meterRegistry=prometheusMeterRegistry;
+        _collectorRegistry=prometheusMeterRegistry.getPrometheusRegistry();
+
+        // add monitoring jvm metrics
+        new JvmMemoryMetrics().bindTo(_meterRegistry);
+    }
 
     @SneakyThrows
     public static void main(final String[] args)
     {
-        final PushGateway client = new PushGateway(new URL("http://localhost/pushgateway"));
-        client.setConnectionFactory(new BasicAuthHttpConnectionFactory("admin", "admin"));
+        new PrometheusPushgatewayMicrometerRunner().doBatchProcess();
+    }
 
-        // Default metrics
-        final PrometheusMeterRegistry prometheusMeterRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
-        CollectorRegistry collectorRegistry = prometheusMeterRegistry.getPrometheusRegistry();
-        //final AtomicInteger batchProcessProgress=prometheusMeterRegistry.counter("batch process progress",);
-        final Counter batchProcessProgress=prometheusMeterRegistry.counter("batch process progress", Tags.of("counter","micrometer counter"));
-
-        // jvm metrics
-        final JvmMemoryMetrics jmm=new JvmMemoryMetrics();
-        jmm.bindTo(prometheusMeterRegistry);
-
+    public void doBatchProcess()
+    {
+        final Counter batchProcessProgress=_meterRegistry.counter("batch process progress", Tags.of("counter","micrometer counter"));
         final String processName = PrometheusPushgatewayMicrometerRunner.class.getName();
 
-        push(client, collectorRegistry, processName,true);
+        push(processName,true);
 
         System.out.println("Started...");
 
@@ -47,21 +58,20 @@ public class PrometheusPushgatewayMicrometerRunner {
             }
             batchProcessProgress.increment();
 
-            push(client, collectorRegistry, processName, false);
+            push(processName, false);
 
             System.out.println("   running " + i);
         }
 
-        push(client, collectorRegistry, processName,true);
+        push(processName,true);
 
         System.out.println("...finished");
     }
 
-    private static void push(final PushGateway client, final CollectorRegistry registry,
-                             final String processName, final boolean abortOnError)
+    private void push(final String processName, final boolean abortOnError)
     {
         try {
-            client.push(registry, processName);
+            _pushGateway.push(_collectorRegistry, processName);
         } catch (final Exception e) {
             System.err.println("unable to push data");
             e.printStackTrace();
