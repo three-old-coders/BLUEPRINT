@@ -15,6 +15,7 @@ scrape_configs:
       - targets: ['prometheus:9090']
 
   - job_name: 'pushgateway-dev'
+    scrape_interval: 5s
     honor_labels: true
     metrics_path: /pushgateway/metrics
     static_configs:

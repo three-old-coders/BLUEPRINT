@@ -110,13 +110,16 @@
             <artifactId>micrometer-core</artifactId>
             <version>1.11.5</version>
         </dependency>
-
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
             <version>1.11.5</version>
         </dependency>
-
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-jmx</artifactId>
+            <version>1.11.5</version>
+        </dependency>
         <!-- prometheus -->
 
         <dependency>
