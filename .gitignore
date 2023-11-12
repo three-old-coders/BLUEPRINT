@@ -11,18 +11,19 @@ docker_sb_clamav-FULL.jar
 *.ipr
 *.iws
 *~
-target/
-build/
+target
+build
 token.txt
 GITHUB.TOKEN
 
 # Ignore eclipse/idea and other files
 .DS_Store
 .gradle
-.idea
 .classpath
 .project
-.settings/
+.idea
+.settings
+.vscode
 .tomcatplugin
 .metadata
 .#webclasspath
@@ -30,3 +31,7 @@ gw6*
 mvn3*
 __*
 DOC_*.pdf
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
