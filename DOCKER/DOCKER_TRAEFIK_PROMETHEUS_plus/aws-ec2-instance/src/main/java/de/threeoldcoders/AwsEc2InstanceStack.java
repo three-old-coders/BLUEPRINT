@@ -61,6 +61,7 @@ public class AwsEc2InstanceStack extends Stack {
                         InstanceClass.BURSTABLE3,
                         InstanceSize.MICRO
                 ))
+                .requireImdsv2(true)
                 .securityGroup(securityGroup)
                 .vpc(vpc)
                 .vpcSubnets(

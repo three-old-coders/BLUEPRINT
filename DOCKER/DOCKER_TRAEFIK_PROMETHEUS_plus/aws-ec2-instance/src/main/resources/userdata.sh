@@ -6,11 +6,14 @@ yum install -y java-17-amazon-corretto-devel.x86_64 git awslogs
 # set JAVA_HOME
 echo "export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))" > /etc/profile.d/java_home.sh
 
+# get Instance Metadata Service Version 2 (IMDSv2) TOKEN valid for 6h (21600 seconds)
+TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
+
 # configure awslogs
 # update base config to current region
-CURRENT_REGION=`curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region|awk -F\" '{print $4}'`
+CURRENT_REGION=`curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}'`
 sed -i "/region/c\region = $CURRENT_REGION" /etc/awslogs/awscli.conf
-echo "set the awslog region to $CURRENT_REGION"
+echo "set the awslog region to [$CURRENT_REGION]"
 # enable the awslogs service and start it immediately.
 systemctl enable --now awslogsd
 
