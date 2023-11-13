@@ -2,7 +2,7 @@
 yum update -y
 
 # install java sdk and awslogs
-yum install -y java-17-amazon-corretto-devel.x86_64 git awslogs
+yum install -y java-17-amazon-corretto-devel.x86_64 git jq awslogs
 # set JAVA_HOME
 echo "export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))" > /etc/profile.d/java_home.sh
 
