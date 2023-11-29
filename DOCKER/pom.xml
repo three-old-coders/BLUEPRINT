@@ -20,6 +20,7 @@
 
     <modules>
         <module>DOCKER_CLAMAV</module>
+        <module>DOCKER_TRAEFIK_PROMETHEUS_plus</module>
     </modules>
 
 </project>
