@@ -26,6 +26,10 @@ public class PrometheusPushgatewayJmxSupport
     private final URL _url;
     private final HttpConnectionFactory _httpcf;
 
+
+    private PushGateway _pgw;
+
+
     public PrometheusPushgatewayJmxSupport(final PrometheusMeterRegistry pmr,
                                            final String processName, final Map<String, String> envMap,
                                            final URL url, final HttpConnectionFactory httpcf)
@@ -43,22 +47,33 @@ public class PrometheusPushgatewayJmxSupport
         final CompositeMeterRegistry cmr = new CompositeMeterRegistry(Clock.SYSTEM);
         cmr.add(_pmr);
 
-        final PushGateway pgw = new PushGateway(_url);
+        _pgw = new PushGateway(_url);
         if (null != _httpcf) {
-            pgw.setConnectionFactory(_httpcf);
+            _pgw.setConnectionFactory(_httpcf);
         }
-        pgw.push(_pmr.getPrometheusRegistry(), _processName, _envMap);     // test push
+        // todo: configurable testOnInit?
+        _pgw.push(_pmr.getPrometheusRegistry(), _processName, _envMap);     // test push
+
+        // add meter listener to force a push otherwise meter may get garbage collected before we even had a chance
+        // to contact our pushgateway.
+        cmr.config().onMeterAdded(meter -> {
+            try {
+                _pgw.push(_pmr.getPrometheusRegistry(), _processName, _envMap);
+            } catch (final Exception e) {
+                e.printStackTrace();
+            }
+        });
 
         final TimerTask tt = new TimerTask()
         {
             @Override
             public void run()
             {
-                try {
-                    pgw.push(_pmr.getPrometheusRegistry(), _processName, _envMap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            try {
+                _pgw.push(_pmr.getPrometheusRegistry(), _processName, _envMap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             }
         };
 
@@ -97,9 +112,14 @@ public class PrometheusPushgatewayJmxSupport
         // track jmx bean creations, no usage yet.
         final NotificationListener nlReg = (notification, handback) -> {
             final MBeanServerNotification nlNBS = (MBeanServerNotification) notification;
-            if(MBeanServerNotification.REGISTRATION_NOTIFICATION.equals(nlNBS.getType())) {
+            if (MBeanServerNotification.REGISTRATION_NOTIFICATION.equals(nlNBS.getType())) {
                 System.out.println("MBean Registered [" + nlNBS.getMBeanName() + "]");
-            } else if(MBeanServerNotification.UNREGISTRATION_NOTIFICATION.equals(nlNBS.getType())) {
+//                try {
+//                    _pgw.push(_pmr.getPrometheusRegistry(), _processName, _envMap);     // test push
+//                } catch (final Exception e) {
+//                    e.printStackTrace();
+//                }
+            } else if (MBeanServerNotification.UNREGISTRATION_NOTIFICATION.equals(nlNBS.getType())) {
                 System.out.println("MBean Unregistered [" + nlNBS.getMBeanName() + "]");
             }
         };

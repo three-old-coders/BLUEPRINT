@@ -15,6 +15,7 @@ target/
 build/
 token.txt
 GITHUB.TOKEN
+**/.PrometheusPushgatewayImapExporter.properties
 
 # Ignore eclipse/idea and other files
 .DS_Store

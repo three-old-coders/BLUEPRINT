@@ -1,6 +1,7 @@
 package com.github.three_old_coders.blueprint.infrastructure.prometheus;
 
 import io.micrometer.core.instrument.Clock;
+import io.micrometer.core.instrument.Meter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics;
 import io.micrometer.core.instrument.composite.CompositeMeterRegistry;
@@ -15,6 +16,7 @@ import lombok.SneakyThrows;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class PrometheusPushgatewayMicrometerJmxExporterOverJmxRunner extends PrometheusMeterRunnerBase
 {
