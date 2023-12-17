@@ -1,0 +1,19 @@
+docker registry
+https://gabrieltanner.org/blog/docker-registry/
+
+https://chat.openai.com/share/3d918144-751c-40a9-b95b-9ceedad9770e
+
+----
+
+https://docker-docs.uclv.cu/registry/spec/api/#:~:text=The%20Docker%20Registry%20HTTP%20API,images%20and%20enable%20their%20distribution.
+https://docker-docs.uclv.cu/registry/spec/api/#listing-image-tags
+
+curl -u "test:test" http://localhost:5000/v2/_catalog
+curl -u "test:test" http://localhost:5000/v2/jmspi/tags/list
+
+docker login -u test -p test localhost:5000
+docker pull localhost:5000/jmspi:0.0.1-SNAPSHOT
+
+docker ps   -->     container "activemq" in network "network-activemq"
+
+docker run -e spring.activemq.broker-url="tcp://activemq:61616" --network="network-activemq" localhost:5000/jmspi:0.0.1-SNAPSHOT -c com.github.three_old_coders.blueprint.kubernetes.PiCalculatorJmsConsumerApplication

@@ -2,6 +2,7 @@
 /log/*.log
 /tmp
 /temp
+**/temp
 **/dependency-reduced-pom.xml
 docker_sb_clamav-FULL.jar
 

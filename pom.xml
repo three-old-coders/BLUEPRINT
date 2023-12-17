@@ -32,6 +32,8 @@
         <module>COMMON</module>
         <module>DOCKER</module>
         <module>INFRASTRUCTURE</module>
+        <module>KUBERNETES</module>
+        <!-- <module>JAVA_AGENT</module> -->
         <module>RUNDECK</module>
         <module>TAPESTRY5</module>
     </modules>

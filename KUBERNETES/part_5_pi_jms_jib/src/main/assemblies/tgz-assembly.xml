@@ -1,0 +1,58 @@
+<assembly>
+    <id>bin</id>
+    <!-- Specifies that our binary distribution is a zip package -->
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+
+    <baseDirectory>${appDirectoryName}</baseDirectory>
+    <!-- Adds the dependencies of our application to the lib directory -->
+    <dependencySets>
+        <dependencySet>
+            <useProjectArtifact>true</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <scope>runtime</scope>
+            <unpack>false</unpack>
+        </dependencySet>
+    </dependencySets>
+
+    <fileSets>
+        <!--
+            Adds java startup scripts to the root bin directory of the zip package. The startup
+            scripts are unpacked from the backend/common_SERVICE/src/main/resources/scripts directory.
+        -->
+        <fileSet>
+            <directory>${project.build.directory}/scripts</directory>
+            <outputDirectory>bin</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <!-- copy all scripts and set chmod 755 -->
+        <fileSet>
+            <directory>${project.basedir}/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+            <includes>
+                <include>*.sh</include>
+            </includes>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <!-- copy all remaining files and set chmod 644. As this is the default mode
+             no explicit fileMode attribute is necessary.
+             currently the previous copied scripts are not updated from 755->644 -->
+        <fileSet>
+            <directory>${project.basedir}/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+        </fileSet>
+        <!--
+            copy resources from the config directory, but it will not overwrite already existing files in config
+        -->
+        <fileSet>
+            <directory>${project.basedir}/config</directory>
+            <outputDirectory>config</outputDirectory>
+        </fileSet>
+        <!-- copy optional possible configured private keys -->
+        <fileSet>
+            <directory>${project.build.directory}/keys</directory>
+            <outputDirectory>privateKeys</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>

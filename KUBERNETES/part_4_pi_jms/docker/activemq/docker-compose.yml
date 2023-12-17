@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  activemq:
+    image: webcenter/activemq:latest
+    container_name: activemq
+    ports:
+      - "61616:61616"       # JMS port
+      - "8161:8161"         # Web console port
+    networks:
+      - network-activemq    # todo: configurable network
+
+networks:
+  network-activemq:
+    name: network-activemq  # todo: breaking change in docker: hostname with _ not valid, v1/v2 changed _ to -
+    driver: bridge
