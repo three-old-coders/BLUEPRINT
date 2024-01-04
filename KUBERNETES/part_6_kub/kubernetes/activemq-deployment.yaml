@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: activemq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: activemq
+  template:
+    metadata:
+      labels:
+        app: activemq
+    spec:
+      containers:
+        - name: web
+          image: webcenter/activemq:latest    # 5.14.3
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 61616
+          resources:
+            limits:
+              memory: 512Mi                   # 137 OOM

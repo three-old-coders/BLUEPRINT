@@ -1,1 +1,5 @@
 https://chat.openai.com/share/a017d35e-608f-4e5b-bdc8-f5e407ccd9f2
+
+---
+
+https://learnk8s.io/blog/scaling-spring-boot-microservices

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: imageregistry-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: imageregistryapp
+  template:
+    metadata:
+      labels:
+        app: imageregistryapp
+    spec:
+      serviceAccountName: registrysa
+      containers:
+        - name: imageregistryapp
+          image: localhost:5000/imageregistryapp:latest
+          ports:
+            - containerPort: 80
