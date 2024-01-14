@@ -90,7 +90,8 @@
                             </from>
                             <to>
                                 <!-- todo: configurable registry -->
-                                <image>localhost:5000/jmspi:${project.version}</image>
+                                <!-- DEFAULT REGISTRY <image>localhost:5000/jmspi:${project.version}</image> -->
+                                <image>localhost:8182/repository/local-docker-repository/jmspi:${project.version}</image>
                                 <auth>
                                     <username>test</username>
                                     <password>test</password>

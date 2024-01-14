@@ -14,7 +14,7 @@ spec:
     spec:
       serviceAccountName: registrysa
       containers:
-        - name: imageregistryapp
-          image: localhost:5000/imageregistryapp:latest
+        - name: registry  # name used in docker yaml part_5_pi_jms_jib/docker/registry
+          image: localhost:5000/registry:latest
           ports:
             - containerPort: 80
