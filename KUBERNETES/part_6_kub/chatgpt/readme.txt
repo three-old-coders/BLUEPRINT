@@ -55,3 +55,4 @@ kubectl port-forward activemq-599b4558b9-9h95g 61616:61616 &
 
 https://www.middlewareinventory.com/blog/kubectl-port-forward/
 https://stackoverflow.com/questions/59296801/docker-compose-exit-code-is-137-when-there-is-no-oom-exception
+https://blog.knoldus.com/how-to-use-nexus-3-as-private-docker-registry/

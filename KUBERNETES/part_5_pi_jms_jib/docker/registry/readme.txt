@@ -17,4 +17,7 @@ nexus:
     docker image pull localhost:8182/repository/local-docker-repository/jmspi:0.0.1-SNAPSHOT
     docker image ls | grep 8182
 
-docker container list -a | grep <containername> | awk '{print $1}' | xargs docker container rm
+bulk delete images:
+
+    docker container list -a | grep <containername> | awk '{print $1}' | xargs docker container rm
+
