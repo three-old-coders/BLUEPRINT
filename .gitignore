@@ -4,6 +4,7 @@
 /temp
 **/temp
 **/dependency-reduced-pom.xml
+**/assemblies
 docker_sb_clamav-FULL.jar
 
 # Ignore other unneeded files.
