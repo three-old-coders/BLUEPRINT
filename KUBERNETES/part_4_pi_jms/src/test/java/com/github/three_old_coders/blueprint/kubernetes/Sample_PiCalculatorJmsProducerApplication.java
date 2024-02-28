@@ -24,7 +24,7 @@ public class Sample_PiCalculatorJmsProducerApplication
         try (final ConfigurableApplicationContext context = SpringApplication.run(Sample_PiCalculatorJmsProducerApplication.class, args)) {
             final JmsProducer jmsProducer = context.getBean(JmsProducer.class);
 
-            for (int i = 0; i <= 100; i++) {
+            for (int i = 0; i <= 500; i++) {
                 final JSONObject joPI = new JSONObject().put("pi", i);
                 jmsProducer.sendMessage(joPI.toString());
 

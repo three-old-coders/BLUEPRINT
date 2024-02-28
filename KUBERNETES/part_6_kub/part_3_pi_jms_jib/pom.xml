@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.github.three-old-coders.blueprint.kubernetes</groupId>
+    <artifactId>kubernetes-part5pi-jmsservice-jib</artifactId>
+    <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    
+    <name>KUBERNETES-SAMPLE_kubernetes-part4pi-jmsservice-jib (jar)</name>
+
+    <parent>
+        <groupId>com.github.three-old-coders.blueprint.kubernetes</groupId>
+        <artifactId>kubernetes.root</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.three-old-coders.blueprint.kubernetes</groupId>
+            <artifactId>kubernetes-part4pi-jmsservice</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+            <version>4.7.5</version>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>distribution</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>make-assembly</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- This is where we use our shared assembly descriptor -->
+                                    <descriptors>
+                                        <descriptor>src/main/assemblies/tgz-assembly.xml</descriptor>
+                                    </descriptors>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>properties-maven-plugin</artifactId>
+                        <version>1.2.1</version>
+                        <executions>
+                            <execution>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>set-system-properties</goal>
+                                </goals>
+                                <configuration>
+                                    <properties>
+                                        <property>
+                                            <name>sendCredentialsOverHttp</name>
+                                            <value>true</value>
+                                        </property>
+                                    </properties>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                        <version>3.4.0</version>
+                        <configuration>
+                            <allowInsecureRegistries>true</allowInsecureRegistries>
+                            <from>
+                                <image>openjdk:17-jdk-alpine</image>
+                            </from>
+                            <to>
+                                <!-- todo: configurable registry -->
+                                <!-- DEFAULT REGISTRY <image>localhost:5000/jmspi:${project.version}</image> -->
+                                <image>localhost:8182/repository/local-docker-repository/jmspi:${project.version}</image>
+                                <auth>
+                                    <username>test</username>
+                                    <password>test</password>
+                                </auth>
+                            </to>
+                            <container>
+                                <ports>
+                                    <port>61616</port>
+                                </ports>
+                            </container>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

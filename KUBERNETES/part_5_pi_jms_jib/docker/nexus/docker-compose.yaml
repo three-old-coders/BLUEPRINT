@@ -7,4 +7,4 @@ services:
       - "./temp:/nexus-data"
     ports:
       - "8181:8081"
-      - "8182:8082"
+      - "8182:8082"   # why do we need 8082?

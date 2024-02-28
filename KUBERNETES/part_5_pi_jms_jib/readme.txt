@@ -1,3 +1,7 @@
+ docker network create registry-network
+
+----
+
 build and push to nexus
 
     mvn compile jib:build -P distribution
@@ -5,6 +9,10 @@ build and push to nexus
 check:
 
     WebUI: http://localhost:8181/#browse/browse:local-docker-repository
+    docker ps
+    docker logs nexus-nexus-1 -f
+
+    login test/test
 
     docker run --rm -e spring.activemq.broker-url=tcp://activemq:61616 \
         --network network-activemq \
