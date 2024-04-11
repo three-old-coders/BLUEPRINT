@@ -28,23 +28,27 @@ public class Sample_Plugin_Runner
 
         final List<IMessageHandler> extensions = pluginManager.getExtensions(IMessageHandler.class);
 
+        int countHandled = 0;
+
         {
             final MessageDesc md = new MessageDesc("P1");
             for (final IMessageHandler extension : extensions) {
-                extension.canHandle(md);
+                countHandled += extension.canHandle(md) ? 1 : 0;
             }
         }
 
         {
             final MessageDesc md = new MessageDesc("P2");
             for (final IMessageHandler extension : extensions) {
-                extension.canHandle(md);
+                countHandled += extension.canHandle(md) ? 1 : 0;
             }
         }
 
         final MessageDesc md = new MessageDesc("P3");
         for (final IMessageHandler extension : extensions) {
-            extension.canHandle(md);
+            countHandled += extension.canHandle(md) ? 1 : 0;
         }
+
+        System.out.println("handled [" + countHandled + "] messages from [3]");
     }
 }

@@ -38,6 +38,7 @@ public class SpringPlugin1
         {
             if ("P1".equals(message.getType())) {
                 System.out.println(PLUGIN_NAME + " can handle message " + message);
+                return true;
             }
 
             return false;
