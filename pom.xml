@@ -35,6 +35,7 @@
         <module>KUBERNETES</module>
         <!-- <module>JAVA_AGENT</module> -->
         <module>RUNDECK</module>
+        <module>SPRING</module>
         <module>TAPESTRY5</module>
     </modules>
 
