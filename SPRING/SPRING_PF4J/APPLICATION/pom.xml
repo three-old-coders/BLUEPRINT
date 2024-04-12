@@ -17,6 +17,10 @@
     
     <name>SPRING-PF4J-application (jar)</name>
 
+    <properties>
+        <spring.version>6.1.5</spring.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.github.three-old-coders.blueprint.spring</groupId>
@@ -36,17 +40,47 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Spring -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+            <version>3.2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>3.2.4</version>
+        </dependency>
+<!--
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+-->
         <!-- just defer build after plugins by fake dependency -->
 
         <dependency>
             <groupId>com.github.three-old-coders.blueprint.spring</groupId>
-            <artifactId>spring-plugin-1</artifactId>
+            <artifactId>pf4j-plugin-1</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.three-old-coders.blueprint.spring</groupId>
-            <artifactId>spring-plugin-2</artifactId>
+            <artifactId>pf4j-plugin-2</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.three-old-coders.blueprint.spring</groupId>
+            <artifactId>pf4j-spring-plugin-1</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>

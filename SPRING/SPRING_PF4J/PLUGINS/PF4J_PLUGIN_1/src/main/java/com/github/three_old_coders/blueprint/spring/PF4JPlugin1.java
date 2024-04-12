@@ -3,7 +3,7 @@ package com.github.three_old_coders.blueprint.spring;
 import org.pf4j.Extension;
 import org.pf4j.Plugin;
 
-public class SpringPlugin1
+public class PF4JPlugin1
     extends Plugin
 {
     public static final String PLUGIN_NAME = "Plugin-1";

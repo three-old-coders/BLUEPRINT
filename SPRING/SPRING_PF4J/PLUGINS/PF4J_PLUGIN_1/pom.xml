@@ -11,11 +11,11 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>spring-plugin-1</artifactId>
+    <artifactId>pf4j-plugin-1</artifactId>
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
     
-    <name>SPRING-PF4J-plugin-1 (jar)</name>
+    <name>PF4J-plugin-1 (jar)</name>
 
     <properties>
         <!-- Override below properties in each plugin's pom.xml -->
@@ -54,7 +54,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <outputDirectory>${project.basedir}/plugin</outputDirectory>
+                    <outputDirectory>${project.basedir}/target/plugin</outputDirectory>
                     <finalName>${project.artifactId}-${project.version}-all</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <attach>false</attach>

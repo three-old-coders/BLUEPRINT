@@ -29,6 +29,7 @@
     <modules>
         <module>PF4J_PLUGIN_1</module>
         <module>PF4J_PLUGIN_2</module>
+        <module>PF4J_SPRING_PLUGIN_1</module>
     </modules>
 
     <dependencies>
