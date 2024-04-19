@@ -1,4 +1,4 @@
-package com.github.three_old_coders.blueprint.spring;
+package com.github.three_old_coders.blueprint.spring.pf4j;
 
 import org.pf4j.PluginManager;
 import org.springframework.context.ApplicationContextAware;

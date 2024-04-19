@@ -5,23 +5,27 @@
 
     <parent>
         <groupId>com.github.three-old-coders.blueprint.spring</groupId>
-        <artifactId>spring.root</artifactId>
+        <artifactId>spring-pf4j.root</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>spring-pf4j.root</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>spring-pf4j-common-application</artifactId>
+    <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
     
-    <name>spring-pf4j-java (pom)</name>
+    <name>SPRING-PF4J-common-application (jar)</name>
 
-    <modules>
-        <module>COMMON_APPLICATION</module>
-        <module>COMMON_PLUGIN</module>
-        <module>PLUGINS</module>
-        <module>SPRING_APPLICATION</module>
-        <!-- <module>SPRING_APPLICATION</module> -->
-    </modules>
+    <properties>
+        <spring.version>6.1.5</spring.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>6.1.5</version>
+        </dependency>
+   </dependencies>
 </project>

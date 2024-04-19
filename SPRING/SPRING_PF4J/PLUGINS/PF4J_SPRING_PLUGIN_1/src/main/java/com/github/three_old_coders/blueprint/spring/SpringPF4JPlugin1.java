@@ -1,10 +1,10 @@
 package com.github.three_old_coders.blueprint.spring;
 
 import org.pf4j.Extension;
-import org.pf4j.Plugin;
+import org.springframework.context.ApplicationContext;
 
 public class SpringPF4JPlugin1
-    extends Plugin
+    extends SpringPF4JPluginBase
 {
     public static final String PLUGIN_NAME = "Spring-Plugin-1";
 
@@ -28,16 +28,37 @@ public class SpringPF4JPlugin1
         System.out.println(PLUGIN_NAME + " to be deleted");
     }
 
-    // ---->> PLUGIN INTERFACE (IMessageHandler)
+    //
+    // ---->> PLUGIN EXTENSION (IMessageHandler)
+    //
 
     @Extension
-    public static class HandleExtension implements IMessageHandler
+    public static class HandleExtension extends SpringExtensionBase
+        implements IMessageHandler
     {
+        public HandleExtension(final ApplicationContext applicationContext)
+        {
+            super(applicationContext);
+        }
+
+        @Override
+        protected String[] getPluginScanPackages()
+        {
+            return new String[] {"com.github.three_old_coders.blueprint.spring"};
+        }
+
+        //
+        // ---->> IMessageHandler
+        //
+
         @Override
         public boolean canHandle(final MessageDesc message)
         {
             if ("P1".equals(message.getType())) {
                 System.out.println(PLUGIN_NAME + " can handle message " + message);
+                final PrivatePluginService pps = getApplicationContext().getBean(PrivatePluginService.class);
+                pps.doSomething();
+
                 return true;
             }
 
