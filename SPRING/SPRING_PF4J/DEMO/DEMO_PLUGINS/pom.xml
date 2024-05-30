@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+        <groupId>com.github.three-old-coders.blueprint.spring</groupId>
+        <artifactId>spring-pf4j-demo.root</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>spring-pf4j-plugins.root</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    
+    <name>spring-pf4j-plugins-root (pom)</name>
+
+    <properties>
+        <!-- Override below properties in each plugin's pom.xml -->
+        <plugin.id />
+        <plugin.class />
+        <plugin.version />
+        <plugin.provider />
+        <plugin.dependencies />
+    </properties>
+
+    <modules>
+        <module>PF4J_PLUGIN_1</module>
+        <module>PF4J_PLUGIN_2</module>
+        <module>PF4J_SPRING_PLUGIN_1</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.three-old-coders.blueprint.spring</groupId>
+            <artifactId>spring-demo-common-plugin</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.pf4j</groupId>
+            <artifactId>pf4j</artifactId>
+            <version>${pf4j.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+                <version>3.1.1</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -5,25 +5,24 @@
 
     <parent>
         <groupId>com.github.three-old-coders.blueprint.spring</groupId>
-        <artifactId>spring.root</artifactId>
+        <artifactId>spring-pf4j-demo.root</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>spring-pf4j.root</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>spring-demo-common-plugin</artifactId>
+    <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
     
-    <name>spring-pf4j-root (pom)</name>
+    <name>DEMO-SPRING-COMMON-PLUGIN (jar)</name>
 
-    <properties>
-        <pf4j.version>3.11.0</pf4j.version>
-        <spring.version>6.1.5</spring.version>
-    </properties>
-
-    <modules>
-        <module>PF4J_SPRING_BRIDGE</module>
-        <module>DEMO</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.pf4j</groupId>
+            <artifactId>pf4j</artifactId>
+            <version>${pf4j.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
